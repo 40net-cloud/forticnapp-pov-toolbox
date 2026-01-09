@@ -70,5 +70,6 @@ Lacework FortiCNAPP uses **Docker API v2** to pull images. Registry integrations
 
 
 
-On-Demand: CLI Command 
+Example On-Demand: CLI Command  
+
  lacework vulnerability container scan quay.io quay/busybox latest
