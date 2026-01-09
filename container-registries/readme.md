@@ -65,3 +65,10 @@ Lacework FortiCNAPP uses **Docker API v2** to pull images. Registry integrations
   - Amazon ECR: 1000
 - **Per-repository scan rate**: 100 images/hour
 - **Account-wide limit**: 1200 images/hour
+
+
+
+
+
+On-Demand: CLI Command 
+ lacework vulnerability container scan quay.io quay/busybox latest
