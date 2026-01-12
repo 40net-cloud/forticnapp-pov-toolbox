@@ -42,8 +42,8 @@ Deployment using Lacework PowerShell Script Flow
 - Select = the Windows access token created and that you want to use for your agent installation.
 - Click the Install tab.
 - Click  installation method, Lacework PowerShell Script:
-- Do either of the following:
-  - Click Download script to download the file (powershell.zip file).
+- Copy URL
+  - Paste the URL on Window Server browswer to download the folder "powershell.zip" 
   - Unzip "powershell.zip" and you get 3 files (Azure-Deploy-LW-Win.ps1, Install-LWDataCollector.ps1 & lwminisign.exe).
 
 <img width="434" height="103" alt="01b0b44c-b2e1-4a39-84ef-240a22070ea4" src="https://github.com/user-attachments/assets/c6ce35a0-25a1-48ea-adf2-81e513279450" />  
