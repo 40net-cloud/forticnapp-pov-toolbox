@@ -5,7 +5,7 @@
 
 | Role | Description |
 |------|--------------|
-| **Azure Global Administrator** | An Azure portal account that has the **Global Administrator** role for your tenant's directory: https://entra.microsoft.com/ |
+| **Azure Global Administrator** | An Azure portal account that has the **Global Administrator** role (In Microsoft Entra ID) for your tenant's directory: https://entra.microsoft.com/ |
 | **Azure Owner Role** | An Azure portal account with the **Owner** role in all subscriptions that you want to monitor. |
 | **Lacework FortiCNAPP Administrator** | A Lacework account with **administrator privileges** to create and manage cloud integrations. |
 | ⚡ **Deployment Methods** | Supported installation environments and automation options:<br>• **Azure Cloud Shell**<br>• **Host connected to Azure subscription being used** | — |
