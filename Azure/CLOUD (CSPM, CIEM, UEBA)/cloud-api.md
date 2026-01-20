@@ -153,7 +153,7 @@
 
 | Additional Options       | Description                                                                                                                                                                                                                                                                                      |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Existing storage account | You can use an existing or manually create new storage account within a resource group for FortiCNAPP                                                                                                                                                                                                           |
+| Existing storage account | You can use an existing or manually create new storage account within a resource group for FortiCNAPP                                                                                                                                                                                                          
 | Follow steps for storage | Manual setup guide: [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration) |
 
 
