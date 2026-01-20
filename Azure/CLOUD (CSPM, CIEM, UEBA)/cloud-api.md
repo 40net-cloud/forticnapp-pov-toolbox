@@ -143,14 +143,20 @@
 -----
 -----
 
-### 🧱 FortiCNAPP Advanced configuration Guided UI Configuration:
+### 🧱 FortiCNAPP Main Advanced configuration Guided UI Configuration:
 
-| Main Advanced Options                 |
-| -----------------------------         |
-| Specify list of subscriptions         | 
-| Enable all subscriptions              |
-| Specify management group ID           |
-| Exiating Storage with Resource Group  | 
+| Options                       | Description                                                                 |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| Specify list of subscriptions | Requires **Owner role** on each selected subscription.                      |
+| Enable all subscriptions      | Requires **Owner role** on all subscription in the tenant.                  |
+| Specify management group ID   | Requires **Management Group Owner role** for management group–level access. |  
+
+| Additional Options       | Description                                                                                                                                                                                                                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Existing storage account | You can use an existing or manually create new storage account within a resource group for FortiCNAPP                                                                                                                                                                                                           |
+| Follow steps for storage | Manual setup guide: [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration) |
+
+
 
 
 <img width="824" height="460" alt="Screenshot 2026-01-20 at 4 39 09 PM" src="https://github.com/user-attachments/assets/75aba5d6-24f4-4788-abfc-55f24b6bad37" />
