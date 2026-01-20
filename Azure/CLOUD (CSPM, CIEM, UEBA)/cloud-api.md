@@ -149,6 +149,11 @@
 <img width="824" height="460" alt="Screenshot 2026-01-20 at 4 39 09 PM" src="https://github.com/user-attachments/assets/75aba5d6-24f4-4788-abfc-55f24b6bad37" />
 
 
+| Options                       |
+| ----------------------------- |
+| Specify list of subscriptions |
+| Enable all subscriptions      |
+| Specify management group ID   |
 
 
 ### 📘 Reference Links
