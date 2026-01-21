@@ -149,7 +149,11 @@
 | ----------------------------- | --------------------------------------------------------------------------- |
 | Specify list of subscriptions | Requires **Owner role** on each selected subscription.                      |
 | Enable all subscriptions      | Requires **Owner role** on all subscription in the tenant.                  |
-| Specify management group ID   | Requires **Management Group Owner role** for management group–level access. |  
+| Specify management group ID   | Requires **Management Group Owner role** for management group–level access. |   
+
+- For Subscription  It will deploy Storage/RG in the default Subscription and IAM Role in each Subcription.
+- For Management: It will Inherit IAM role to subscriptions under Management and Storage/RG in the default Subscription.
+
 
 | Additional Options       | Description                                                                                                                                                                                                                                                                                      |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
