@@ -1,5 +1,6 @@
 # ☁️ Azure: Cloud API Integration
 
+FortiCNAPP authenticates to Microsoft Entra ID using an Azure AD application (service principal). Azure services then evaluate the roles assigned to that service principal to authorize access to resources and logs.
 
 ### 🧾 Onboarding Requirements (Just for deployment phase - Terraform) 
 
