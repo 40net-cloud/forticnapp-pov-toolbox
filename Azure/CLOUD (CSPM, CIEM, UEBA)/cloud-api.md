@@ -43,7 +43,19 @@
 
 ## 📜 Azure Activity Log Integration — Configuration Workflow
 
+### Summary
+
+| Item | Description |
+|------|-------------|
+| Activity Log Export | Azure Diagnostic Settings are configured on each subscription to export Activity Logs into a centralized Azure Storage Account. |
+| Multi-Subscription Support | Logs from multiple subscriptions are stored under separate subscription-ID folders. |
+| Log Location | Activity Logs are copied into `insights-activity-logs/<subscription-id>/`. |
+| Change Notification | Azure Event Grid and Queue notify FortiCNAPP when a new log file is created, eliminating the need to continuously scan storage. |
+| Log Access | FortiCNAPP is granted read-only access to the Storage Account to retrieve and analyze exported Activity Logs. |
+| Authentication & Authorization | FortiCNAPP authenticates using Microsoft Entra ID, and Azure services enforce assigned RBAC roles at the subscription or resource group scope to authorize metadata access and log retrieval. |
+
 ### 🔁  Azure Activity - Terms Definition notes (General)
+
 
 | Stage | What It Does | Data Type |
 |--------|---------------|-----------|
