@@ -173,7 +173,20 @@ FortiCNAPP authenticates to Microsoft Entra ID using an Azure AD application (se
 | Existing storage account | You can use an existing or manually create new storage account within a resource group for FortiCNAPP                                                                                                                                                                                                          
 | Follow steps for storage | Manual setup guide: [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration) |
 
-
+| Category | Setting | Recommended Value | Explanation |
+|--------|--------|------------------|-------------|
+| Security | Require secure transfer for REST API operations | **Enabled** | Enforces HTTPS for all access to logs |
+| Security | Allow anonymous access on containers | **Disabled** | Prevents public unauthenticated access |
+| Security | Enable storage account key access | **Enabled** | Required for Azure services and integrations |
+| Security | Default to Microsoft Entra authorization | Disabled | FortiCNAPP uses explicit RBAC, not portal defaults |
+| Security | Minimum TLS version | **TLS 1.2** | Security best practice |
+| Data Lake | Enable hierarchical namespace | **Disabled** | Not required; Activity Logs are standard blobs |
+| Access protocols | Enable SFTP | Disabled | Not used by FortiCNAPP |
+| Access protocols | Enable NFS v3 | Disabled | Not required |
+| Blob storage | Allow cross-tenant replication | Disabled | Prevents unintended data replication |
+| Blob storage | Access tier | **Hot** | Logs are frequently read |
+| Azure Files | Enable large file shares | Disabled | Not used |
+| Azure Files | Enable Managed Identity for SMB | Disabled | Not used |
 
 
 <img width="824" height="460" alt="Screenshot 2026-01-20 at 4 39 09 PM" src="https://github.com/user-attachments/assets/75aba5d6-24f4-4788-abfc-55f24b6bad37" />
