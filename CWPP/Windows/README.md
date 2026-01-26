@@ -6,8 +6,8 @@ After you install the agent, the agent and Lacework FortiCNAPP server communicat
 
 ## Windows Agent System & Deployment Requirements
 
-#### Run as Administrator on Windows PowerShell to install/uninstall the agent
-#### We recommend that you exclude the agent from any antivirus or endpoint detection and response (EDR) applications on your host. The Install-LWDataCollector.ps1 script allows you to enable this exclusion for Microsoft Defender. For other antivirus applications, you can customize the script to exclude the agent from scanning
+#### - Run as Administrator on Windows PowerShell to install/uninstall the agent
+#### - We recommend that you exclude the agent from any antivirus or endpoint detection and response (EDR) applications on your host. The Install-LWDataCollector.ps1 script allows you to enable this exclusion for Microsoft Defender. For other antivirus applications, you can customize the script to exclude the agent from scanning
 
 | **Category** | **Requirement / Details** |
 |---------------|----------------------------|
