@@ -108,6 +108,8 @@ sc.exe start lwdatacollector
 
 ## ✅ 4. Verify, Restart, Troubleshoot: C:\Users\Administrator>
 
+#### - To troubleshoot Windows agent errors, review the LWDataCollector log files in the C:\ProgramData\Lacework\Logs directory.
+
 Enter the following command to check status for the lwdatacollector service: 
 - In Powersehll:
 ```bash
@@ -139,8 +141,6 @@ Unistall the window agent with the following powershell command:
 $app = Get-WmiObject -Class Win32_Product -Filter "Name like '%Lacework%'"
 $app.Uninstall()
 ```
-
- - To troubleshoot Windows agent errors, review the LWDataCollector log files in the C:\ProgramData\Lacework\Logs directory.
 
 ## ✅ Reference Links
 
