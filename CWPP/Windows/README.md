@@ -13,8 +13,10 @@ After you install the agent, the agent and Lacework FortiCNAPP server communicat
 | **Hardware Requirements & Agent Usage** | - **CPU:** 2-core processor.<br>- **Memory (RAM):** 4 GB minimum.<br>- **Agent Average CPU Usage:** Less than **10%** (typically much lower).<br>- **Agent Memory Usage:** Less than **200 MB** (typically much lower). |
 | **Performance Notes** | The agent runs as a lightweight background service and typically consumes minimal CPU and memory resources. |
 | **Deployment Recommendations** | - Ensure servers meet minimum hardware and OS requirements before installation.<br>- Verify network and security configurations support outbound TLS 1.2 traffic.<br>- Maintain PowerShell and Windows updates for stability and compatibility. |
-|***Run as Administrator on Windows PowerShell to install/uninstall the agent.**
+|**Run as Administrator on Windows PowerShell to install/uninstall the agent.**|
+|**We recommend that you exclude the agent from any antivirus or endpoint detection and response (EDR) applications on your host. The Install-LWDataCollector.ps1 script allows you to enable this exclusion for Microsoft Defender. For other antivirus applications, you can customize the script to exclude the agent from scanning**.|
 ---
+
 # ✅ Deployment using Lacework PowerShell Script File Flow:
 Fits All Clouds: Install the Windows Agent on Hosts Using Lacework PowerShell Script, Quick Easy installion method on few machines during Lab/POC.
 There are many other methods (mentioned later), but this can fit a quick easy way for this kind of deployments if there are few machines and multicloud deployments.
