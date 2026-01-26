@@ -30,6 +30,10 @@ Deployment using Lacework PowerShell Script Flow
 ├ 3. Deployment using Lacework PowerShell Script  without a Configuration File.
 ├ 4. Verify.
 ✅ Reference Links
+
+- Adds a local firewall rule to allow the agent to communicate with Lacework FortiCNAPP.
+- Optionally configures a Windows Defender exclusion for the agent.
+
 ✅ Just Side Note: Other Installation Methods for Windows Servers Supported
 ```
 ## ✅ 1. Create New Access Token:
