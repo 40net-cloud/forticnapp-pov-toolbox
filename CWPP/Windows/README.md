@@ -80,20 +80,30 @@ Example for Windows Agent Release 1.7.2:
 | **More Information** | See section *Restart the Windows Agent* for further details. | — |
 
 
-## ✅ 3.2. Deployment using Lacework PowerShell Script (with Proxy settings) :
+## ✅ 3.2. Additional properties and settings:
 
-To configure the agent to use a specific proxy during installation in the command line, use the following command:C:\Users\Administrator>  
+When you install the Lacework FortiCNAPP Windows agent on a host, the configuration file config.json is created in the C:\ProgramData\Lacework\ directory. You can add properties to the config.json file to change the agent behavior as described below.
+
+| **Topic** | **Description** | **Link** |
+|------------|-----------------|----------|
+| 🛡️ **Additional parameters** | Detailed documentation on agent architecture, supported OS versions, and system requirements. | [View Docs]([https://docs.fortinet.com/document/lacework-forticnapp/latest/administrati](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/483792/configure-windows-agent-using-the-configuration-file) |
+
+If you modify the file while the agent is running, you must restart the agent for the changes to take effect.
+
+To restart the agent:
+
+- Open a PowerShell terminal as administrator.
+  Stop the window agent with the following command:  
+
 ```bash
-msiexec.exe /i LWDataCollector.msi ACCESSTOKEN=Your_Access_Token SERVERURL=Your_API_Endpoint PROXYURL=http://Your_Proxy_Server:Your_Port
+sc.exe stop lwdatacollector
 ```
-### Proxy Configuration
 
-| **Parameter** | **Description** | **Example / Notes** |
-|----------------|-----------------|----------------------|
-| **Your_Proxy_Server** | The URL or IP address of your HTTP proxy server. | Example: `http://proxy.example.com` or `192.168.1.10` |
-| **Your_Port** | The port number used by the proxy server. | Example: `8080` |
-| **Disable Proxy Option** | If the agent should not use a proxy, regardless of the machine’s configuration, use the following command during installation: | ```powershell<br>msiexec /i lacework-agent.msi NO_PROXY=1<br>``` |
+Restart the window agent with the following command:  
 
+```bash
+sc.exe start lwdatacollector
+```
 
 
 ## ✅ 4. Verify, Restart, Troubleshoot: C:\Users\Administrator>
