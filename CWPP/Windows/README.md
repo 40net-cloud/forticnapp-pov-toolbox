@@ -140,6 +140,8 @@ $app = Get-WmiObject -Class Win32_Product -Filter "Name like '%Lacework%'"
 $app.Uninstall()
 ```
 
+### To troubleshoot Windows agent errors, review the LWDataCollector log files in the C:\ProgramData\Lacework\Logs directory.
+
 ## ✅ Reference Links
 
 | **Topic** | **Description** | **Link** |
