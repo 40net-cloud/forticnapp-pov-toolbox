@@ -10,7 +10,7 @@ After you install the agent, the agent and Lacework FortiCNAPP server communicat
 
 | **Category**  | **Requirement / Details**  |
 |---------------|----------------------------|
-|**Refer to: [https://docs.fortinet.com/document/forticnapp/latest/agent-support/937645/windows-agent-system-requirements)**. |
+|**Refer to Windows agent system requirements**: | [https://docs.fortinet.com/document/forticnapp/latest/agent-support/937645/windows-agent-system-requirements).|
 | **Operating System Requirements** | - Must support **Transport Layer Security (TLS) 1.2**.<br>- **Do NOT install** on personal or consumer Windows editions (e.g., Windows 10/11 Home, Pro, etc.).<br>- Recommended: **Windows Server 2012 R2**, **2016**, **2019**, **2022**. |
 | **Software Prerequisites** | - **PowerShell 5.0 or later**.<br>Check version: <br>`$PSVersionTable.PSVersion` |
 | **Hardware Requirements & Agent Usage** | - **CPU:** 2-core processor.<br>- **Memory (RAM):** 4 GB minimum.<br>- **Agent Average CPU Usage:** Less than **10%** (typically much lower).<br>- **Agent Memory Usage:** Less than **200 MB** (typically much lower). |
