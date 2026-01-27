@@ -78,12 +78,16 @@ Example for Windows Agent Release 1.7.2:
 | **Parameter** | **Description** | **Example / Notes** |
 |----------------|-----------------|----------------------|
 | **Your_Access_Token** | Specifies your agent access token. | Token details under *Agent Token* (e.g., `b2fe1bb5axxxxx`). |
-| **Your_API_Endpoint** | Specifies your Lacework FortiCNAPP agent server URL. | Example: [https://xx-eu.lacework.net](https://xx-eu.lacework.net) |
+| **Your_API_Endpoint** | Uses a region-specific agent server URL to communicate with the Lacework FortiCNAPP platform.. | Example: [https://api.fra.lacework.net) |
 | **-Defender option** | Excludes the Windows agent from scanning with Windows Defender. | Optional flag. |
 | **Agent_MSI_Download_URL** | Copy the URL for Lacework Windows Agent MSI package. | [https://github.com/lacework/lacework-windows-agent-releases/releases](https://github.com/lacework/lacework-windows-agent-releases/releases) |
 | **Config File Location** | The `config.json` file containing the options specified in the command line. | Created in `C:\ProgramData\Lacework\` directory. |
 | **Configuration Update** | You can modify the `config.json` file to change settings for the agent. | After modification, **restart the agent** for the changes to take effect. |
 | **More Information** | See section *Restart the Windows Agent* for further details. | — |
+
+
+<img width="836" height="272" alt="Screenshot 2026-01-27 at 11 19 53 AM" src="https://github.com/user-attachments/assets/f2833cad-66bb-44a0-a982-a94e755a9b12" />
+
 
 
 ## ✅ 3.2. Additional properties and settings:
