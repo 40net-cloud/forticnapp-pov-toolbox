@@ -161,6 +161,8 @@ $app.Uninstall()
 | 🛡️ **Windows Agent PowerShell Installation** | Step-by-step guide for installing the agent using a PowerShell script. | [View Docs](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/169764/installing-the-windows-agent-using-a-powershell-script) |
 | 🛡️ **Windows Agent Installation Prerequisites** | Lists prerequisites and dependencies before deploying the Windows Agent. | [View Docs](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/902600/windows-agent-installation-prerequisites) |
 | 🛡️ **Network Proxy Configuration for Windows Agent Traffic** | Explains how to configure a proxy for Windows Agent network communications. | [View Docs](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/558949/use-a-network-proxy-for-windows-agent-traffic) |
+| 🛡️ **Allowlists URLs required Connectivity** | Allowlist the following URLs to enable the agent to communicate with the Lacework FortiCNAPP server. | [View Docs](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/59862/required-connectivity-proxies-and-certificates-for-agents) |
+
 
 
 ---
