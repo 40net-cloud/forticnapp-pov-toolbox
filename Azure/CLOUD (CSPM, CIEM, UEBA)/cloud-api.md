@@ -203,4 +203,7 @@ FortiCNAPP authenticates to Microsoft Entra ID using an Azure AD application (se
 | **Azure App for Integration** | [About Entra ID Permissions and Azure App Setup](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/644235#about-entra-id-permissions) |
 | **Lacework FortiCNAPP for Azure FAQ** | [FortiCNAPP for Azure – FAQ](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/318933/lacework-forticnapp-for-azure-faq) |
 | **Azure Activity Log Integration – Manual Configuration** | [Manual Configuration for Azure Activity Log Integration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/521511/azure-activity-log-integration-manual-configuration) |
+| **Terraform Reference** | (https://github.com/lacework/terraform-azure-activity-log/tree/main) |
+
+
 
