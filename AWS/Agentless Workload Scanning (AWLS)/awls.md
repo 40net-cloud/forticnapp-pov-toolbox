@@ -124,7 +124,7 @@ lacework generate cloud-account aws --output='/tmp/forti' --agentless='true' --a
 | Step | Description |
 |------|--------------|
 | **1** | The customer runs the **Agentless AWLS Terraform module** to deploy the required resources in their AWS environment. |
-| **2** | Terraform template provisions:<br>• **IAM Roles / Global**<br>• **S3 Bucket /Gloval**<br>• **ECS Cluster /Region** (with *Sidekick* container)<br>• **VPC**, **Subnet**, and **Internet Gateway /Region**   |
+| **2** | Terraform template provisions:<br>• **IAM Roles / Global**<br>• **S3 Bucket /Global**<br>• **ECS Cluster /Region** (with *Sidekick* container)<br>• **VPC**, **Subnet**, and **Internet Gateway /Region**   |
 | **3** | The **Sidekick container** is executed as part of an **ECS Fargate task**. |
 | **4** | The task enumerates customer workloads, identifies attached block volumes, securely mounts them, and initiates the scanning process. |
 | **5** | Scanning results are written to the customer’s **S3 bucket**. |
