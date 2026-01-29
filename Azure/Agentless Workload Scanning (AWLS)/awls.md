@@ -24,3 +24,21 @@ This Terraform module installs global and regional resources. The global resourc
 | 🎯 Selective Scanning | Customers can limit which workloads are scanned using **filters, tags, or resource queries**. |
 | ☁ Powered by Azure | Built using **Azure Container Apps**, **Azure Managed Identity**, and **Azure-native networking and storage services**. |
 
+
+
+
+| Step | Description |
+|-----:|-------------|
+| 1 | The customer deploys the **Agentless AWLS Terraform module for Azure**, which provisions all required resources in the customer subscription. |
+| 2 | Terraform provisions the following components:<br><br>• **Microsoft Entra ID application & service principal (Global)**<br>• **Azure RBAC role assignments (Subscription / Resource Group)**<br>• **Storage Account (Global – scan artifacts & metadata)**<br>• **Container Apps Environment (Per Region)**<br>• **Container App Jobs (Per Region)**<br>• **Virtual Network, Subnet, NAT Gateway, NSG (Per Region)** |
+| 3 | A **Container App Job** is executed in the customer’s Azure subscription to initiate the scan. |
+| 4 | The job determines which workloads (virtual machines) are to be scanned across the monitored tenants and subscriptions. |
+| 5 | The job identifies the associated managed disks and creates **temporary read-only clones** in the scanning subscription where the Container App job is hosted. |
+| 6 | Virtual machines are launched to **mount the cloned disks** and perform scanning **without deploying agents inside customer workloads**. |
+| 7 | Scan metadata and results are written to the **customer-owned Azure Storage Account**. |
+| 8 | **FortiCNAPP retrieves scan results and metadata** from the customer storage account using **least-privilege, identity-based access**. |
+| 🧹 Automatic Cleanup | Temporary disk clones, scan artifacts, and scan virtual machines are automatically removed to minimize footprint and cost. |
+| ⏱ Scan Frequency | By default, scans run **every 24 hours**. |
+| 🔒 Privacy-First Design | FortiCNAPP has **no direct network or OS-level access** to customer workloads. All interactions occur through Azure APIs and customer-controlled resources. |
+| 🎯 Selective Scanning | Customers can control which workloads are scanned using **filters, tags, or resource queries**. |
+| ☁ Powered by Azure | Built using **Azure Container Apps**, **Azure Managed Identity**, and **Azure-native networking and storage services**. |
