@@ -34,9 +34,9 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 |                       8 | The scanning virtual machines upload scan metadata and results to the **customer-owned Azure Blob Storage account**.                                                                                                                                                                                                                                                                                                                                                         |
 |                       9 | A FortiCNAPP ingestion service runs on a schedule and **retrieves scan results and metadata** from the customer storage account for processing in the FortiCNAPP platform.                                                                                                                                                                                                                                                                                                   |
 |    🧹 Automatic Cleanup | Temporary snapshots, ephemeral scanning virtual machines, and stale scan artifacts are automatically removed to minimize footprint and cost.   
-
-| ⏱️ **Scan Frequency** | By default, scans run **every 24 hours**. |
-
-| 🔒 **Privacy-First Design** | **FortiCNAPP** has **no direct access** to customer workloads — it interacts only with the resources it deploys, using **limited IAM permissions**. ||
+                                                                                                  |
+| ⏱️ **Scan Frequency**   | By default, scans run **every 24 hours**. 
+                                                                                                  | 
+| 🔒 **Privacy-First Design** | **FortiCNAPP** has **no direct access** to customer workloads — it interacts only with the resources it deploys, using **limited IAM permissions**. 
 
 
