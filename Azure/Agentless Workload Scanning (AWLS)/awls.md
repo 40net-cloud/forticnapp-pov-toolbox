@@ -25,7 +25,7 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 |                    Step | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |                       1 | The customer deploys the **Azure Agentless Workload Scanning (AWLS) Terraform module**, which provisions all required resources in the customer’s Azure environment.                                                                                                                                                                                                                                                                                                         |
-|                       2 | Terraform provisions the following components: <br><br>• **Microsoft Entra ID application and service principal (Global)** <br>• **Azure RBAC role assignments** (subscription and/or resource group scope) <br>• **Customer-owned Azure Storage Account** (scan artifacts and metadata) <br>• **Container Apps Environment** (per region) <br>• **Container App Jobs** (per region) <br>• **Virtual Network, Subnet, NAT Gateway, and Network Security Group** (per region) |
+|                       2 | Terraform provisions the following components: <br><br>• **Microsoft Entra ID application and service principal (Global)** <br>• **Azure RBAC role assignments** (subscription and/or resource group scope) <br>• **Customer-owned Azure Storage Account** (Global / scan artifacts and metadata) <br>• **Container Apps Environment** (per region) <br>• **Container App Jobs** (per region) <br>• **Virtual Network, Subnet, NAT Gateway, and Network Security Group** (per region) |
 |                       3 | The **Container App Job is triggered on a schedule**, without interactive action from the FortiCNAPP platform.                                                                                                                                                                                                                                                                                                                                                               |
 |                       4 | The Container App Job determines which virtual machines should be scanned based on the configured tenant or subscription scope.                                                                                                                                                                                                                                                                                                                                              |
 |                       5 | For each selected virtual machine, the scanner identifies the attached **Azure managed disks** and creates **temporary read-only snapshots**.                                                                                                                                                                                                                                                                                                                                |
@@ -36,38 +36,3 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 |    🧹 Automatic Cleanup | Temporary snapshots, ephemeral scanning virtual machines, and stale scan artifacts are automatically removed to minimize footprint and cost.                                                                                                                                                                                                                                                                                                                                 |
 
 
-
-
-| Step | Description |
-|-----:|-------------|
-| 1 | The customer deploys the **Agentless AWLS Terraform module for Azure**, which provisions all required resources in the customer subscription. |
-| 2 | Terraform provisions the following components: <br><br>• **Microsoft Entra ID application & service principal (Global)** <br>• **Azure RBAC role assignments (Subscription / Resource Group)** <br>• **Storage Account (Global – scan artifacts & metadata)** <br>• **Container Apps Environment (Per Region)** <br>• **Container App Jobs (Per Region)** <br>• **Virtual Network, Subnet, NAT Gateway, NSG (Per Region)** |
-| 3 | A **Container App Job** is executed in the customer’s Azure subscription to initiate the scan. |
-| 4 | The job enumerates customer workloads, identifies attached managed disks, and creates **temporary read-only snapshots** for scanning. |
-| 5 | Snapshots are securely attached to the scanning job environment and analyzed **without deploying agents inside customer workloads**. |
-| 6 | Scan metadata and results are written to the **customer-owned Azure Storage Account**. |
-| 7 | **FortiCNAPP retrieves scan results and metadata** from the customer storage account using **least-privilege, identity-based access**. |
-| 🧹 Automatic Cleanup | Temporary snapshots, scan artifacts, and stale jobs are automatically removed to minimize footprint and cost. |
-| ⏱ Scan Frequency | By default, scans run **every 24 hours**. |
-| 🔒 Privacy-First Design | FortiCNAPP has **no direct network or OS-level access** to customer workloads. All interactions occur through Azure APIs and customer-controlled resources. |
-| 🎯 Selective Scanning | Customers can limit which workloads are scanned using **filters, tags, or resource queries**. |
-| ☁ Powered by Azure | Built using **Azure Container Apps**, **Azure Managed Identity**, and **Azure-native networking and storage services**. |
-
-
-
-
-| Step | Description |
-|-----:|-------------|
-| 1 | The customer deploys the **Agentless AWLS Terraform module for Azure**, which provisions all required resources in the customer subscription. |
-| 2 | Terraform provisions the following components:<br><br>• **Microsoft Entra ID application & service principal (Global)**<br>• **Azure RBAC role assignments (Subscription / Resource Group)**<br>• **Storage Account (Global – scan artifacts & metadata)**<br>• **Container Apps Environment (Per Region)**<br>• **Container App Jobs (Per Region)**<br>• **Virtual Network, Subnet, NAT Gateway, NSG (Per Region)** |
-| 3 | A **Container App Job** is executed in the customer’s Azure subscription to initiate the scan. |
-| 4 | The job determines which workloads (virtual machines) are to be scanned across the monitored tenants and subscriptions. |
-| 5 | The job identifies the associated managed disks and creates **temporary read-only clones** in the scanning subscription where the Container App job is hosted. |
-| 6 | Virtual machines are launched to **mount the cloned disks** and perform scanning **without deploying agents inside customer workloads**. |
-| 7 | Scan metadata and results are written to the **customer-owned Azure Storage Account**. |
-| 8 | **FortiCNAPP retrieves scan results and metadata** from the customer storage account using **least-privilege, identity-based access**. |
-| 🧹 Automatic Cleanup | Temporary disk clones, scan artifacts, and scan virtual machines are automatically removed to minimize footprint and cost. |
-| ⏱ Scan Frequency | By default, scans run **every 24 hours**. |
-| 🔒 Privacy-First Design | FortiCNAPP has **no direct network or OS-level access** to customer workloads. All interactions occur through Azure APIs and customer-controlled resources. |
-| 🎯 Selective Scanning | Customers can control which workloads are scanned using **filters, tags, or resource queries**. |
-| ☁ Powered by Azure | Built using **Azure Container Apps**, **Azure Managed Identity**, and **Azure-native networking and storage services**. |
