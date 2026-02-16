@@ -1,0 +1,46 @@
+############################################################################################################################################
+#Required variables to integrate Amazon Container Registries (ECR) with Lacework #
+############################################################################################################################################
+
+# The IAM role ARN. required when setting use_existing_iam_role to true
+iam_role_arn = ""
+
+# The external ID configured inside the IAM role. required when setting use_existing_iam_role to true. It can be used also to update iam_role_external_id
+iam_role_external_id = ""
+
+# The IAM role name. Required to match with iam_role_arn if use_existing_iam_role is set to true
+iam_role_name = "my-tf-ecr-role"
+
+# The Lacework AWS account that the IAM role will grant access. It is by default "434813966438"
+lacework_aws_account_id = "434813966438"
+
+# The name of the external ECR integration in FortiCNAPP
+lacework_integration_name = "my-tf-ecr-lw-integration"
+
+# A list of objects with image labels to limit the assessment of images with matching labels. If you specify limit_by_tags and limit_by_label limits, they function as an AND.
+limit_by_labels = []
+
+# A list of repositories to assess
+limit_by_repositories = []
+
+# A list of tags to limit the assessment of images with matching tags. If you specify limit_by_tags and limit_by_label limits, they function as an AND
+limit_by_tags = []
+
+# The maximum number of newest container images to assess per repository. Must be one of 5, 10, or 15. Defaults to 5.
+limit_num_imgs = 5
+
+# Whether or not the integration should check non-os packages in the container for vulnerabilities
+non_os_package_support = true
+
+# The registry domain to configure. By default, it uses the current AWS account ID and region. You can specify a custom registry domain to override the default setting. 
+registry_domain = ""
+
+# A map/dictionary of Tags to be assigned to created resources
+tags =  {}
+
+# Set this to true to use an existing IAM role
+use_existing_iam_role = false
+
+# Amount of time to wait before the next resource is provisioned
+wait_time = "15s"
+
