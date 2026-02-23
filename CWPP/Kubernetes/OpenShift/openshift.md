@@ -1,6 +1,6 @@
 ## 🧩 FortiCNAPP (Lacework) Agent Guide on OpenShift (RHCOS)
 
-Follow these steps to completely deploy Lacework (FortiCNAPP) Linux agent on OpenShift RHCSO Cluster.
+Follow these steps to completely deploy Lacework (FortiCNAPP) Linux agent on OpenShift RHCOS Cluster.
 Each step includes a brief explanation and ready-to-copy command.
 
 #### Example Result:
