@@ -129,10 +129,12 @@ FortiCNAPP Container Image Vulnerability Scanning Methods
 | **CI / Inline Scanner**                         | **Pre-deployment** (build pipeline)    | Container images being built          | CI pipeline (Jenkins, GitHub Actions, Travis CI, etc.) | Security testing during **image build process**                            | Inline scanner integrates with CI systems to scan images as part of the **build pipeline**                          |
 | **Local Scanning / Inline Scanner**             | **Pre-deployment** (developer stage)   | Container images built locally        | Developer machine (Windows, Mac, Linux)                | Developers test images **before pushing to registry**                      | Inline scanner can run **locally or via Lacework CLI** to assess builds without requiring FortiCNAPP console access |
 | **CD / Kubernetes Admission Controller**        | **Pre-deployment** (deployment gate)   | Container images about to be deployed | Kubernetes cluster                                     | Prevent vulnerable images from being deployed                              | **Admission controller webhook + proxy scanner inspect images prior to deployment**                                 |
-| **Agentless Workload Scanning**                 | **Running phase** (active workloads)   | Running containers and hosts          | FortiCNAPP agentless scanning from cloud platform      | Scan **active containers and hosts without installing agents**             | Detect vulnerabilities on **hosts running containers and the images used by those containers**                      |
+| **Agentless Workload Scanning (AWLS)**                 | **Running phase** (active workloads)   | Running containers and hosts          | FortiCNAPP agentless scanning on cloud platform      | Scan **active containers and hosts without installing agents**             | Detect vulnerabilities on **hosts running containers and the images used by those containers**                      |
 | **Agent Scan**                                  | **Running phase** (active workloads)   | Running containers and hosts          | FortiCNAPP agent installed on host                     | Continuous runtime vulnerability monitoring                                | **FortiCNAPP agents installed on hosts collect container and host vulnerability data**                              |
 
-
+> **Note**
+> Agentless Workload Scanning (AWLS) and FortiCNAPP Agents are explained in a separate folder.  
+> This document focuses only on container registries vulnerability scanning only.
 
 
 
