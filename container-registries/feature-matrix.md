@@ -5,6 +5,23 @@
 
 Application Deployment Comparison (Containers vs VM vs Bare Metal)
 
+| Feature              | Traditional OS | VM   | Container  |
+| -------------------- | -------------- | ---- | ---------  |
+| Dependency isolation | ❌              | ✅    | ✅       |
+| Separate OS per app  | ❌              | ✅    | ❌       |
+| Resource usage       | Low            | High | Low        |
+| Startup time         | Fast           | Slow | Very fast  |
+
+
+
+| Stage                              | What It Solved                                   | New Problem Introduced                   |
+| ---------------------------------- | ------------------------------------------------ | ---------------------------------------- |
+| **Traditional OS (single server)** | Run multiple applications on one OS              | Dependency conflicts between apps        |
+| **Virtual Machines (VMs)**         | Isolate each application with its own OS         | Heavy resource usage (CPU, RAM, storage) |
+| **Containers**                     | Isolate application environments without full OS | Requires container runtime/orchestrators |
+
+
+
 | Category                | **Containers**                    | **Virtual Machines (VMs)**  | **Bare Metal / Traditional Apps**        |
 | ----------------------- | --------------------------------- | --------------------------- | ---------------------------------------- |
 | Virtualization type     | OS-level virtualization           | Hardware virtualization     | No virtualization                        |
@@ -132,6 +149,9 @@ FortiCNAPP Container Image Vulnerability Scanning Methods
 | **CD / Kubernetes Admission Controller**        | Deployment control | **Non-active images** (about to run)      | Images referenced in Kubernetes deployment      | Kubernetes cluster                                    | Prevent vulnerable images from being deployed                     | Admission controller webhook and proxy scanner inspect images prior to deployment                      |
 | **Agentless Workload Scanning (AWLS)**          | Running phase      | **Active containers / hosts**             | Running container workloads and hosts           | Cloud platform scan                                   | Detect vulnerabilities in running environments                    | Agentless scanning identifies containers and images running on hosts                                   |
 | **Agent Scan**                                  | Running phase      | **Active containers / hosts**             | Containers and hosts running workloads          | Host agent                                            | Continuous vulnerability visibility at runtime                    | Agents installed on hosts collect container and host vulnerability data                                |
+
+
+we need to continue and confirm the methods of integration for these methods focusing on container registries: platform-scanner scan image at the backend, while Proxy scanning happens on customer's side  and inline scanner scan at customer side  / The inline scanner is triggered on an on-demand basis / for integration it requires "Authorization Token" from the Inline-scanner integration
 
 
 
