@@ -58,7 +58,7 @@ More information can be found from [link.](https://docs.aws.amazon.com/AmazonECR
 
 - Create a proxy scanner linux machine and attache the created role to it.
 
-![AWS Trusted Entities](AWS-Roles-Trustrelations.png)
+![AWS Trusted Entities](images/AWS-Roles-Trustrelations.png)
 
 **FortiCNAPP**
 
