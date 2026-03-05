@@ -151,6 +151,34 @@ FortiCNAPP Container Image Vulnerability Scanning Methods
 | **Agent Scan**                                  | Running phase      | **Active containers / hosts**             | Containers and hosts running workloads          | Host agent                                            | Continuous vulnerability visibility at runtime                    | Agents installed on hosts collect container and host vulnerability data                                |
 
 
+
+./lw-scanner image evaluate ubuntu 18.04  
+
+docker run lacework/lacework-inline-scanner image evaluate nginx latest
+
+
+// auth        configure Lacework platform authentication settings
+./lw-scanner configure auth 
+
+or ./lw-scanner image evaluate ubuntu 18.04   -n tenant-id -t inline-auh-token
+
+Scanner Command Differences:
+The difference is not “different scan engine” — it is how you launch the scanner.
+
+| Aspect                | `lw-scanner image evaluate` (Binary)                                              | `docker run lacework/lacework-inline-scanner`                           |
+| --------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| What runs the scanner | Scanner installed **as a program on the machine**                                 | Scanner **packaged inside a container image**                           |
+| Where it can run      | Local machine **or CI runner**                                                    | Local machine **or CI runner**                                          |
+| Authentication        | Can reuse **local saved config** (e.g., `~/.lacework`) → **easier for local use** | Cannot see local config unless mounted → usually pass **env variables** |
+| Ease of use locally   | ✅ **Simpler** because local config already exists                                 | Slightly more complex                                                   |
+| Ease of use in CI/CD  | Works but CI must **install the scanner binary first**                            | ✅ **Preferred in CI** because scanner is already inside the container   |
+| Docker runtime usage  | Required to **handle container image format and layers**                          | Required to **run the scanner container and handle image layers**       |
+| Scanner engine        | Same FortiCNAPP inline scanner                                                    | Same FortiCNAPP inline scanner                                          |
+
+
+
+
+
 we need to continue and confirm the methods of integration for these methods focusing on container registries: platform-scanner scan image at the backend, while Proxy scanning happens on customer's side  and inline scanner scan at customer side  / The inline scanner is triggered on an on-demand basis / for integration it requires "Authorization Token" from the Inline-scanner integration
 
 
