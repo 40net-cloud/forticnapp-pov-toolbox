@@ -1,0 +1,57 @@
+############################################################################################################################################
+# Required Variables to Integrate DSPM with your AWS Account #
+############################################################################################################################################
+
+# AWS account ID where DSPM scanner will be deployed
+scanning_account_id = ""
+
+# Region where DSPM scanners is deployed
+regions = [""]
+
+############################################################################################################################################
+# Optionals Variables to Integrate DSPM with your AWS Account  #
+############################################################################################################################################
+
+# Integration name in FortiCNAPP
+lacework_integration_name = "aws-dspm"
+
+# Prefix for resources
+resource_prefix = "forticnapp-dspm"
+
+# Tags to apply to all resources
+tags = {
+  ManagedBy   = "terraform"
+}
+
+# Scan settings:
+# How often the DSPM scanner runs, in hours. Valid values: 24 (1 day), 72 (3 days), 168 (7 days), 720 (30 days).
+scan_frequency_hours = null
+# Maximum file size to scan, in megabytes. Valid values: 1 to 50.
+max_file_size_mb     = null
+# Docker image for the DSPM scanner
+scanner_image = "lacework/dspm-scanner:latest"
+
+
+# ECS task sizing:
+# CPU units for ECS task (256, 512, 1024, 2048, 4096)
+ecs_task_cpu    = 1024
+# Memory for ECS task in MB (512, 1024, 2048, 4096, 8192, etc.)
+ecs_task_memory = 2048
+
+# Datastore filtering configuration
+datastore_filters = null 
+
+# Optional additional trusted roles
+additional_trusted_role_arns = []
+
+# Optional environment variables
+additional_environment_variables = []
+
+# Hostname for the Lacework account (e.g., my-tenant.lacework.net). If not provided, will use the URL associated with the default Lacework CLI profile.
+lacework_hostname = ""
+
+# Lacework domain
+lacework_domain = "lacework.net"
+
+# Lacework AWS account ID
+lacework_aws_account_id = "434813966438"
