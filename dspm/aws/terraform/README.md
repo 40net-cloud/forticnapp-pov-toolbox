@@ -35,3 +35,8 @@ Only modify other variables if necessary. Refer to variables.tf for variable typ
    terraform plan
    terraform apply
 </code></pre>
+
+You can remove the created resources using the command: 
+<code><pre>
+   terraform destroy
+</code></pre>
