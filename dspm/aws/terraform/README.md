@@ -36,7 +36,7 @@ Only modify other variables if necessary. Refer to variables.tf for variable typ
    terraform apply
 </code></pre>
 
-You can remove the created resources using the command: 
+You can delete the integration and remove all created resources using the following command:
 <code><pre>
    terraform destroy
 </code></pre>
