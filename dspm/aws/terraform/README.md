@@ -24,11 +24,12 @@ Follow these steps to deploy:
 3. (Optional) Customize your deployment: Default values are provided for all optional variables, but you may want to customize some of them:
     - lacework_integration_name
     - resource_prefix
-    - tags. 
+    - tags 
 
 You can also adjust scanning setting or ecs task sizing.
 Only modify other variables if necessary. Refer to variables.tf for variable types and descriptions.
 4. Run the following commands:
+
 <code><pre>
    terraform init
    terraform plan
