@@ -28,8 +28,8 @@ Follow these steps to deploy:
 
 You can also adjust scanning setting or ecs task sizing.
 Only modify other variables if necessary. Refer to variables.tf for variable types and descriptions.
-4. Run the following commands:
 
+4. Run the following commands:
 <code><pre>
    terraform init
    terraform plan
