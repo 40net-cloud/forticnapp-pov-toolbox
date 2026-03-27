@@ -36,7 +36,9 @@
 | `concurrency`             | ❌ No                               | Limit parallel runs      | Avoid conflicts                      | “Only one deploy at a time”          | deploy stage                |
 
 
+## 🧠 GitHub Actions Execution Flow
 
+```text
 Your Laptop
      ↓ (push / PR / manual)
 GitHub
