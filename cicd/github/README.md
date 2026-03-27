@@ -1,6 +1,5 @@
-name
 
-
+## 🧠 GitHub Actions Master Reference Table
 
 
 | Component                 | Mandatory?                         | What it is (Simple)      | Why GitHub requires it               | Mental Model (How to think about it) | Used later in your pipeline |
