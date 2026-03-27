@@ -34,3 +34,15 @@
 | `shell`                   | ❌ No                               | Command interpreter      | Control execution env                | “Use bash/powershell”                | OS-specific                 |
 | `artifacts` (pattern)     | ❌ No                               | Save files               | Preserve outputs                     | “Keep reports”                       | SARIF, logs                 |
 | `concurrency`             | ❌ No                               | Limit parallel runs      | Avoid conflicts                      | “Only one deploy at a time”          | deploy stage                |
+
+
+
+Your Laptop
+     ↓ (push / PR / manual)
+GitHub
+     ↓
+GitHub-hosted runner (ephemeral VM)
+     ↓
+Run pipeline steps
+     ↓
+VM is destroyed
