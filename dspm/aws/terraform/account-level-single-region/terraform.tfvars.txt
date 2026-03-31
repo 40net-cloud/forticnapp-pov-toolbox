@@ -12,6 +12,9 @@ regions = [""]
 # Optionals Variables to Integrate DSPM with your AWS Account  #
 ############################################################################################################################################
 
+# Region to deploy shared resources to (multi-region deployment). Defaults to first region in var.regions.
+global_region = ""
+
 # Integration name in FortiCNAPP
 lacework_integration_name = "aws-dspm"
 

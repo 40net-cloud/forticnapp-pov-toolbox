@@ -1,4 +1,3 @@
-
 # See: https://registry.terraform.io/providers/lacework/lacework/latest/docs
 
 module "lacework_dspm" {
@@ -8,6 +7,9 @@ module "lacework_dspm" {
 
   scanning_account_id = var.scanning_account_id
   regions             = var.regions
+
+
+  global_region             = var.global_region
 
   lacework_integration_name = var.lacework_integration_name
   resource_prefix           = var.resource_prefix

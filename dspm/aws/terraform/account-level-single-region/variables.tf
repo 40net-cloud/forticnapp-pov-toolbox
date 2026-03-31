@@ -16,6 +16,12 @@ variable "regions" {
   }
 }
 
+variable "global_region" {
+  type        = string
+  default     = ""
+  description = "Region for global resources (S3 bucket, etc). Defaults to first region in var.regions."
+}
+
 variable "lacework_integration_name" {
   description = "Name of the DSPM integration in FortiCNAPP"
   type        = string
@@ -132,4 +138,3 @@ variable "lacework_aws_account_id" {
   default     = "434813966438"
   description = "The Lacework AWS account that the IAM role will grant access."
 }
-
