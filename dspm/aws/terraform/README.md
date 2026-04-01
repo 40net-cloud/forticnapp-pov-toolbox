@@ -1,4 +1,4 @@
-# Terraform for Integrating Single Region AWS Data Security Posture Management (DSPM) with FortiCNAPP
+# Terraform for Integrating AWS Data Security Posture Management (DSPM) with FortiCNAPP
 
 ## Overview
 
