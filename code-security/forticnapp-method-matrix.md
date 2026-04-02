@@ -19,7 +19,7 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 ---
 
-## 🧠 SCA (SmartFix (Advanced Remediation Engine))
+### 🧠 SCA (SmartFix (Advanced Remediation Engine))
 
 - Recommends **practical and prioritized fixes** for identified vulnerabilities  
 - Can **resolve multiple vulnerabilities with a single upgrade or change**  
