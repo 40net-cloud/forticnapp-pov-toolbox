@@ -61,7 +61,7 @@ All Installed Libraries (Full Dependency Tree)
         ▼
 SCA scans ALL libraries
 (direct + transitive)
-
+```
 
 ```text
 Package managers for the same language do the same job (manage dependencies), but differ in flexibility, performance, and complexity.
