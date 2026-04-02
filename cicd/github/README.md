@@ -14,7 +14,7 @@ repo-root/
 ├── .github/workflows/        ← REQUIRED location
 │       └── workflow.yml
 │
-└── cicd/vuln-java-lab/       ← your application
+└── cicd/vuln-java-lab/       ← your application (working directory)
 
 ```
 
