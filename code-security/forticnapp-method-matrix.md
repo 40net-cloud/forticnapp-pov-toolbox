@@ -12,8 +12,8 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 | Area | Tools |
 |------|------|
-| Code Security | SAST |
-| Dependency Security | SCA + SmartFix |
+| Code Security | SAST - Internal code |
+| Dependency Security | SCA - 3rd party + SmartFix |
 | Visibility | SBOM - Components |
 | Secrets Protection | Hard-coded secrets |
 | Compliance | Licenses |
