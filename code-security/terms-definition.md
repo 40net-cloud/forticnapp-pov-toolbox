@@ -25,6 +25,24 @@ SAST scans code
 Package managers for the same language do the same job (manage dependencies), but differ in flexibility, performance, and complexity.
 ```
 
+## 🧠 Code, Package Manager, and Dependency Mapping
+
+| Language | Code Location (SAST scans) | Dependency File(s) (SCA scans) | Package Manager / Build Tool | Where Dependency File Lives |
+|----------|---------------------------|--------------------------------|------------------------------|-----------------------------|
+| Java (Maven) | src/main/java/... | pom.xml | Maven | Project root |
+| Java (Gradle) | src/main/java/... | build.gradle / build.gradle.kts / gradle.lockfile | Gradle | Project root |
+| Java (Bazel) | src/main/java/... | MODULE.bazel / BUILD.bazel | Bazel | Root + module folders |
+| Python | src/ or root | requirements.txt / Pipfile / pyproject.toml | pip / Pipenv / Poetry | Project root |
+| JavaScript | src/ or root | package.json + package-lock.json | npm / yarn / pnpm | Project root |
+| TypeScript | src/ or root | package.json + lockfile | npm / yarn / pnpm | Project root |
+| Go | root or cmd/ | go.mod + go.sum | Go modules | Project root |
+| PHP | src/ or public/ | composer.json + composer.lock | Composer | Project root |
+
+
+
+
+
+
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
 | **What it scans (WHAT)**        | Your **source code** (`.java`, `.py`, `.js`)   | Your **dependencies** (`pom.xml`, `package.json`)    | Your **running application (URL)**              |
