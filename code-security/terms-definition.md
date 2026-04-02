@@ -20,7 +20,7 @@ Defined in Dependency File
 SCA scans dependencies
 SAST scans code
 
-
+```
 
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
@@ -41,11 +41,3 @@ SAST scans code
 | **Output format**               | File + line number                             | Library + CVE                                        | URL + endpoint                                  |
 
 
-Code (SAST scans this)
-     ↓ uses
-Libraries
-     ↓ installed by
-Package Manager
-     ↓ defined in
-Dependency File (SCA scans this)
-* A package manager is a tool that downloads, installs, and manages libraries (dependencies) your code needs.
