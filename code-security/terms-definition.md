@@ -5,6 +5,19 @@
 A company writes its own business logic code (analyzed by SAST), then uses a dependency file to declare third-party libraries. A package manager installs those libraries (including transitive dependencies), and SCA scans the full dependency tree for known vulnerabilities.
 
 
+🔥 Your table = SBOM + security data
+
+| Column          | Meaning               |
+| --------------- | --------------------- |
+| Component name  | library               |
+| Version         | version installed     |
+| Repository      | where code comes from |
+| Vulnerabilities | CVEs                  |
+| License         | legal usage           |
+
+
+
+
 ## 🔁 SAST vs SCA Flow
 
 ```text
