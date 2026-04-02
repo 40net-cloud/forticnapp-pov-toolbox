@@ -39,8 +39,7 @@ Package managers for the same language do the same job (manage dependencies), bu
 | PHP | src/ or public/ | composer.json + composer.lock | Composer | Project root |
 
 
-
-
+## 🧠 SAST, SCA & DAST
 
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
