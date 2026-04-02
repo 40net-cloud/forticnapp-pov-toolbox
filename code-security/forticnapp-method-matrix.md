@@ -10,7 +10,7 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 ## 🛡️ FortiCNAPP Security Coverage
 
-| Area | Tools |
+| Area | FortiCNAPP Tools |
 |------|------|
 | Code Security | SAST - Internal code |
 | Dependency Security | SCA - 3rd party + SmartFix |
