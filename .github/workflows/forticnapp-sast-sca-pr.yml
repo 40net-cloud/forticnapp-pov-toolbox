@@ -1,1 +1,156 @@
+name: FortiCNAPP SAST + SCA Pull Request
 
+on:
+  pull_request:
+    branches:
+      - main   # Run only when a PR targets the main branch
+    paths:
+      - 'cicd/vuln-java-lab/**'
+      - '.github/workflows/forticnapp-sast-sca-pr.yml'
+
+permissions:
+  contents: read          # Needed so the workflow can read repository content
+  pull-requests: write    # Useful for PR-related integrations
+  security-events: write  # Needed only if you later upload SARIF to GitHub code scanning
+
+jobs:
+  pr-scan:
+    name: PR - FortiCNAPP scan and compare
+    runs-on: ubuntu-latest   # GitHub-hosted runner; this is the execution machine
+
+    defaults:
+      run:
+        working-directory: cicd/vuln-java-lab
+        # Make all shell commands run inside your Java lab folder
+
+    steps:
+      # ------------------------------------------------------------
+      # STEP 1 - Check out the PR source branch
+      # Purpose: GitHub step
+      # Why: We need the changed code from the PR to scan it first
+      # ------------------------------------------------------------
+      - name: Checkout source branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      # ------------------------------------------------------------
+      # STEP 2 - Install and configure FortiCNAPP CLI
+      # Purpose: FortiCNAPP setup
+      # Why: The Lacework/FortiCNAPP CLI is required to run SAST/SCA scans
+      # ------------------------------------------------------------
+      - name: Install FortiCNAPP CLI
+        run: |
+          curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+          lacework configure \
+            -a ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net \
+            -k ${{ secrets.LW_API_KEY }} \
+            -s ${{ secrets.LW_API_SECRET }} \
+            --noninteractive
+          lacework component install sca
+
+      # ------------------------------------------------------------
+      # STEP 3 - Scan the PR source branch
+      # Purpose: FortiCNAPP scan
+      # Why: This scans the new/changed code from the PR
+      # Output:
+      #   - saves results to FortiCNAPP UI
+      #   - writes raw scan output locally as JSON
+      # ------------------------------------------------------------
+      - name: Scan source branch with FortiCNAPP
+        run: |
+          lacework sca scan ./ \
+            --save-results \
+            -f lw-json \
+            -o /tmp/lacework-scan-source.json
+
+      # ------------------------------------------------------------
+      # STEP 4 - Check out the PR target/base branch
+      # Purpose: GitHub step
+      # Why: We need the original branch state to compare old vs new
+      # ------------------------------------------------------------
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+
+      # ------------------------------------------------------------
+      # STEP 5 - Scan the PR target/base branch
+      # Purpose: FortiCNAPP scan
+      # Why: This provides the "old" baseline for comparison
+      # Output:
+      #   - saves results to FortiCNAPP UI
+      #   - writes raw scan output locally as JSON
+      # ------------------------------------------------------------
+      - name: Scan target branch with FortiCNAPP
+        run: |
+          lacework sca scan ./ \
+            --save-results \
+            -f lw-json \
+            -o /tmp/lacework-scan-target.json
+
+      # ------------------------------------------------------------
+      # STEP 6 - Compare source vs target results
+      # Purpose: FortiCNAPP compare
+      # Why: This identifies issues introduced by the PR
+      # Output:
+      #   - SARIF comparison file for review / GitHub use
+      # ------------------------------------------------------------
+      - name: Compare scans and generate SARIF
+        run: |
+          lacework sca compare \
+            --new /tmp/lacework-scan-source.json \
+            --old /tmp/lacework-scan-target.json \
+            -o /tmp/lacework-comparison.sarif
+
+      # ------------------------------------------------------------
+      # STEP 7 - Upload SARIF file as GitHub artifact
+      # Purpose: GitHub artifact handling
+      # Why: Lets you download and inspect the comparison report from the workflow run
+      # ------------------------------------------------------------
+      - name: Upload comparison SARIF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacework-comparison-report
+          path: /tmp/lacework-comparison.sarif
+
+      # ------------------------------------------------------------
+      # STEP 8 - Upload raw JSON scan files as artifacts
+      # Purpose: GitHub artifact handling
+      # Why: Keeps the raw FortiCNAPP scan outputs for troubleshooting / evidence
+      # ------------------------------------------------------------
+      - name: Upload source JSON artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacework-scan-source-json
+          path: /tmp/lacework-scan-source.json
+
+      - name: Upload target JSON artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacework-scan-target-json
+          path: /tmp/lacework-scan-target.json
+
+      # ------------------------------------------------------------
+      # STEP 9 - Generate SBOM
+      # Purpose: FortiCNAPP SBOM generation
+      # Why: Produces a CycloneDX SBOM for the dependencies in this app
+      # ------------------------------------------------------------
+      - name: Generate SBOM
+        run: |
+          lacework sca scan ./ \
+            -f cdx-json \
+            -o /tmp/sbom.json
+
+      # ------------------------------------------------------------
+      # STEP 10 - Upload SBOM artifact
+      # Purpose: GitHub artifact handling
+      # Why: Lets you download the SBOM from the workflow run
+      # ------------------------------------------------------------
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacework-sbom
+          path: /tmp/sbom.json
