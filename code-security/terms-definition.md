@@ -19,4 +19,12 @@
 | **When to use**                 | During development                             | During development                                   | After deployment                                |
 | **Output format**               | File + line number                             | Library + CVE                                        | URL + endpoint                                  |
 
-A package manager is a tool that downloads, installs, and manages libraries (dependencies) your code needs.
+
+Code (SAST scans this)
+     ↓ uses
+Libraries
+     ↓ installed by
+Package Manager
+     ↓ defined in
+Dependency File (SCA scans this)
+* A package manager is a tool that downloads, installs, and manages libraries (dependencies) your code needs.
