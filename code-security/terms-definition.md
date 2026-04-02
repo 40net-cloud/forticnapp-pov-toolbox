@@ -21,6 +21,9 @@ SCA scans dependencies
 SAST scans code
 
 ```
+```text
+Package managers for the same language do the same job (manage dependencies), but differ in flexibility, performance, and complexity.
+```
 
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
