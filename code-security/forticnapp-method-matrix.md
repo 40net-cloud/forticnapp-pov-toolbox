@@ -2,7 +2,7 @@
 ## This Section will discuss Application Code Security (SAST, SCA, SBOM & Secrets) Matrix
 
 ```bash
-https://docs.fortinet.com/document/lacework-forticnapp/latest/administration-guide/357681/features
+[https://docs.fortinet.com/document/lacework-forticnapp/latest/administration-guide/357681/features](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix)
 ```
 
 ## Code Security (SCA/SAST/SBOM) — Deployment Matrix
