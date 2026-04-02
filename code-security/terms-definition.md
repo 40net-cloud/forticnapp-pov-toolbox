@@ -1,5 +1,26 @@
 
 
+## 🔁 SAST vs SCA Flow
+
+```text
+Code (.java / .py / .js)
+        │
+        ▼
+Uses Libraries (Dependencies)
+        │
+        ▼
+Installed via Package Manager
+(Maven / pip / npm / Composer / Go)
+        │
+        ▼
+Defined in Dependency File
+(pom.xml / requirements.txt / package.json)
+        │
+        ▼
+SCA scans dependencies
+SAST scans code
+
+
 
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
