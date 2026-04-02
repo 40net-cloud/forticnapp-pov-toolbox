@@ -8,6 +8,16 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 ## 🛡️ FortiCNAPP Capabilities Overview
 
+## 🛡️ FortiCNAPP Security Coverage
+
+| Area | Tools |
+|------|------|
+| Code Security | SAST |
+| Dependency Security | SCA + SmartFix |
+| Visibility | SBOM |
+| Secrets Protection | Secrets Scanning |
+| Compliance | License Compliance |
+
 | Capability | Description |
 |-----------|------------|
 | **SAST** (Static Application Security Testing) | Analyzes source code to identify security weaknesses and coding flaws during development. |
