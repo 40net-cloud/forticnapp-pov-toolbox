@@ -21,6 +21,48 @@ SCA scans dependencies
 SAST scans code
 
 ```
+
+## 🔁 Code → Dependencies → SAST / SCA Flow (with dependency tree)
+
+```text
+Code (.java / .py / .js)
+        │
+        │  SAST scans code
+        ▼
+Uses Libraries (Direct Dependencies)
+        │
+        │  Defined by developer
+        ▼
+Dependency File
+(pom.xml / requirements.txt / package.json)
+        │
+        │  e.g. you define: mongoose / spring-web
+        ▼
+Package Manager (Maven / npm / pip / Composer / Go)
+        │
+        │  Resolves dependencies
+        ▼
+Direct Dependencies
+        │
+        │  (libraries you explicitly added)
+        ▼
+Transitive Dependencies
+        │
+        │  (libraries required by other libraries)
+        │
+        │  e.g.
+        │    mongoose → mongodb → bson → debug
+        ▼
+All Installed Libraries (Full Dependency Tree)
+        │
+        │  stored locally:
+        │    node_modules/
+        │    ~/.m2/
+        ▼
+SCA scans ALL libraries
+(direct + transitive)
+
+
 ```text
 Package managers for the same language do the same job (manage dependencies), but differ in flexibility, performance, and complexity.
 ```
