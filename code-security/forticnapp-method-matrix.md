@@ -14,9 +14,9 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 |------|------|
 | Code Security | SAST |
 | Dependency Security | SCA + SmartFix |
-| Visibility | SBOM |
-| Secrets Protection | Secrets Scanning |
-| Compliance | License Compliance |
+| Visibility | SBOM - Components |
+| Secrets Protection | Hard-coded secrets |
+| Compliance | Licenses |
 
 | Capability | Description |
 |-----------|------------|
