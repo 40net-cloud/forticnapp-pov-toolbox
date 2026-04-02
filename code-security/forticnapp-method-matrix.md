@@ -5,7 +5,10 @@
 https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix
 ```
 
-FortiCNAPP supports: SAST, SCA, SBOM & Secrets Scanning.
+## FortiCNAPP Support
+```bash
+FortiCNAPP supports: SAST, SCA (SmartFix), SBOM, Secrets Scanning,  License compliance & SmartFix.
+```
 
 
 ## Code Security (SCA/SAST/SBOM) — Deployment Matrix
