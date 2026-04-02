@@ -20,15 +20,14 @@ repo-root/
 # vuln-java-lab
 
 
-| File                      | Main purpose                                                  |
-| ------------------------- | ------------------------------------------------------------- |
-| `pom.xml`                 | SCA, SBOM, license data                                       |
-| `App.java`                | basic Java structure                                          |
-| `LoginController.java`    | hardcoded secrets, weak randomness                            |
-| `UnsafeQueryService.java` | SQL injection, command injection, weak crypto, unsafe parsing |
-| `application.properties`  | config secrets and insecure settings                          |
-| `fake-secrets.txt`        | strong secret-detection results                               |
-
+| File | Main purpose | Primary detection area |
+|---|---|---|
+| `pom.xml` | Defines project dependencies and build metadata | **SCA**, **SBOM**, **license compliance** |
+| `App.java` | Basic Java application structure and entry point | Minimal **SAST** context |
+| `LoginController.java` | Demo application logic with weak patterns and hardcoded values | **SAST**, **secrets scanning** |
+| `UnsafeQueryService.java` | Intentionally vulnerable code patterns | **SAST** |
+| `application.properties` | Configuration file with intentionally unsafe settings and fake sensitive values | **Secrets scanning**, configuration review |
+| `fake-secrets.txt` | Deliberately fake credentials and tokens for testing detection | **Secrets scanning** |
 
 
 ## 🧠 GitHub Actions Master Reference Table
