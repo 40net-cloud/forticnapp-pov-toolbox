@@ -30,7 +30,7 @@ jobs:
       # Why: We need the changed code from the PR to scan it first
       # ------------------------------------------------------------
       - name: Checkout source branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
@@ -71,7 +71,7 @@ jobs:
       # Why: We need the original branch state to compare old vs new
       # ------------------------------------------------------------
       - name: Checkout target branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.base.ref }}
           fetch-depth: 0
