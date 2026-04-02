@@ -9,6 +9,7 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 ```bash
 FortiCNAPP supports: SAST, SCA (+ SmartFix), SBOM, Secrets Scanning & License compliance .
  * SmartFix is FortiCNAPP's advanced recommendation system designed to provide actionable and efficient solutions for vulnerabilities identified by FortiCNAPP's tools.
+ * SmartFix is capable of recommending a single fix that addresses multiple vulnerabilities in a package simultaneously.
 ```
 
 
