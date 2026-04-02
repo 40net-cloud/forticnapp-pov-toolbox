@@ -111,7 +111,7 @@ jobs:
       # Why: Lets you download and inspect the comparison report from the workflow run
       # ------------------------------------------------------------
       - name: Upload comparison SARIF artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lacework-comparison-report
           path: /tmp/lacework-comparison.sarif
@@ -122,13 +122,13 @@ jobs:
       # Why: Keeps the raw FortiCNAPP scan outputs for troubleshooting / evidence
       # ------------------------------------------------------------
       - name: Upload source JSON artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lacework-scan-source-json
           path: /tmp/lacework-scan-source.json
 
       - name: Upload target JSON artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lacework-scan-target-json
           path: /tmp/lacework-scan-target.json
@@ -150,7 +150,7 @@ jobs:
       # Why: Lets you download the SBOM from the workflow run
       # ------------------------------------------------------------
       - name: Upload SBOM artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: lacework-sbom
           path: /tmp/sbom.json
