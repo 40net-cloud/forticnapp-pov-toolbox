@@ -28,7 +28,7 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 ## 🧠 Code Security (SCA/SAST/SBOM) — Deployment Matrix
 
-For Detailed Updated Matrix: 
+For Detailed updated tested Matrix: 
 ```bash
 https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix
 ```
