@@ -27,7 +27,7 @@ Package managers for the same language do the same job (manage dependencies), bu
 
 ## 🧠 Code, Package Manager, and Dependency Mapping
 
-| Language | Code Location (SAST scans) | Dependency File(s) (SCA scans) | Package Manager / Build Tool | Where Dependency File Lives |
+| Language | Standard Code Location (SAST scans) | Dependency File(s) (SCA scans) | Package Manager / Build Tool | Where Dependency File Lives |
 |----------|---------------------------|--------------------------------|------------------------------|-----------------------------|
 | Java (Maven) | src/main/java/... | pom.xml | Maven | Project root |
 | Java (Gradle) | src/main/java/... | build.gradle / build.gradle.kts / gradle.lockfile | Gradle | Project root |
