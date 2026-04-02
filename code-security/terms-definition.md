@@ -1,9 +1,4 @@
-└── SCA Component (lacework component install sca)
-    ├── Software Composition Analysis (SCA)
-    ├── Static Application Security Testing (SAST)
-    ├── Secrets Detection
-    ├── SBOM Generation
-    └── License Compliance
+
 
 
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
