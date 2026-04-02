@@ -1,5 +1,5 @@
 
-## This Section will discuss FortiCNAPP Application Code SecurityL
+## This Section will discuss FortiCNAPP Application Code Security:
 
 ```bash
 https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix
