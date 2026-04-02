@@ -28,6 +28,11 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 
 ## 🧠 Code Security (SCA/SAST/SBOM) — Deployment Matrix
 
+For Detailed Updated Matrix: 
+```bash
+https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix
+```
+
 | Feature ↓ \ Mode →                 | SCM Integration (SaaS repos)                                                       | CI/CD Pipeline                                                                               | Local (CLI on dev machine)                             | IDE Extension                                              | **Self-Hosted SCM (With Internet Connection)**                                                                                     | **Self-Hosted SCM (No Internet Connection)**                                             |
 | ---------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | **What runs**                      | SCA, SAST, Secrets                                                                 | SCA, SAST, Secrets, SBOM (optional)                                                          | SCA, SAST, Secrets                                     | SCA, SAST, Secrets (per IDE support)                       | SCA, SAST, Secrets (via CI/CD job or CLI)                                                                                          | ❌ Not possible                                                                           |
