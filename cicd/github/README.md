@@ -1,17 +1,20 @@
 
 🧠 Rule (GitHub Actions)
 
-✔ Workflow YAML files must be inside .github/workflows/
-✔ And that folder must be at the repository root
 
+---
+
+# 🔁  Rule (GitHub Actions)
+```markdown
+## 🔁 GitHub Actions Structure
+
+```text
 repo-root/
-└── .github/
-    └── workflows/
-        └── your-workflow.yml
-
-        defaults:
-  run:
-    working-directory: cicd/vuln-java-lab
+│
+├── .github/workflows/        ← REQUIRED location
+│       └── workflow.yml
+│
+└── cicd/vuln-java-lab/       ← your application
 
 
 
