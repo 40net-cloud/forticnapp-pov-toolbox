@@ -1,5 +1,12 @@
 
 
+## 🔁 Definition
+
+A company writes its own business logic code (analyzed by SAST), then uses dependency files to include third-party libraries to save time; a package manager downloads those libraries (and their transitive dependencies), and SCA scans all of those libraries for known vulnerabilities.
+
+
+
+
 ## 🔁 SAST vs SCA Flow
 
 ```text
