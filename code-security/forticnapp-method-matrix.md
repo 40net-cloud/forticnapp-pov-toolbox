@@ -24,10 +24,9 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 - Recommends **practical and prioritized fixes** for identified vulnerabilities  
 - Can **resolve multiple vulnerabilities with a single upgrade or change**  
 - Helps reduce remediation effort and improve efficiency across dependency management  
-```
 
 
-## Code Security (SCA/SAST/SBOM) — Deployment Matrix
+## 🧠 Code Security (SCA/SAST/SBOM) — Deployment Matrix
 
 | Feature ↓ \ Mode →                 | SCM Integration (SaaS repos)                                                       | CI/CD Pipeline                                                                               | Local (CLI on dev machine)                             | IDE Extension                                              | **Self-Hosted SCM (With Internet Connection)**                                                                                     | **Self-Hosted SCM (No Internet Connection)**                                             |
 | ---------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
