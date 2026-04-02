@@ -17,6 +17,17 @@ repo-root/
 └── cicd/vuln-java-lab/       ← your application (working directory)
 
 ```
+# vuln-java-lab
+
+
+| File                      | Main purpose                                                  |
+| ------------------------- | ------------------------------------------------------------- |
+| `pom.xml`                 | SCA, SBOM, license data                                       |
+| `App.java`                | basic Java structure                                          |
+| `LoginController.java`    | hardcoded secrets, weak randomness                            |
+| `UnsafeQueryService.java` | SQL injection, command injection, weak crypto, unsafe parsing |
+| `application.properties`  | config secrets and insecure settings                          |
+| `fake-secrets.txt`        | strong secret-detection results                               |
 
 
 
