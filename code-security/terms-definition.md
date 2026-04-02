@@ -19,3 +19,4 @@
 | **When to use**                 | During development                             | During development                                   | After deployment                                |
 | **Output format**               | File + line number                             | Library + CVE                                        | URL + endpoint                                  |
 
+A package manager is a tool that downloads, installs, and manages libraries (dependencies) your code needs.
