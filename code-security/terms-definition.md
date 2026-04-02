@@ -42,7 +42,6 @@ Package managers for the same language do the same job (manage dependencies), bu
 
 
 
-
 | Aspect                          | **SAST (Static Application Security Testing)** | **SCA (Software Composition Analysis)**              | **DAST (Dynamic Application Security Testing)** |
 | ------------------------------- | ---------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------- |
 | **What it scans (WHAT)**        | Your **source code** (`.java`, `.py`, `.js`)   | Your **dependencies** (`pom.xml`, `package.json`)    | Your **running application (URL)**              |
