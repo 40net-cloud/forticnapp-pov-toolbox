@@ -1,4 +1,35 @@
 
+🧠 Rule (GitHub Actions)
+
+
+---
+
+# 🔁  Rule (GitHub Actions)
+```markdown
+## 🔁 GitHub Actions Structure
+
+```text
+repo-root/
+│
+├── .github/workflows/        ← REQUIRED location
+│       └── workflow.yml
+│
+└── cicd/vuln-java-lab/       ← your application (working directory)
+
+```
+# vuln-java-lab
+
+
+| File | Main purpose | Primary detection area |
+|---|---|---|
+| `pom.xml` | Defines project dependencies and build metadata | **SCA**, **SBOM**, **license compliance** |
+| `App.java` | Basic Java application structure and entry point | Minimal **SAST** context |
+| `LoginController.java` | Demo application logic with weak patterns and hardcoded values | **SAST**, **secrets scanning** |
+| `UnsafeQueryService.java` | Intentionally vulnerable code patterns | **SAST** |
+| `application.properties` | Configuration file with intentionally unsafe settings and fake sensitive values | **Secrets scanning**, configuration review |
+| `fake-secrets.txt` | Deliberately fake credentials and tokens for testing detection | **Secrets scanning** |
+
+
 ## 🧠 GitHub Actions Master Reference Table
 
 
