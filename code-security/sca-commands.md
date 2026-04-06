@@ -1,5 +1,6 @@
 📦 FortiCNAPP lacework sca scan — Full Flags Table ( lacework sca scan )
 
+
 | Flag                   | Type        | Allowed Values                  | Default | Description                                          |
 | ---------------------- | ----------- | ------------------------------- | ------- | ---------------------------------------------------- |
 | `--acf`                | bool        | `true`, `false`                 | `false` | Enable Application Context Filtering                 |
