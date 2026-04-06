@@ -5,6 +5,10 @@
 https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505/integration-and-feature-matrix
 ```
 
+```bash
+https://docs.fortinet.com/document/forticnapp/latest/administration-guide/293059
+```
+
 
 
 ## 🛡️ FortiCNAPP Security Coverage
