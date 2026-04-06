@@ -1,4 +1,4 @@
-name: Test FortiCNAPP Upload
+name: Test FortiCNAPP Upload2
 
 on:
   pull_request:
