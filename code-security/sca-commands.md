@@ -1,4 +1,4 @@
-📦 FortiCNAPP lacework sca scan — Full Flags Table
+📦 FortiCNAPP lacework sca scan — Full Flags Table ( lacework sca scan )
 
 | Flag                   | Type        | Allowed Values                  | Default | Description                                          |
 | ---------------------- | ----------- | ------------------------------- | ------- | ---------------------------------------------------- |
