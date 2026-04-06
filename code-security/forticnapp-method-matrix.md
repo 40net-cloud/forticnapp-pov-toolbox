@@ -6,7 +6,6 @@ https://docs.fortinet.com/document/forticnapp/latest/administration-guide/957505
 ```
 
 
-## 🛡️ FortiCNAPP Capabilities Overview
 
 ## 🛡️ FortiCNAPP Security Coverage
 
