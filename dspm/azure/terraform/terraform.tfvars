@@ -2,7 +2,7 @@
 # Required Variables to Integrate DSPM with your Azure Account #
 ############################################################################################################################################
 
-# List of Azure regions where DSPM scanners are deployed
+# List of Azure regions where DSPM scanners are deployed - ["region-1", "region-2"]
 regions = [""]
 
 ############################################################################################################################################
