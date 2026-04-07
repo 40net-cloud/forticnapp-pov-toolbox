@@ -1,11 +1,11 @@
 ############################################################################################################################################
-# Required Variables to Integrate DSPM with your AWS Account #
+# Required/ Mandatory Variables to Integrate DSPM with your AWS Account #
 ############################################################################################################################################
 
 # AWS account ID where DSPM scanner will be deployed
 scanning_account_id = ""
 
-# Region where DSPM scanners is deployed
+# Region where DSPM scanners is deployed (example: "eu-west-1", "eu-central-1")
 regions = [""]
 
 ############################################################################################################################################
@@ -56,5 +56,5 @@ lacework_hostname = ""
 # Lacework domain
 lacework_domain = "lacework.net"
 
-# Lacework AWS account ID
+# Lacework AWS account ID - Don't change
 lacework_aws_account_id = "434813966438"
