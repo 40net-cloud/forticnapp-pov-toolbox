@@ -130,7 +130,13 @@ Navigate to : Vulnerabilities -> Containers
 
 - The following command requests an on-demand container vulnerability scan and waits for the scan to completeon-demand
 ```bash
-lacework vuln ctr scan YourAWSAccount.dkr.ecr.YourRegion.amazonaws.com YourRepository YourTagOrImageDigest --poll
+curl --location --request POST 'YourHost:8080/v1/scan' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "registry": "YourRegistry",
+    "image_name": "YourRepository/YourImage",
+    "tag": "YourValue"
+}'
 ```
 - To view all container vulnerability assessments for your Lacework FortiCNAPP account for the last 24 hours (default):
 ```bash
