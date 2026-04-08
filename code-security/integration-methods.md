@@ -1,14 +1,14 @@
 
 
-
-# Install
-curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
-
-# Configure
-lacework configure -a <account> -k <key> -s <secret>
-
-# Prepare repo
-git init && git add . && git commit -m "init"
-
-# Scan + upload
-lacework sca scan . --save-results
+Install CLI
+   ↓
+Configure Authentication
+   ↓
+Initialize Git (.git required)
+   ↓
+Run Scan
+   ↓
+Choose Output:
+   ├── Local only → lacework sca scan .
+   ├── File report → -f sarif -o file
+   └── Upload to UI → --save-results
