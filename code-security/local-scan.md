@@ -1,3 +1,6 @@
+# FortiCNAPP Local Code Security Scan (SCA, SAST, Secrets, license-detection)
+
+
 
 ### 📘 Reference Links
 
