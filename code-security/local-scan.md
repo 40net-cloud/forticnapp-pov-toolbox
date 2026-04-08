@@ -1,5 +1,5 @@
 ## FortiCNAPP Local Code Security Scan (SCA, SAST, Secrets, license-detection)
-<br><br>
+<br>
 
 
 ### 📘 Reference Links
@@ -8,7 +8,7 @@
 |--------|---------------------|
 | **FortiCNAPP CLI Reference** | [https://docs.fortinet.com/document/forticnapp/latest/cli-reference/68020/get-started-with-the-lacework-forticnapp-cli) |
 
-
+<br>
 
 ## FortiCNAPP Local SCA Scan — Simple Steps
 
@@ -21,7 +21,7 @@
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan . --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
-
+<br>
 
 ### FortiCNAPP lacework sca scan —  Addtional Flags Table (  `lacework sca scan` )
 
