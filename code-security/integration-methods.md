@@ -20,7 +20,7 @@
 
 
 
-### FortiCNAPP lacework sca scan —  Addtional Flags Table (  **lacework sca scan** )
+### FortiCNAPP lacework sca scan —  Addtional Flags Table (  `lacework sca scan` )
 
 | Flag                   | Type        | Allowed Values                  | Default | Description                                          |
 | ---------------------- | ----------- | ------------------------------- | ------- | ---------------------------------------------------- |
