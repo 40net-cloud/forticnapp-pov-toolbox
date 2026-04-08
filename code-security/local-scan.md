@@ -7,6 +7,10 @@
 | Topic | Documentation Link |
 |--------|---------------------|
 | **FortiCNAPP CLI Reference** | [https://docs.fortinet.com/document/forticnapp/latest/cli-reference/68020/get-started-with-the-lacework-forticnapp-cli) |
+| **FortiCNAPP Requirements**  |  [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/681609/requirements) |
+
+
+                    
 
 <br>
 
