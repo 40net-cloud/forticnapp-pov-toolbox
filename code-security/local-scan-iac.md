@@ -28,7 +28,7 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 | 3 | Install IaC component | `lacework component install iac` | OPAL engine enabled |
 | 4 | Prepare IaC code | (Terraform / YAML / JSON files) | IaC files ready |
 | 5 | Run IaC scan | `lacework iac scan -d .` | Findings displayed in terminal |
-| 6 | Export report (optional) | `lacework iac scan -d . --format json --save-result result.json` | JSON report generated |
+| 6 | Export report (optional) | `lacework iac scan -d . --format yaml --save-result result.yaml` | yaml report generated |
 | 7 | Upload results to FortiCNAPP (optional) | `lacework iac scan -d . --upload` | Results available in FortiCNAPP UI |
 | 8 | Use in CI/CD | (GitHub / Jenkins / etc.) | Shift-left IaC security |
 
