@@ -7,7 +7,7 @@
 
 
 
-# FortiCNAPP Local SCA Scan — Simple Steps
+## FortiCNAPP Local SCA Scan — Simple Steps
 
 | Step | Action | Command | Result |
 |------|--------|---------|--------|
@@ -19,8 +19,8 @@
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
 
-📦 FortiCNAPP lacework sca scan — Full Flags Table (  **lacework sca scan** )
 
+### FortiCNAPP lacework sca scan —  Addtional Flags Table (  **lacework sca scan** )
 
 | Flag                   | Type        | Allowed Values                  | Default | Description                                          |
 | ---------------------- | ----------- | ------------------------------- | ------- | ---------------------------------------------------- |
