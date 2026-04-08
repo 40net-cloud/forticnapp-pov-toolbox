@@ -1,4 +1,4 @@
-## FortiCNAPP Local Code Security Scan (SCA, SAST, SBOM, Secrets, license-detection & IAC)
+## FortiCNAPP Local Code Security Scan (SCA, SAST, SBOM, Secrets, license-detection )
 <br>
 
 
