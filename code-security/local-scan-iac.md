@@ -14,11 +14,11 @@
 
 
 ### FortiCNAPP IaC Scan (OPAL) — Simple Guide
-🔹 What is OPAL (IaC scanning)
 OPAL is FortiCNAPP’s IaC static analyzer
 It scans Terraform, Kubernetes, CloudFormation, etc.
 It uses OPA + Rego policies to detect misconfigurations before deploymen
 
+<br>
 
 ### FortiCNAPP IaC Scan (OPAL) — Simple Steps
 | Step | Action | Command | Result |
@@ -32,6 +32,7 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 | 7 | Upload results to FortiCNAPP (optional) | `lacework iac scan -d . --upload` | Results available in FortiCNAPP UI |
 | 8 | Use in CI/CD | (GitHub / Jenkins / etc.) | Shift-left IaC security |
 
+<br>
 
 | Flag | Shorthand | Type | Default | Allowed Values | Description |
 |------|-----------|------|---------|----------------|-------------|
