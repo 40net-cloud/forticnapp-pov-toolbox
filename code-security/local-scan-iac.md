@@ -12,11 +12,16 @@
                     
 <br>
 
-
 ### FortiCNAPP IaC Scan (OPAL) — Simple Guide
 OPAL is FortiCNAPP’s IaC static analyzer
 It scans Terraform, Kubernetes, CloudFormation, etc.
 It uses OPA + Rego policies to detect misconfigurations before deploymen
+
+| Component | Description | Requirement | Behavior |
+|-----------|------------|------------|----------|
+| OPAL | Native FortiCNAPP IaC scanner (OPA/Rego-based) | No Docker required | Always runs and provides baseline results |
+| Checkov | Extended IaC scanner (Bridgecrew) for deeper cloud and Kubernetes checks | Requires Docker | Skipped if Docker is not running |
+| tfsec | Terraform-specific security scanner | Requires Terraform files (`.tf`) | Runs only when Terraform code is detected |
 
 <br>
 
