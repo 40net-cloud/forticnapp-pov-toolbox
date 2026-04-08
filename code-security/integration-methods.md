@@ -7,7 +7,7 @@
 
 
 
-# FortiCNAPP Local SCA Scan — Simple Guide
+# FortiCNAPP Local SCA Scan — Simple Steps
 
 | Step | Action | Command | Result |
 |------|--------|---------|--------|
