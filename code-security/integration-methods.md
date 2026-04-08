@@ -17,6 +17,9 @@
 | 4 | Export SARIF report | `lacework sca scan . -f sarif -o result.sarif` | SARIF file created |
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan . --save-results` | Results uploaded to UI |
 
+Example:  % lacework sca scan . -f lw-json -o test.json --save-results                            
+
+
 
 📦 FortiCNAPP lacework sca scan — Full Flags Table (  **lacework sca scan** )
 
