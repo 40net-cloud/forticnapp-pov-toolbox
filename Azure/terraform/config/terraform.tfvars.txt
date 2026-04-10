@@ -1,0 +1,77 @@
+############################################################################################################################################
+#  Variables to Integrate Azure Configuration with FortiCNAPP #
+############################################################################################################################################
+
+# All variables are currently set to their default values. You can customize them as needed to suit your specific requirements.
+
+########################################
+# Azure AD Application
+########################################
+
+# The name of the Azure Active Directory Application
+application_name  = "lacework_audit"
+
+# The owners of the Azure Active Directory Application. If empty, current user will be owner
+application_owners = [] 
+
+# If choosing to grant permissions to the directory through the Directory Reader role, FortiCNAPP will collect the list of users, groups, members, and app registrations from the Entra ID organization using Microsoft Graph API calls.
+#This information is exposed for LQL datasources and compliance policies.
+# Disabling this permission may be required if your organization has specific regulatory or privacy requirements that do not allow this information to be collected by third parties.
+# If disabled, LQL datasources and related IAM compliance policies will not be assessed. By default, this setting is true.
+enable_directory_reader = true
+
+# Set to false to prevent the module from creating any resources. Default set to true.
+create_application = true 
+
+############################################################################################################
+
+########################################
+# FortiCNAPP Integration
+########################################
+
+# The Lacework integration name
+lacework_integration_name = "TF config"
+
+########################################
+# Subscription Scope
+########################################
+# List of subscriptions to grant read access to (ex: "subscription-id-1", "subscription-id-2", "subscription-id-3"), by default the module will only use the primary subscription
+subscription_ids = []
+# If set to true, grant read access to ALL subscriptions within the selected Tenant (overrides 'subscription_ids')
+all_subscriptions  = false
+# List of subscriptions to exclude when using the all_subscriptions option (ex:"subscription-id-1", "subscription-id-2", "subscription-id-3").
+subscription_exclusions = []
+
+################################################################################
+# Your Provisioned Application (required when creat_application is set to false)
+################################################################################
+
+# Required variables when you want to use your provisioned application:
+# The Active Directory Application id to use (required when creat_application is set to false)
+Provisioned_application_id = ""
+# The name of the Azure Active Directory Application (required when creat_application is set to false)
+Provisioned_application_name = ""
+# The Active Directory Application password to use (required when creat_application is set to false)
+Provisioned_application_password = ""
+#  The Enterprise App Object ID related to the application_id (required when creat_application is set to false)
+Provisioned_service_principal_id = ""
+
+
+########################################
+# Management Group Option 
+########################################
+
+# If set to true, the AD Application will be a Reader on the Management Group level instead of Subscription level
+use_management_group = false
+# Required variable when use_management_group is true:
+# The Management Group ID to add Reader permissions (required when use_management_group is true)
+management_group_id = ""
+
+########################################
+# Timing / Deployment Behavior
+########################################
+
+# Amount of time to wait before the Lacework resources are provisioned
+wait_time = "20s"
+
+############################################################################################
