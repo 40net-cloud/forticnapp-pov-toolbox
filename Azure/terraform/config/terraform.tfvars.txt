@@ -9,7 +9,7 @@
 ########################################
 
 # The name of the Azure Active Directory Application
-application_name  = "lacework_audit"
+application_name  = "lacework_security_audit"
 
 # The owners of the Azure Active Directory Application. If empty, current user will be owner
 application_owners = [] 

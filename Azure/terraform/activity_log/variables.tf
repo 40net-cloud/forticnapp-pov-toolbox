@@ -1,0 +1,216 @@
+variable "create_application" {
+  type        = bool
+  default     = true
+  description = "Set to `false` to prevent the module from creating any resources"
+}
+
+variable "application_name" {
+  type        = string
+  default     = "lacework_security_audit"
+  description = "The name of the Azure Active Directory Application"
+}
+
+variable "application_owners" {
+  type = list(string)
+  default = []
+  description = "The owners of the Azure Active Directory Application. If empty, current user will be owner"
+}
+
+variable "enable_directory_reader" {
+  type = bool
+  default = true
+  description = "Enable Directory Reader role for this principal. This will allow Lacework to read Users/Groups/Principals from MS Graph API"
+}
+
+################################################################################################################
+
+variable "all_subscriptions" {
+  type        = bool
+  default     = false
+  description = "If set to `true`, grant read access to ALL subscriptions within the selected Tenant (overrides `subscription_ids`)"
+}
+variable "Provisioned_application_id" {
+  type        = string
+  default     = ""
+  description = "The Active Directory Application id to use (required when creat_application is set to false)"
+}
+variable "Provisioned_application_name" {
+  type        = string
+  default     = "lacework_security_audit"
+  description = "The name of the Azure Active Directory Application (required when creat_application is set to false) "
+}
+variable "Provisioned_application_password" {
+  type        = string
+  sensitive   = true
+  default     = ""
+  description = "The Active Directory Application password to use (required when creat_application is set to false) "
+}
+variable "diagnostic_settings_name" {
+  type        = string
+  default     = "activity-logs"
+  description = "The name of the subscription's Diagnostic Setting for Activity Logs (required when use_existing_diagnostic_settings is set to true)"
+}
+variable "existing_subnet_id" {
+  type        = string
+  default     = ""
+  description = "Subnet ID for existing VNet to use for creating the private endpoint and/or storage account access rules"
+}
+variable "use_existing_diagnostic_settings" {
+  type        = bool
+  default     = false
+  description = "Set this to `true` to use an existing Diagnostic Settings. Default behavior creates a new Diagnostic Settings"
+}
+variable "lacework_integration_name" {
+  type        = string
+  default     = "TF activity log"
+  description = "The Lacework integration name"
+}
+variable "location" {
+  type        = string
+  description = "Azure region where the storage account for logging will reside"
+  default     = "West US 2"
+}
+variable "log_retention_days" {
+  type        = number
+  description = "Specifies the number of days that logs will be retained"
+  default     = 10
+}
+# NOTE: this prefix is used in all resources and we have a limitation with the
+# storage name that can only consist of lowercase letters and numbers, and must
+# be between 3 and 24 characters long
+variable "prefix" {
+  type        = string
+  default     = "lacework"
+  description = "The prefix to use at the beginning of every generated resource"
+}
+variable "Provisioned_service_principal_id" {
+  type        = string
+  default     = ""
+  description = "The Enterprise App Object ID related to the application_id (required when creat_application is set to false)"
+}
+variable "storage_account_name" {
+  type        = string
+  default     = ""
+  description = "The name of the Storage Account"
+}
+variable "storage_account_resource_group" {
+  type        = string
+  default     = ""
+  description = "The Resource Group for the existing Storage Account"
+}
+variable "subscription_exclusions" {
+  type        = list(string)
+  description = "List of subscriptions to exclude when using the `all_subscriptions` option."
+  default     = []
+}
+variable "subscription_ids" {
+  type        = list(string)
+  description = "List of subscriptions to enable logging (by default the module will only use the primary subscription)"
+  default     = []
+}
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Key-value map of Tag names and Tag values"
+}
+variable "use_existing_ad_application" {
+  type        = bool
+  default     = false
+  description = "Set this to `true` to use an existing Active Directory Application"
+}
+variable "use_existing_storage_account" {
+  type        = bool
+  default     = false
+  description = "Set this to `true` to use an existing Storage Account. Default behavior creates a new Storage Account"
+}
+variable "use_existing_subnet" {
+  type        = bool
+  default     = false
+  description = "Set this to `true` to use an existing VNet Subnet ID. Default behavior creates a new VNet"
+}
+variable "subnet_address_prefixes" {
+  type        = list(string)
+  default     = ["10.0.1.0/24"]
+  description = "Limit the CIDR of the subnet"
+}
+variable "virtual_network_address_space" {
+  type        = list(string)
+  default     = ["10.0.0.0/16"]
+  description = "Adress space of the Storage Acount vNet"
+}
+variable "wait_time" {
+  type        = string
+  default     = "50s"
+  description = "Amount of time to wait before the Lacework resources are provisioned"
+}
+variable "infrastructure_encryption_enabled" {
+  type        = bool
+  default     = false
+  description = "Enable Infrastructure Encryption for Azure Storage Account"
+}
+variable "use_storage_account_network_rules" {
+  type        = bool
+  default     = false
+  description = "Enable configuration of azurerm_storage_account_network_rules resource"
+}
+variable "storage_account_network_rule_action" {
+  type        = string
+  default     = "Deny"
+  description = "Specifies the azurerm_storage_account_network_rules default action of allow or deny when no other rules match. Valid options are `Deny` or `Allow`"
+}
+variable "storage_account_network_rule_bypass" {
+  type        = list(string)
+  default     = ["Metrics", "Logging", "AzureServices"]
+  description = "Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Valid options are any combination of `Logging`, `Metrics`, `AzureServices`, or `None`. Requires `use_storage_account_network_rules` enabled."
+}
+variable "storage_account_network_rule_subnet_ids" {
+  type        = list(string)
+  default     = []
+  description = "A list of virtual network subnet ids to secure the storage account. Requires `use_storage_account_network_rules` enabled."
+}
+variable "storage_account_network_rule_ip_rules" {
+  type        = list(string)
+  default     = []
+  description = "List of allowed ip addresses. Requires `use_storage_account_network_rules` enabled."
+}
+variable "storage_account_network_rule_lacework_ip_rules" {
+  type        = list(string)
+  default     = [
+    # US
+    "34.208.85.38",
+    "35.93.121.192/26",
+    "35.95.82.0/26",
+    "35.165.121.10",
+    "35.165.62.149",
+    "35.165.83.150",
+    "35.166.181.157",
+    "44.231.201.69",
+    "52.42.2.33",
+    "52.43.197.121",
+    "52.88.113.199",
+    "54.200.230.179",
+    "54.203.18.234",
+    "54.213.7.200",
+    # EU
+    "3.75.192.192/26",
+    "3.121.245.162",
+    "18.184.141.112",
+    "18.193.166.115",
+    # APAC
+    "3.27.79.192/26",
+    "54.79.135.186",
+    "54.66.98.157",
+    "13.54.191.160",
+    # Singapore
+    "18.99.45.128/26",
+    "18.140.103.40",
+    "47.130.81.233",
+    "54.179.201.12"
+  ]
+  description = "List of allowed Lacework ip addresses. See https://docs.fortinet.com/document/forticnapp/latest/administration-guide/264821/appendix-a-inbound-and-outbound-connections. Requires `use_storage_account_network_rules` enabled."
+}
+variable "private_endpoint_network_policies_enabled" {
+  type        = string
+  default     = "Disabled"
+  description = "Enable or Disable network policies for the private endpoint on the subnet. Possible values are Disabled, Enabled, NetworkSecurityGroupEnabled and RouteTableEnabled. Defaults to Disabled"
+}
