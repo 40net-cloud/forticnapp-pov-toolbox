@@ -32,6 +32,7 @@ Follow these steps to deploy:
 3. (Optional) Customize your deployment: Default values are provided for all variables, but you may want to customize some of them:
     - lacework_integration_name
     - application name and owner
+    
     If You want use your existing application id, set create_application = fales and fill in Your Provisioned Application variables.
 
     You can allow Management Group level instead of Subscription level by setting use_management_group = true and provide management_group_id.
