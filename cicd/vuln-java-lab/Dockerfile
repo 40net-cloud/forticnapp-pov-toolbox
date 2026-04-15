@@ -1,3 +1,5 @@
+# Replace the full file: cicd/vuln-java-lab/Dockerfile
+
 FROM maven:3.8.6-openjdk-11 AS build
 
 WORKDIR /app
@@ -5,16 +7,10 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn -q clean package -DskipTests
 
-# 🔥 Use MUCH older base image
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
-# 🔥 Install older vulnerable packages
 RUN apt-get update && \
-    apt-get install -y \
-    openjdk-8-jre \
-    openssl \
-    curl \
-    bash
+    apt-get install -y openjdk-8-jre curl openssl bash
 
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
