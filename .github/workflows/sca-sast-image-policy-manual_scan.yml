@@ -1,4 +1,4 @@
-name: FortiCNAPP SCA + DockerHub + Policy applied Manual Scan
+name: FortiCNAPP SCA + DockerHub + Image Policy Manual Scan
 
 on:
   workflow_dispatch:
@@ -13,12 +13,19 @@ jobs:
     steps:
       # ------------------------------------------------------------
       # STEP 1 - Checkout code
+      # Purpose:
+      #   Pull the source code into the GitHub runner.
       # ------------------------------------------------------------
       - name: Checkout repository
         uses: actions/checkout@v5
 
       # ------------------------------------------------------------
       # STEP 2 - Install & authenticate FortiCNAPP CLI
+      # Purpose:
+      #   Install the CLI and configure it for SCA/SAST scanning.
+      # Notes:
+      #   - This authentication is only for CLI-based scanning.
+      #   - The inline scanner later uses a different auth method.
       # ------------------------------------------------------------
       - name: Install FortiCNAPP CLI
         run: |
@@ -31,7 +38,13 @@ jobs:
           lacework component install sca
 
       # ------------------------------------------------------------
-      # STEP 3 - Run SCA/SAST
+      # STEP 3 - Run SCA/SAST and upload results
+      # Purpose:
+      #   Scan source code and dependencies, then upload results to
+      #   FortiCNAPP UI.
+      # Notes:
+      #   - This step does NOT block the pipeline.
+      #   - Findings are still visible in FortiCNAPP.
       # ------------------------------------------------------------
       - name: Run SCA scan
         run: |
@@ -39,10 +52,12 @@ jobs:
           lacework sca scan . \
             -f sarif \
             -o lacework-reports/scan.sarif.json \
-            --save-results | tee scan-output.txt
+            --save-results
 
       # ------------------------------------------------------------
       # STEP 4 - Build Java app
+      # Purpose:
+      #   Compile and package the vulnerable Java lab into a JAR.
       # ------------------------------------------------------------
       - name: Build Java app with Maven
         working-directory: cicd/vuln-java-lab
@@ -51,6 +66,8 @@ jobs:
 
       # ------------------------------------------------------------
       # STEP 5 - Docker login
+      # Purpose:
+      #   Authenticate to Docker Hub so the image can be pushed.
       # ------------------------------------------------------------
       - name: Docker login
         env:
@@ -61,7 +78,8 @@ jobs:
 
       # ------------------------------------------------------------
       # STEP 6 - Build Docker image
-      # (env moved here - scoped only to Docker steps)
+      # Purpose:
+      #   Build the image from the app Dockerfile.
       # ------------------------------------------------------------
       - name: Build Docker image
         env:
@@ -73,7 +91,14 @@ jobs:
           docker build -t $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG .
 
       # ------------------------------------------------------------
-      # STEP 7 - Inline scan (pre-push)
+      # STEP 7 - Inline scan Docker image (pre-push)
+      # Purpose:
+      #   Evaluate the built image against FortiCNAPP CI/CD image
+      #   policies before pushing it.
+      # Notes:
+      #   - This is the stage where policy-based blocking happens.
+      #   - If FortiCNAPP UI says a policy action is "Block", this
+      #     step can fail and stop the workflow.
       # ------------------------------------------------------------
       - name: Inline scan Docker image (pre-push)
         env:
@@ -95,6 +120,8 @@ jobs:
 
       # ------------------------------------------------------------
       # STEP 8 - Push Docker image
+      # Purpose:
+      #   Push the image only if the pre-push inline scan passed.
       # ------------------------------------------------------------
       - name: Push Docker image
         env:
@@ -106,6 +133,8 @@ jobs:
 
       # ------------------------------------------------------------
       # STEP 9 - Remove local image
+      # Purpose:
+      #   Remove the local image so the next scan pulls from Docker Hub.
       # ------------------------------------------------------------
       - name: Remove local image
         env:
@@ -116,7 +145,9 @@ jobs:
           docker rmi $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
 
       # ------------------------------------------------------------
-      # STEP 10 - Inline scan (post-push)
+      # STEP 10 - Inline scan Docker image (post-push)
+      # Purpose:
+      #   Scan the image again after push, from the registry side.
       # ------------------------------------------------------------
       - name: Inline scan Docker image (post-push)
         env:
