@@ -1,0 +1,153 @@
+name: FortiCNAPP SCA + Vulnerable Image Policy Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secure-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ------------------------------------------------------------
+      # STEP 1 - Checkout code
+      # Purpose:
+      #   Pull the repository so SCA/SAST can scan the source code.
+      # ------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # ------------------------------------------------------------
+      # STEP 2 - Install & authenticate FortiCNAPP CLI
+      # Purpose:
+      #   Install the CLI and authenticate it for SCA/SAST scanning.
+      # ------------------------------------------------------------
+      - name: Install FortiCNAPP CLI
+        run: |
+          curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+          lacework configure \
+            -a ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net \
+            -k ${{ secrets.LW_API_KEY }} \
+            -s ${{ secrets.LW_API_SECRET }} \
+            --noninteractive
+          lacework component install sca
+
+      # ------------------------------------------------------------
+      # STEP 3 - Run SCA/SAST and upload results
+      # Purpose:
+      #   Scan code and dependencies and upload results to FortiCNAPP.
+      # Notes:
+      #   - This step does NOT block the pipeline.
+      #   - It is only for visibility in FortiCNAPP UI.
+      # ------------------------------------------------------------
+      - name: Run SCA scan
+        run: |
+          mkdir -p lacework-reports
+          lacework sca scan . \
+            -f sarif \
+            -o lacework-reports/scan.sarif.json \
+            --save-results
+
+      # ------------------------------------------------------------
+      # STEP 4 - Login to Docker Hub
+      # Purpose:
+      #   Authenticate so the vulnerable image can be pushed later.
+      # ------------------------------------------------------------
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      # ------------------------------------------------------------
+      # STEP 5 - Pull intentionally vulnerable image
+      # Purpose:
+      #   Use a prebuilt vulnerable image for image policy testing.
+      # ------------------------------------------------------------
+      - name: Pull vulnerable image
+        run: |
+          docker pull vulnerables/web-dvwa:1.9
+
+      # ------------------------------------------------------------
+      # STEP 6 - Retag vulnerable image to your own Docker Hub repo
+      # Purpose:
+      #   Rename the image so it is pushed under your Docker Hub account.
+      # Notes:
+      #   - Change dvwa-demo if you want a different repository name.
+      # ------------------------------------------------------------
+      - name: Retag vulnerable image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker tag vulnerables/web-dvwa:1.9 $DOCKER_USER/dvwa-demo:latest
+
+      # ------------------------------------------------------------
+      # STEP 7 - Inline scan Docker image (pre-push)
+      # Purpose:
+      #   Evaluate the vulnerable image against FortiCNAPP CI/CD
+      #   image policies BEFORE pushing it.
+      # Notes:
+      #   - This is the step that should fail if your image policy
+      #     matches and is set to Block.
+      # ------------------------------------------------------------
+      - name: Inline scan Docker image (pre-push)
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker pull lacework/lacework-inline-scanner:latest
+          docker run --rm \
+            -e LW_ACCOUNT_NAME=${{ secrets.LW_ACCOUNT_NAME }} \
+            -e LW_ACCESS_TOKEN=${{ secrets.LW_ACCESS_TOKEN }} \
+            -e LW_SCANNER_SAVE_RESULTS=true \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            lacework/lacework-inline-scanner:latest \
+            image evaluate $DOCKER_USER/dvwa-demo:latest \
+            --build-id $GITHUB_RUN_ID \
+            --build-plan github-actions \
+            --save
+
+      # ------------------------------------------------------------
+      # STEP 8 - Push vulnerable image to Docker Hub
+      # Purpose:
+      #   Push the image only if the pre-push policy scan passed.
+      # ------------------------------------------------------------
+      - name: Push vulnerable image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker push $DOCKER_USER/dvwa-demo:latest
+
+      # ------------------------------------------------------------
+      # STEP 9 - Remove local image
+      # Purpose:
+      #   Remove the local copy so the next scan reads from Docker Hub.
+      # ------------------------------------------------------------
+      - name: Remove local image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker rmi $DOCKER_USER/dvwa-demo:latest || true
+
+      # ------------------------------------------------------------
+      # STEP 10 - Inline scan Docker image (post-push)
+      # Purpose:
+      #   Scan the same image again after push from registry context.
+      # ------------------------------------------------------------
+      - name: Inline scan Docker image (post-push)
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          docker pull lacework/lacework-inline-scanner:latest
+          docker run --rm \
+            -e LW_ACCOUNT_NAME=${{ secrets.LW_ACCOUNT_NAME }} \
+            -e LW_ACCESS_TOKEN=${{ secrets.LW_ACCESS_TOKEN }} \
+            -e LW_SCANNER_SAVE_RESULTS=true \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            lacework/lacework-inline-scanner:latest \
+            image evaluate $DOCKER_USER/dvwa-demo:latest \
+            --build-id ${GITHUB_RUN_ID}-post \
+            --build-plan github-actions \
+            --save
