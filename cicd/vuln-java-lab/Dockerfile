@@ -5,10 +5,16 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn -q clean package -DskipTests
 
-FROM ubuntu:18.04
+# 🔥 Use MUCH older base image
+FROM ubuntu:16.04
 
+# 🔥 Install older vulnerable packages
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jre curl openssl
+    apt-get install -y \
+    openjdk-8-jre \
+    openssl \
+    curl \
+    bash
 
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
