@@ -1,4 +1,4 @@
-name: FortiCNAPP Manual Upload Test
+name: FortiCNAPP SCA SAST Policy applied Manual Scan 
 
 on:
   workflow_dispatch:
