@@ -1,3 +1,5 @@
+```bash
+
 name: FortiCNAPP Manual Upload Test
 
 on:
@@ -28,3 +30,5 @@ jobs:
         run: |
           mkdir -p lacework-reports
           lacework sca scan . -f sarif -o lacework-reports/scan.sarif.json --save-results
+
+```
