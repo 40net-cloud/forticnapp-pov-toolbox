@@ -1,5 +1,5 @@
 
-name: FortiCNAPP Manual Upload Test
+name: FortiCNAPP SCA SAST Manual Scan 
 
 on:
   workflow_dispatch:
