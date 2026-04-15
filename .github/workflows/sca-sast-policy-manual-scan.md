@@ -26,7 +26,7 @@ jobs:
             --noninteractive
           lacework component install sca
 
-      - name: Run SCA (save + capture output)
+      - name: Run SCA (save to FortiCNAPP UI + capture output)
         run: |
           mkdir -p lacework-reports
           lacework sca scan . \
