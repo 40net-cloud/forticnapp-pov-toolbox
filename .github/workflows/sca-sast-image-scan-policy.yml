@@ -1,4 +1,4 @@
-name: FortiCNAPP SCA + DockerHub + Policy applied
+name: FortiCNAPP SCA + DockerHub + Policy applied Manual Scan
 
 on:
   workflow_dispatch:
