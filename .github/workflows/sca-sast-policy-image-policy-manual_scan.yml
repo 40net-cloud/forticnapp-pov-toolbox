@@ -1,1 +1,149 @@
+name: FortiCNAPP SCA + DockerHub + Policy applied Manual Scan
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secure-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ------------------------------------------------------------
+      # STEP 1 - Checkout code
+      # ------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # ------------------------------------------------------------
+      # STEP 2 - Install & authenticate FortiCNAPP CLI
+      # ------------------------------------------------------------
+      - name: Install FortiCNAPP CLI
+        run: |
+          curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+          lacework configure \
+            -a ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net \
+            -k ${{ secrets.LW_API_KEY }} \
+            -s ${{ secrets.LW_API_SECRET }} \
+            --noninteractive
+          lacework component install sca
+
+      # ------------------------------------------------------------
+      # STEP 3 - Run SCA/SAST
+      # ------------------------------------------------------------
+      - name: Run SCA scan
+        run: |
+          mkdir -p lacework-reports
+          lacework sca scan . \
+            -f sarif \
+            -o lacework-reports/scan.sarif.json \
+            --save-results | tee scan-output.txt
+
+      # ------------------------------------------------------------
+      # STEP 4 - Enforce policy (manual gate for SCA)
+      # ------------------------------------------------------------
+      - name: Enforce policy (block pipeline)
+        run: |
+          if grep -E "Critical: [1-9]|High: [1-9]" scan-output.txt; then
+            echo "❌ Blocking due to vulnerabilities"
+            exit 1
+          else
+            echo "✅ No blocking vulnerabilities"
+          fi
+
+      # ------------------------------------------------------------
+      # STEP 5 - Build Java app
+      # ------------------------------------------------------------
+      - name: Build Java app with Maven
+        working-directory: cicd/vuln-java-lab
+        run: |
+          mvn -B clean package -DskipTests
+
+      # ------------------------------------------------------------
+      # STEP 6 - Docker login
+      # ------------------------------------------------------------
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+      # ------------------------------------------------------------
+      # STEP 7 - Build Docker image
+      # (env moved here - scoped only to Docker steps)
+      # ------------------------------------------------------------
+      - name: Build Docker image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: hello-app
+          IMAGE_TAG: latest
+        working-directory: cicd/vuln-java-lab
+        run: |
+          docker build -t $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG .
+
+      # ------------------------------------------------------------
+      # STEP 8 - Inline scan (pre-push)
+      # ------------------------------------------------------------
+      - name: Inline scan Docker image (pre-push)
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: hello-app
+          IMAGE_TAG: latest
+        run: |
+          docker pull lacework/lacework-inline-scanner:latest
+          docker run --rm \
+            -e LW_ACCOUNT_NAME=${{ secrets.LW_ACCOUNT_NAME }} \
+            -e LW_ACCESS_TOKEN=${{ secrets.LW_ACCESS_TOKEN }} \
+            -e LW_SCANNER_SAVE_RESULTS=true \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            lacework/lacework-inline-scanner:latest \
+            image evaluate $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG \
+            --build-id $GITHUB_RUN_ID \
+            --build-plan github-actions \
+            --save
+
+      # ------------------------------------------------------------
+      # STEP 9 - Push Docker image
+      # ------------------------------------------------------------
+      - name: Push Docker image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: hello-app
+          IMAGE_TAG: latest
+        run: |
+          docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
+
+      # ------------------------------------------------------------
+      # STEP 10 - Remove local image
+      # ------------------------------------------------------------
+      - name: Remove local image
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: hello-app
+          IMAGE_TAG: latest
+        run: |
+          docker rmi $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG || true
+
+      # ------------------------------------------------------------
+      # STEP 11 - Inline scan (post-push)
+      # ------------------------------------------------------------
+      - name: Inline scan Docker image (post-push)
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: hello-app
+          IMAGE_TAG: latest
+        run: |
+          docker pull lacework/lacework-inline-scanner:latest
+          docker run --rm \
+            -e LW_ACCOUNT_NAME=${{ secrets.LW_ACCOUNT_NAME }} \
+            -e LW_ACCESS_TOKEN=${{ secrets.LW_ACCESS_TOKEN }} \
+            -e LW_SCANNER_SAVE_RESULTS=true \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            lacework/lacework-inline-scanner:latest \
+            image evaluate $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG \
+            --build-id ${GITHUB_RUN_ID}-post \
+            --build-plan github-actions \
+            --save
