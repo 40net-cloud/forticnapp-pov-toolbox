@@ -108,6 +108,12 @@ jobs:
             --build-id $GITHUB_RUN_ID \
             --build-plan github-actions \
             --save
+            --policy \
+            --critical-violation-exit-code 1 \
+            --high-violation-exit-code 1 \
+            --medium-violation-exit-code 1 \
+            --low-violation-exit-code 1 \
+            --info-violation-exit-code 1
 
       # ------------------------------------------------------------
       # STEP 8 - Push vulnerable image to Docker Hub
