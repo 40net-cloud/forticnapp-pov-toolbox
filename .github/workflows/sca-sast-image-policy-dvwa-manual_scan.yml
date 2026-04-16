@@ -107,7 +107,7 @@ jobs:
             image evaluate $DOCKER_USER/dvwa-demo:latest \
             --build-id $GITHUB_RUN_ID \
             --build-plan github-actions \
-            --save
+            --save  \
             --policy \
             --critical-violation-exit-code 1 \
             --high-violation-exit-code 1 \
