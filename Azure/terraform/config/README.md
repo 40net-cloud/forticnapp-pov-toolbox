@@ -1,11 +1,25 @@
+:wave: [Overview](#overview) • [Requirments](#requirments) • [Instructions](#instructions) 
+
 # Terraform for Integrating Azure Configurations with FortiCNAPP
 
 ## Overview
 
-Terraform will create using default values:
-- Application id with secret id.
-- Service principal with assigned:
-    - Dirctory readers role :Read-only access to Entra ID (users, groups, apps, metadata)
+### What does Configuration provide?
+
+Monitor and analyze your Azure account configuration for security compliance.
+Lacework FortiCNAPP collects resource configuration data from your cloud account at regular intervals and uses this data to:
+
+- Build and maintain an **inventory** of your cloud assets.
+- Identify resource configuration, identity, entitlement, and attack path risks in your cloud accounts.
+- Assess your cloud security posture against compliance frameworks such as CIS, PCI, HIPAA, NIST, ISO 27001, SOC 2, and more.
+
+For more details, see [Azure CSPM Configuration Workflow.](https://github.com/40net-cloud/forticnapp-pov-toolbox/blob/main/Azure/CLOUD%20(CSPM%2C%20CIEM%2C%20UEBA)/cloud-api.md#%EF%B8%8F-azure-cloud-security-posture-management-cspm--configuration-workflow)
+
+### What Does Terraform Create in Azure?
+
+- Azure AD / Entra application with client secret and Service principal (creat_application is set to true) or use an existing one (creat_application is set to false).
+- Create and assign the following roles to service principal:
+    - Dirctory readers role (only with creat_application is set to true) :Read-only access to Entra ID (users, groups, apps, metadata). If enable_directory_reader = false , LQL datasources and related IAM compliance policies will not be assessed. By default, this setting is true.
     - Key vault reader : View Key Vault metadata (no access to secrets or keys)
     - Reader role: View all Azure resources and configurations (no changes allowed)
 
@@ -27,7 +41,8 @@ The following is a list of requirements to run FortiCNAPP Terraform modules for 
 
 Follow these steps to deploy:
 
-1. Rename the file `terraform.tfvars.txt` to `terraform.tfvars`.
+1. Copy all Terraform configuration files into your working directory. Then, rename the file `terraform.tfvars.txt` to `terraform.tfvars`. 
+   The terraform.tfvars file contains all configurable input variables for the deployment. Each variable is already populated with a default value, so modifying them is optional. Update these values only if you need to customize the deployment for your environment. 
 2. Terraform code will integrate the primary azure subscription (You can verify it with command line: az account show). You can change that behavior with subscription scope variables.
 3. (Optional) Customize your deployment: Default values are provided for all variables, but you may want to customize some of them:
     - lacework_integration_name

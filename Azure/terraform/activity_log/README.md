@@ -1,6 +1,6 @@
 :wave: [Overview](#overview) • [Requirments](#requirments) • [Instructions](#instructions) 
 
-# Terraform for Integrating Azure Activity_Logs with FortiCNAPP
+# Terraform for Integrating Azure Activity Logs with FortiCNAPP
 
 ## Overview 
 
@@ -21,10 +21,12 @@ For more details, see the [Azure Activity Log Integration – Configuration Work
 
 ### What Does Terraform Create in Azure?
 
-- Azure AD / Entra application (creat_application is set to true) or use an existing one (creat_application is set to false)
+- Azure AD / Entra application with client secret and Service principal (creat_application is set to true) or use an existing one (creat_application is set to false).
+- Create and assign the following roles to service principal:
+   - Dirctory readers role (only with creat_application is set to true) :Read-only access to Entra ID (users, groups, apps, metadata). If enable_directory_reader = false , LQL datasources and related IAM compliance policies will not be assessed. By default, this setting is true.
+   - Custom Azure role definition with permissions to read the storage account, queue, event subscription, list storage keys, read blobs, read queue messages, and delete queue messages
 - Storage Queue for notifications about new log files
 - Event Grid on the storage account that sends blob-created events into that queue
-- Custom Azure role definition with permissions to read the storage account, queue, event subscription, list storage keys, read blobs, read queue messages, and delete queue messages
 - Private Endpoint for the storage account
 
 Creates only if you are not reusing existing storage account (use_existing_storage_account = false)
