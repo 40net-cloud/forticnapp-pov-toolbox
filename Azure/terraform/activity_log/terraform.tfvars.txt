@@ -1,5 +1,5 @@
 ############################################################################################################################################
-# Variables to Integrate Azure Log Activity with FortiCNAPP #
+# Variables to Integrate Azure Activity logs with FortiCNAPP #
 ############################################################################################################################################
 
 # All variables are currently set to their default values. You can customize them as needed to suit your specific requirements.

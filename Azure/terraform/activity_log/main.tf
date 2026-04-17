@@ -1,4 +1,4 @@
-# Terraform for integrating Azure Subscriptions and Tenants with FortiCnapp for cloud resource configuration assessment
+# Terraform for integrating Azure Subscriptions and Tenants with FortiCnapp for Activity Log analysis
 provider "azurerm" {
   features {}
 }
@@ -36,7 +36,7 @@ module "az_activity_log" {
   # General Azure Settings
   ########################################
   prefix   = var.prefix
-  tags = var.tags
+  tags     = var.tags
 
   ########################################
   # Azure AD Application
