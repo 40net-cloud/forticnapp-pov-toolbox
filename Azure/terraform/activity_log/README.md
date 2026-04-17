@@ -58,9 +58,10 @@ The following is a list of requirements to run FortiCNAPP Terraform modules for 
 
 Follow these steps to deploy:
 
-1. Copy all terraform files and rename the file `terraform.tfvars.txt` to `terraform.tfvars`.
+1. Copy all Terraform configuration files into your working directory. Then, rename the file `terraform.tfvars.txt` to `terraform.tfvars`. 
+   The terraform.tfvars file contains all configurable input variables for the deployment. Each variable is already populated with a default value, so modifying them is optional. Update these values only if you need to customize the deployment for your environment. 
 2. Terraform code will integrate the primary azure subscription (You can verify it with command line: az account show). You can change that behavior with subscription scope variables.
-3. (Optional) when you want to use an existing application set (creat_application to false) and fill in all Your Provisioned Application variables.
+3. (Optional) If you plan to use an existing application, set create_application to false and provide values for all variables related to Your Provisioned Application.
 4. (Optional) Customize your deployment: Default values are provided for all variables, but you may want to customize some of them:
     - lacework_integration_name
     - application name and owner (creat_application to true)
