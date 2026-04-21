@@ -25,6 +25,8 @@
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan . --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
+<br>
+
 or Install CLI from:
 Open a new PowerShell terminal to read the updated system PATH and use the FortiCNAPP CLI.
 
