@@ -25,6 +25,16 @@
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan . --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
+or Install CLI from:
+Open a new PowerShell terminal to read the updated system PATH and use the FortiCNAPP CLI.
+
+Homebrew (macOS/Linux)
+brew install lacework/tap/lacework-cli
+For more details, see the Lacework Homebrew Tap.
+
+Chocolatey (Windows):
+choco install lacework-cli
+For more details, see the Lacework CLI Chocolatey package.
 <br>
 
 ### FortiCNAPP lacework sca scan —  Addtional Flags Table (  `lacework sca scan` )
@@ -60,6 +70,7 @@
 | `-j, --jobs`    | int         | any integer                                                                      | `10`        | Parallel scan jobs                   |
 | `-o, --output`  | string      | file or directory path                                                           | —           | Output file location                 |
 | `--quiet`       | bool        | `true`, `false`                                                                  | `false`     | Suppress console output              |
+
 
 
 
