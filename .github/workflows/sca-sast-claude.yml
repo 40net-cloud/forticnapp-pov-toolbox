@@ -1,4 +1,4 @@
-name: FortiCNAPP SCA SAST Manual Scan
+name: FortiCNAPP SCA SAST Claude Scan
 on:
   workflow_dispatch:
 permissions:
