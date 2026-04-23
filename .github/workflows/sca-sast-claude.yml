@@ -1,0 +1,105 @@
+name: FortiCNAPP SCA SAST Manual Scan
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  # -------------------------------------------------------------------------
+  # Original job — unchanged. Runs the deterministic lacework SCA scan
+  # and uploads the SARIF report as an artifact for the demo.
+  # -------------------------------------------------------------------------
+  test-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Install FortiCNAPP CLI
+        run: |
+          curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+          lacework configure \
+            -a ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net \
+            -k ${{ secrets.LW_API_KEY }} \
+            -s ${{ secrets.LW_API_SECRET }} \
+            --noninteractive
+          lacework component install sca
+      - name: Run SCA and save to FortiCNAPP
+        run: |
+          mkdir -p lacework-reports
+          lacework sca scan . -f sarif -o lacework-reports/scan.sarif.json --save-results
+      - name: Upload SARIF report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lacework-sarif
+          path: lacework-reports/scan.sarif.json
+
+  # -------------------------------------------------------------------------
+  # New parallel job — installs the Fortinet code-security plugin and
+  # runs Claude Code against the repo. Claude triages findings and writes
+  # a markdown report. Runs on its own runner, in parallel with test-upload.
+  # -------------------------------------------------------------------------
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0   # full history so the plugin's triage can use git blame
+
+      - name: Install FortiCNAPP CLI
+        # Same block as test-upload — the plugin's hooks shell out to `lacework`,
+        # so it has to be installed and configured on this runner too.
+        run: |
+          curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh | bash
+          lacework configure \
+            -a ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net \
+            -k ${{ secrets.LW_API_KEY }} \
+            -s ${{ secrets.LW_API_SECRET }} \
+            --noninteractive
+          lacework component install sca
+          lacework component install iac
+
+      - name: Install Claude Code + Fortinet plugin
+        env:
+          # PAT with `repo` scope that can read lacework-dev/fortinet-code-security-plugin.
+          # The runner's default GITHUB_TOKEN cannot access a different private repo.
+          GH_TOKEN: ${{ secrets.PLUGIN_REPO_PAT }}
+        run: |
+          npm install -g @anthropic-ai/claude-code
+
+          # Exactly the install recipe from the plugin README
+          gh release download -R lacework-dev/fortinet-code-security-plugin -A zip
+          unzip -o fortinet-code-security-plugin-*.zip
+          cd fortinet-code-security-plugin-*
+          claude plugin marketplace add "$PWD"
+          claude plugin install code-security@fortinet-plugins
+
+      - name: Run Claude Code with Fortinet plugin
+        uses: anthropics/claude-code-action@beta
+        env:
+          LW_ACCOUNT: ${{ secrets.LW_ACCOUNT_NAME }}.lacework.net
+          LW_API_KEY: ${{ secrets.LW_API_KEY }}
+          LW_API_SECRET: ${{ secrets.LW_API_SECRET }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          direct_prompt: |
+            Run /fortinet-review on this repository.
+
+            For every finding, classify it as Confirmed, Suspected FP, or
+            Context-reduced — using file location (test/fixture dirs),
+            placeholder values, dev-only dependencies, and git blame.
+
+            Write a markdown report to lacework-reports/claude-review.md with:
+              - a summary line: total / Confirmed / Suspected FP / Context-reduced
+              - a table grouped by severity (Critical, High, Medium, Low)
+              - for each Confirmed Critical/High finding, a code snippet
+                showing the suggested fix
+
+            Do NOT modify any source files. Report only.
+
+      - name: Upload Claude review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-review
+          path: lacework-reports/claude-review.md
