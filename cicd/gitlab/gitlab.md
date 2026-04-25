@@ -57,16 +57,23 @@ git commit -m "Add files to scan"
 # 3. Send to GitLab
 git push
 ```
-
 ---
 
 ## 🏗️ GitLab Setup
 
 ### ✅ Prerequisites
 
-* GitLab Server running (sudo gitlab-ctl status)
+* GitLab Server running
+```bash
+sudo gitlab-ctl status
+```
+
 * Project created on Gitlab UI
-* Git repository initialized (.git / git status )
+  
+* Git repository initialized (.git )
+```bash
+git status
+```
 
 ---
 
