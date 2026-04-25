@@ -61,6 +61,15 @@ git push
 
 ## 🏗️ GitLab Setup
 
+🔥 Demo Environment (Example)
+
+Ubuntu VM
+├── GitLab Server
+├── GitLab Runner (system service) ✅ ← YOU RUN COMMANDS HERE
+│
+└── Docker
+     └── Job containers (scan runs here)
+
 ### ✅ Prerequisites
 
 * GitLab Server running
