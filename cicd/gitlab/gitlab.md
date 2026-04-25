@@ -6,7 +6,9 @@
 
 | Reference | Description |
 |------------|--------------|
-|https://docs.fortinet.com/document/forticnapp/latest/administration-guide/666692/tutorial-with-gitlab-pipeline    | Tutorial with GitLab pipeline |
+| https://docs.fortinet.com/document/forticnapp/latest/administration-guide/666692/tutorial-with-gitlab-pipeline    | Tutorial with GitLab pipeline |
+| https://docs.gitlab.com/runner/install/    | Install GitLab Runner |
+
 
 ## 🚀 Final Workflow
 
