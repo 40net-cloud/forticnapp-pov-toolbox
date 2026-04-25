@@ -54,7 +54,7 @@ git push
 
 ---
 
-## 🔁 Trigger Pipeline Manually
+## 🔁 Trigger Pipeline 
 
 GitLab only runs pipelines on **new commits**.
 
