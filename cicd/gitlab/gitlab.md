@@ -124,14 +124,18 @@ Project → Settings → Access Tokens
 
 ## 🏃 Runner Setup
 
-### When to register runner?
+### When to register runner?  
+
+```bash
+sudo systemctl status gitlab-runner
+```
 
 | Scenario              | Action            |
 | --------------------- | ----------------- |
 | Runner already exists | ❌ Do NOT register |
 | No runner exists      | ✅ Register        |
 
-Check: sudo systemctl status gitlab-runner
+
 ---
 
 ### Register Runner
