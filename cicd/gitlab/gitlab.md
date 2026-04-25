@@ -58,7 +58,7 @@ git push
 
 ### ✅ Prerequisites
 
-* GitLab Server running
+* GitLab Server running (sudo gitlab-ctl status)
 * Project created on Gitlab UI
 * Git repository initialized (.git / git status )
 
