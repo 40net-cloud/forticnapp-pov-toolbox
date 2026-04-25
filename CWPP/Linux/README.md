@@ -99,6 +99,18 @@ rpm -e lacework
 yum remove lacework
 ```
 
+## 🔍 FortiCNAPP / Lacework Agent Commands (Linux)
+
+| Command | Description |
+|--------|-------------|
+| `sudo tail -n 200 /var/log/lacework/datacollector.log` | Displays the last 200 lines of the Lacework agent log file. Useful for quick troubleshooting and reviewing recent activity/errors. |
+| `sudo tail -f /var/log/lacework/datacollector.log` | Continuously streams (live view) the Lacework agent logs in real-time. Ideal for monitoring events, debugging, and observing agent behavior as it runs. |
+| `sudo /var/lib/lacework/datacollector -status` | Checks the current status of the Lacework agent (datacollector), including whether it is running and healthy. |
+| `sudo systemctl restart datacollector` | Restarts the Lacework agent service. Use this after configuration changes or if the agent becomes unresponsive. |
+| `cd /var/lib/lacework/config` | Navigates to the directory where the Lacework agent configuration files and tokens are stored. Useful for verifying or editing agent settings. |
+
+
+
 ## ❓ Frequently Asked Questions (FAQ)
 
 | **Question** | **Answer (Summary)** |
