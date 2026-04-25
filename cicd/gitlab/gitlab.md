@@ -54,19 +54,6 @@ git push
 
 ---
 
-## 🔁 Trigger Pipeline 
-
-GitLab only runs pipelines on **new commits**.
-
-```bash
-echo "trigger scan" >> README.md
-git add README.md
-git commit -m "Trigger FortiCNAPP scan"
-git push
-```
-
----
-
 ## 🏗️ GitLab Setup
 
 ### ✅ Prerequisites
@@ -161,7 +148,19 @@ Image: alpine:latest
 Run untagged jobs
 ```
 
+## 🔁 Trigger Pipeline 
+
+GitLab only runs pipelines on **new commits**.
+
+```bash
+echo "trigger scan" >> README.md
+git add README.md
+git commit -m "Trigger FortiCNAPP scan"
+git push
+```
+
 ---
+
 
 ## 📊 Expected Scan Output
 
