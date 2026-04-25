@@ -2,6 +2,13 @@
 
 ---
 
+## 🔗 Reference Links
+
+| Reference | Description |
+|------------|--------------|
+|(https://docs.fortinet.com/document/forticnapp/latest/administration-guide/666692/tutorial-with-gitlab-pipeline) | Tutorial with GitLab pipeline
+. |
+
 ## 🚀 Final Workflow
 
 ```
