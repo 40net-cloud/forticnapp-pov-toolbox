@@ -59,7 +59,7 @@ git push
 ### ✅ Prerequisites
 
 * GitLab Server running
-* Project created
+* Project created on Gitlab UI
 * Git repository initialized (.git / git status )
 
 ---
