@@ -99,7 +99,7 @@ rpm -e lacework
 yum remove lacework
 ```
 
-## 🔍 FortiCNAPP / Lacework Agent Commands (Linux)
+## 🔍 FortiCNAPP / Lacework Agent Quick Commands (Linux)
 
 | Command | Description |
 |--------|-------------|
