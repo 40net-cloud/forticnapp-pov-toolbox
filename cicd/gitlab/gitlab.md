@@ -63,12 +63,17 @@ git push
 
 🔥 Demo Environment (Example)
 
-Ubuntu VM
-├── GitLab Server
-├── GitLab Runner (system service) ✅ ← YOU RUN COMMANDS HERE
+Ubuntu VM (Host)
 │
-└── Docker
-     └── Job containers (scan runs here)
+├── 🧠 GitLab Server
+│     └── UI / Repo / Pipelines
+│
+├── 👷 GitLab Runner (system service)
+│     └── Executes jobs
+│
+└── 🧪 Docker Engine
+      └── 📦 Job Containers
+            └── 🔍 FortiCNAPP Scan runs here
 
 ### ✅ Prerequisites
 
