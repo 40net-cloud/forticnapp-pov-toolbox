@@ -131,7 +131,7 @@ Project → Settings → Access Tokens
 | Runner already exists | ❌ Do NOT register |
 | No runner exists      | ✅ Register        |
 
-**Check: sudo systemctl status gitlab-runner**
+Check: sudo systemctl status gitlab-runner
 ---
 
 ### Register Runner
