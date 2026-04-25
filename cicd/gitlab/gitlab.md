@@ -50,15 +50,12 @@ FortiCNAPP Code Security Scan
 ## 📦 Basic Git Workflow
 
 ```bash
-# 1. Prepare files
-git add .
-
-# 2. Save locally
-git commit -m "Add files to scan"
-
-# 3. Send to GitLab
-git push
+git init            ← make it a repo
+git add .           ← Select and stage files for commit
+git commit -m ""    ← Save staged files as a version in the `.git` database
+git push            ← Send committed changes to GitLab
 ```
+
 ---
 
 ## 🏗️ GitLab Setup
