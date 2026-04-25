@@ -60,7 +60,7 @@ git push
 
 * GitLab Server running
 * Project created
-* Git repository initialized
+* Git repository initialized (.git / git status )
 
 ---
 
