@@ -2,6 +2,13 @@
 
 ---
 
+## 🚀 Final Workflow
+
+```
+Write Code → Commit → Push → Pipeline → Runner → Scan → Results in FortiCNAPP
+```
+
+---
 ## 🧠 Architecture Overview
 
 ```
@@ -98,13 +105,13 @@ Go to:
 Project → Settings → CI/CD → Variables
 ```
 
-| Variable        | Required              | Example                        | Purpose            |
-| --------------- | --------------------- | ------------------------------ | ------------------ |
+| Variable        | Required               | Example                        | Purpose            |
+| --------------- | ---------------------  | ------------------------------ | ------------------ |
 | LW_ACCOUNT      | ✅                     | mycompany                      | FortiCNAPP account |
 | LW_API_KEY      | ✅                     | abc123                         | Authentication     |
 | LW_API_SECRET   | ✅                     | xyz456                         | Authentication     |
 | LW_GITLAB_TOKEN | ✅                     | glpat-xxxx                     | GitLab API access  |
-| GITLAB_URL      | ⚠️ (self-hosted only) | http://gitlab.example.com:8081 | GitLab instance    |
+| GITLAB_URL      | ⚠️ (self-hosted only)  | http://gitlab.example.com      | GitLab instance    |
 
 ---
 
@@ -153,67 +160,6 @@ Image: alpine:latest
 ```
 Run untagged jobs
 ```
-
----
-
-## 🌐 Common Issues & Fixes
-
-### ❌ DNS / Connectivity Issue
-
-Error:
-
-```
-Could not resolve host
-```
-
-Fix:
-
-```bash
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo systemctl restart docker
-```
-
----
-
-### ❌ SSL Issue (Self-hosted)
-
-Temporary workaround:
-
-```bash
-curl -k -L <URL> -o file.yaml
-```
-
----
-
-### ❌ Submodule Issue (IMPORTANT)
-
-If scan shows:
-
-```
-No packages found
-```
-
-Fix:
-
-```bash
-git rm --cached Codes-images/dvna
-rm -rf Codes-images/dvna/.git
-
-git add Codes-images/dvna
-git commit -m "Fix submodule issue"
-git push
-```
-
----
-
-## 🧪 Sample Vulnerable Code
-
-Include:
-
-* DVNA (Node.js)
-* WebGoat (Java)
-* Terraform files
-* Secrets file
 
 ---
 
@@ -270,20 +216,6 @@ Search:
 * Commits trigger pipelines
 * Submodules must be converted to real files
 * Self-hosted GitLab requires `GITLAB_URL`
-
----
-
-## 🚀 Final Workflow
-
-```
-Write Code → Commit → Push → Pipeline → Runner → Scan → Results in FortiCNAPP
-```
-
----
-
-## 🧠 Demo Talking Point
-
-> “Even without full CI/CD, we use GitLab pipelines purely as a secure execution engine to scan code and send results to FortiCNAPP.”
 
 ---
 
