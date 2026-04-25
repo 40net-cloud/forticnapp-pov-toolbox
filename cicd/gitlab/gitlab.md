@@ -61,19 +61,16 @@ git push
 
 ## 🏗️ GitLab Setup
 
-🔥 Demo Environment (Example)
 
-Ubuntu VM (Host)
-│
-├── 🧠 GitLab Server
-│     └── UI / Repo / Pipelines
-│
-├── 👷 GitLab Runner (system service)
-│     └── Executes jobs
-│
-└── 🧪 Docker Engine
-      └── 📦 Job Containers
-            └── 🔍 FortiCNAPP Scan runs here
+### 🏗️ Demo Environment (Example)
+
+| Layer          | Component           | Role                          | Notes                         |
+|----------------|--------------------|-------------------------------|-------------------------------|
+| Host Machine   | Ubuntu VM          | 🏢 Main environment           | Where everything runs         |
+| Application    | GitLab Server      | 🧠 Control plane              | UI, repo, pipelines           |
+| Execution      | GitLab Runner      | 👷 Worker (system service)    | Commands run here             |
+| Runtime        | Docker             | 🧪 Container engine           | Runs pipeline jobs            |
+| Job Layer      | Docker Containers  | ⚙️ Scan execution             | Temporary scan containers     |
 
 ### ✅ Prerequisites
 
