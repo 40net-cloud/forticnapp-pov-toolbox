@@ -1,4 +1,4 @@
-# 🚀 FortiCNAPP Code Security with GitLab (Step-by-Step Guide)
+# 🚀 FortiCNAPP Code Security with GitLab Self-Hosted  (Step-by-Step Guide)
 
 ---
 
