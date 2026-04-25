@@ -123,7 +123,7 @@ Project → Settings → CI/CD → Variables
 | LW_ACCOUNT      | ✅                     | mycompany                      | FortiCNAPP account |
 | LW_API_KEY      | ✅                     | abc123                         | Authentication     |
 | LW_API_SECRET   | ✅                     | xyz456                         | Authentication     |
-| LW_GITLAB_TOKEN | ✅                     | glpat-xxxx                     | GitLab API access  |
+| LW_GITLAB_TOKEN | ✅                     | glpat-xxxx                     | GitLab API access: |
 | GITLAB_URL      | ⚠️ (self-hosted only)  | http://gitlab.example.com      | GitLab instance    |
 
 ---
@@ -134,11 +134,11 @@ Project → Settings → CI/CD → Variables
 Project → Settings → Access Tokens
 ```
 
-| Field | Value            |
+| Field                    | Value            |
 | ----- | ---------------- |
-| Name  | forticnapp-token |
-| Role  | Maintainer       |
-| Scope | api              |
+| Name (example)      | forticnapp-token |
+| Role  | Maintainer  |
+| Scope | api         |
 
 ---
 
