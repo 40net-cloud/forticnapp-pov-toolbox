@@ -22,6 +22,7 @@ Groq LLM (backend)
 Response returned to FortiDAST
 ```
 
+
 ---
 
 ## 🎯 What is Being Tested?
@@ -38,6 +39,22 @@ Response returned to FortiDAST
 ---
 
 ## 🧩 Key Concepts
+
+The GenAI Application Scan allows you to evaluate the security of Generative AI (GenAI) and Large Language Model (LLM) chat endpoints. This scan evaluates your AI assets by simulating sophisticated injection attacks and analyzing model responses. The assessment is mapped to the OWASP Top 10 for LLMs, ensuring coverage against the most critical industry-standard risks.
+
+
+
+| Area                | What is tested                 |
+| ------------------- | ------------------------------ |
+| FortiDAST (GenAI)   | LLM behavior + prompt handling, It behaves like an attacker talking to your chatbot
+
+![Uploading Screenshot 2026-04-26 at 5.28.53 PM.png…]()
+ |
+| FortiDAST (Web/API) | Application vulnerabilities    |
+
+GenAI security = securing the interaction between your app and the LLM
+App security = securing your application itself
+
 
 ### 🔹 What is an Endpoint?
 
