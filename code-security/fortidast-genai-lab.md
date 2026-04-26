@@ -47,13 +47,16 @@ The GenAI Application Scan allows you to evaluate the security of Generative AI 
 | Area                | What is tested                 |
 | ------------------- | ------------------------------ |
 | FortiDAST (GenAI)   | LLM behavior + prompt handling, It behaves like an attacker talking to your chatbot
-
-![Uploading Screenshot 2026-04-26 at 5.28.53 PM.png…]()
- |
 | FortiDAST (Web/API) | Application vulnerabilities    |
 
 GenAI security = securing the interaction between your app and the LLM
 App security = securing your application itself
+
+
+<img width="1239" height="393" alt="Screenshot 2026-04-26 at 5 30 54 PM" src="https://github.com/user-attachments/assets/da7f3d41-691b-4929-912f-e78967720fac" />
+
+<img width="1306" height="523" alt="Screenshot 2026-04-26 at 5 31 20 PM" src="https://github.com/user-attachments/assets/bb3f4c5e-3a6e-4a10-a4c2-d480f49f8199" />
+
 
 
 ### 🔹 What is an Endpoint?
