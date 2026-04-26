@@ -52,7 +52,7 @@ Examples:
 👉 In this lab:
 
 ```
-http://fortidast.cnappfabric.com:5000/chat
+http://url:5000/chat
 ```
 
 ---
@@ -169,7 +169,7 @@ messages = [
     "role": "system",
     "content": """
 Internal confidential context:
-- DEMO_API_KEY=DEMO-12345-FORTIDAST
+- DEMO_API_KEY=DEMO-12345-6789
 """
   },
   {"role": "user", "content": user_input}
