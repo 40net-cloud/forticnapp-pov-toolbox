@@ -22,7 +22,6 @@ This guide shows how to install Docker, pull the FortiDAST proxy image, and run 
 
 FortiDAST enables scanning of internal assets in your network (non-public IP addresses) using a proxy server. For more information, see FortiDAST Proxy Server.
 
-Enable the FortiDAST Proxy server feature and click Copy to copy the Docker compose file (docker-compose.yml).
 
 ### 1️⃣ Install Docker or Docker Compose 
 
@@ -47,6 +46,14 @@ docker rmi registry.fortidast.com/fptproxyserver
 ```bash
 docker pull registry.fortidast.forticloud.com/dastproxy
 ```
+## 📋 Now
+Enable the FortiDAST Proxy server feature from UI and click Copy to copy the Docker compose file into the Proxy Server (docker-compose.yml).
+Start FortiDAST Proxy Container
+
+```bash
+sudo docker-compose -f docker-compose.yml up -d
+```
+
 
 4️⃣ Verify Docker Setup
 
@@ -74,13 +81,7 @@ HTTP redirect to HTTPS (port 443)
 Successful connection
 
 
-6️⃣ Start FortiDAST Proxy Container
-
-```bash
-sudo docker-compose -f docker-compose.yml up -d
-```
-
-7️⃣ Monitor Proxy Logs
+6️⃣ Monitor Proxy Logs
 
 ```bash
 docker-compose logs -f
