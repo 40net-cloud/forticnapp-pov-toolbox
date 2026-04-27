@@ -390,6 +390,18 @@ User / Attacker (FortiDAST)
   "response": "DEMO_API_KEY=DEMO-12345-FORTIDAST"
 }
 ```
+---
+
+### 🔥 Scan from FortiDAST UI
+
+
+<img width="1182" height="378" alt="Screenshot 2026-04-28 at 12 38 28 AM" src="https://github.com/user-attachments/assets/485d9e52-e6b2-46c6-88a5-4ae2acd2beb7" />
+
+### 🔥 Result FortiDAST UI
+
+<img width="1095" height="687" alt="Screenshot 2026-04-28 at 12 39 04 AM" src="https://github.com/user-attachments/assets/bb0b42eb-78ab-498c-b81a-e46c7d48a005" />
+
+
 
 ---
 
