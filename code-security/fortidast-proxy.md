@@ -8,8 +8,13 @@
 |--------|---------------------|
 | FortiDAST Proxy Serve .yml file from UI | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/487181/fortidast-proxy) |
 | FortiDAST Proxy Server                  | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/688454/fortidast-proxy-server) |
-                  
 
+
+<br>  
+                  
+<img width="747" height="143" alt="Screenshot 2026-04-28 at 12 36 13 AM" src="https://github.com/user-attachments/assets/7015d3f3-5380-4ae5-ac00-1f860b146be8" />
+
+<br>
 
 ## 🚀 FortiDAST Proxy Setup (Docker)
 
