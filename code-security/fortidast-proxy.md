@@ -69,6 +69,10 @@ Check containers:
 docker container ls
 ```
 
+```bash
+docker exec -it <containerid> /bin/sh
+```
+
 5️⃣ Test Connectivity to FortiDAST Registry
 
 ```bash
