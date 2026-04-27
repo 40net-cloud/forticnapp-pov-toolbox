@@ -145,15 +145,7 @@ pip install flask groq
 
 ---
 
-### 3. Set API Key
-
-```bash
-export GROQ_API_KEY="your_api_key_here"
-```
-
----
-
-### 4. Run App
+### 3. create App
 
 nano app.py
 ```bash
@@ -228,11 +220,15 @@ if __name__ == "__main__":
 
 ## 🤖Activate venv and Run
 
+### 3. Set API Key
+
 ```bash
-source venv/bin/activate
+export GROQ_API_KEY="your_api_key_here"
 ```
 
 ```bash
+sudo fuser -k 5000/tcp
+source venv/bin/activate
 python3 app.py
 ```
 
