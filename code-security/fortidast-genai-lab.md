@@ -23,6 +23,43 @@ Response returned to FortiDAST
 ```
 
 
+## 🔄 GenAI Security Testing Flow (FortiDAST)
+
+```text
+            +----------------------+
+            |     FortiDAST        |
+            |  (GenAI Scanner)     |
+            +----------+-----------+
+                       |
+                       | HTTP Requests (Attack Prompts)
+                       ↓
+        +------------------------------+
+        |   Your API Endpoint          |
+        |  /chat (Flask App)           |
+        +--------------+---------------+
+                       |
+                       | Sends prompt + system context
+                       ↓
+            +----------------------+
+            |     LLM Backend      |
+            |       (Groq)         |
+            +----------+-----------+
+                       |
+                       | AI Response
+                       ↓
+        +------------------------------+
+        |   Flask App returns JSON     |
+        |   {"response": "..."}        |
+        +--------------+---------------+
+                       |
+                       ↓
+            +----------------------+
+            |     FortiDAST        |
+            |  Analyzes Response   |
+            +----------------------+
+
+
+
 ---
 
 ## 🎯 What is Being Tested?
