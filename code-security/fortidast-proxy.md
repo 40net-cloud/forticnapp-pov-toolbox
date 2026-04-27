@@ -6,8 +6,8 @@
 
 | Topic | Documentation Link |
 |--------|---------------------|
-| ** FortiDAST Proxy Serve .yml file from UI** | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/487181/fortidast-proxy) |
-| ** FortiDAST Proxy Server**                  | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/688454/fortidast-proxy-server) |
+| FortiDAST Proxy Serve .yml file from UI | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/487181/fortidast-proxy) |
+| FortiDAST Proxy Server                  | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/688454/fortidast-proxy-server) |
                   
 <br>
 
