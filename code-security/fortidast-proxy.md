@@ -6,7 +6,8 @@
 
 | Topic | Documentation Link |
 |--------|---------------------|
-| ** FortiDAST Proxy Server** | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/688454/fortidast-proxy-server) |
+| ** FortiDAST Proxy Serve .yml file from UI** | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/487181/fortidast-proxy) |
+| ** FortiDAST Proxy Server**                  | [https://docs.fortinet.com/document/fortidast/26.1.0/user-guide/688454/fortidast-proxy-server) |
                   
 <br>
 
@@ -17,6 +18,11 @@ This guide shows how to install Docker, pull the FortiDAST proxy image, and run 
 ---
 
 ## 📋 Steps
+
+
+FortiDAST enables scanning of internal assets in your network (non-public IP addresses) using a proxy server. For more information, see FortiDAST Proxy Server.
+
+Enable the FortiDAST Proxy server feature and click Copy to copy the Docker compose file (docker-compose.yml).
 
 ### 1️⃣ Install Docker or Docker Compose 
 
