@@ -50,6 +50,11 @@ docker pull registry.fortidast.forticloud.com/dastproxy
 Enable the FortiDAST Proxy server feature from UI and click Copy to copy the Docker compose file into the Proxy Server (docker-compose.yml).
 Start FortiDAST Proxy Container
 
+
+<img width="1181" height="597" alt="Screenshot 2026-04-28 at 12 31 57 AM" src="https://github.com/user-attachments/assets/ce2b50bb-fca2-4f51-be92-a6bcba4d422f" />
+
+
+
 ```bash
 sudo docker-compose -f docker-compose.yml up -d
 ```
