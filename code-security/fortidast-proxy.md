@@ -94,6 +94,25 @@ docker-compose logs -f
 ### Final Step: Scan from UI.
 
 
+## 🔍 OWASP LLM FortiDAST Scan Result Demonstrated
+
+<img width="796" height="68" alt="Screenshot 2026-04-28 at 12 29 54 AM" src="https://github.com/user-attachments/assets/a3b53b40-35d4-4a81-87d3-7afeede809d5" />
+
+
+
+
+<img width="1152" height="637" alt="Screenshot 2026-04-28 at 12 29 21 AM" src="https://github.com/user-attachments/assets/ffd4b994-fce0-4540-92d9-9af85d9cafcd" />
+
+
+
+
+
+
+
+
+
+
+
 
 
 
