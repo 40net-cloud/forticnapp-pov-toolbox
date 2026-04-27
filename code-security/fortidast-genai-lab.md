@@ -153,12 +153,6 @@ export GROQ_API_KEY="your_api_key_here"
 
 ---
 
-
-
-
-
-
-
 ### 4. Run App
 
 nano app.py
@@ -207,6 +201,11 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 ```
 
+## 🤖Activate venv and Run
+
+```bash
+source venv/bin/activate
+```
 
 ```bash
 python3 app.py
