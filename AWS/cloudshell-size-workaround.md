@@ -1,8 +1,7 @@
 | **Step** | **Action / Command** | **Purpose / Notes** |
 |---------|----------------------|---------------------|
 | 🧩 **1. Understand the limitation** | `/home/cloudshell-user` has only ~1 GB persistent storage | AWS CloudShell keeps this directory between sessions, but it is very limited. Terraform provider caches (`.terraform/`) can quickly consume all space. |
-| 📦 **2. Deploy your Terraform** | `terraform init`<br>`terraform apply` | Run Terraform normally inside `/home/cloudshell-user/...` project directory. This will create `.terraform/` locally (large size). | 
-/home/cloudshell-user/lacework/aws-xxxx/.terraform .
+| 📦 **2. Deploy your Terraform** | `terraform init`<br>`terraform apply` | Run Terraform normally inside `/home/cloudshell-user/lacework/aws-xxxx/.terraform ` project directory. This will create `.terraform/` locally (large size). | 
 
 | 📊 **3. Check disk usage** | `du -sh .terraform` | Verify how much space `.terraform/` is consuming (often hundreds of MB). |
 | 🧹 **4. Move heavy cache to /tmp (ephemeral)** | `mv .terraform /tmp/terraform-cache` | `/tmp` has much larger space (~20+ GB) but is **not persistent**. This avoids filling CloudShell storage. |
