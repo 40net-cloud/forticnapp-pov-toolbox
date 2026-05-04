@@ -2,7 +2,7 @@
 
 module "lacework_dspm" {
   source = "lacework/dspm/aws"
-  version = "2.1.3" 
+  version = "0.2.3" 
 
 
   scanning_account_id = var.scanning_account_id
