@@ -1,15 +1,12 @@
-## ⚙️ Terraform Deployment in CloudShell (1 GB Limit Workaround)
-
-| **Step**                                   | **Action / Command**                                                                                                                      | **Purpose / Notes**                                                                                                   |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 🧩 **1. Understand the limitation**        | `/home/cloudshell-user/lacework/aws-xxxxx` has only **~1 GB** of persistent space.                                                                           | Large `.terraform/` directories (provider cache) quickly fill this up.                                                |
-| 🧹 **2. After deployment**                 | `du -hs .*` → shows `.terraform` size.<br>`rm -rf .terraform`                                                                              | Safe to delete `.terraform/` after a successful deploy. It can always be re-initialized.                              |
-| 📦 **3. Keep only essential files**        | Keep `main.tf`, `terraform.tfstate`, and `.terraform.lock.hcl` in `/home/cloudshell-user`.                                                | These are lightweight and needed for later destruction or updates.                                                    |
-| 🚚 **4. Before destroying infrastructure** | 1️⃣ Create a temp folder with more space:<br>`mkdir -p /tmp/forti`<br>2️⃣ Move the project:<br>`mv /home/cloudshell-user/awls /tmp/forti` | `/tmp`, `/root`, or `/aws/mde/mde` usually have tens of GB free. `-p` ensures the folder path exists even if missing. |
-| 🔄 **5. Re-initialize Terraform**          | `terraform init`                                                                                                                          | Re-downloads providers and recreates the `.terraform/` folder.                                                        |
-| 💣 **6. Destroy resources**                | `terraform destroy`                                                                                                                       | Cleanly removes deployed cloud resources.                                                                             |
-| ✅ **Result**                               | Efficient use of CloudShell’s limited storage while maintaining full deploy/destroy capability.                                           | Keeps environment lightweight and reproducible.                                                                       |
-
-
-The command is "ls -laih"
-"du -sh *
+| **Step** | **Action / Command** | **Purpose / Notes** |
+|---------|----------------------|---------------------|
+| 🧩 **1. Understand the limitation** | `/home/cloudshell-user/` has only ~1 GB persistent storage | AWS CloudShell keeps this directory between sessions, but it is very limited. Terraform provider caches (`.terraform/`) can quickly consume all space. |
+| 📦 **2. Deploy your Terraform** | `terraform init`<br>`terraform apply` | Run Terraform normally inside `/home/cloudshell-user/...` project directory. This will create `.terraform/` locally (large size). |
+| 📊 **3. Check disk usage** | `du -sh .terraform` | Verify how much space `.terraform/` is consuming (often hundreds of MB). |
+| 🧹 **4. Move heavy cache to /tmp (ephemeral)** | `mv .terraform /tmp/terraform-cache` | `/tmp` has much larger space (~20+ GB) but is **not persistent**. This avoids filling CloudShell storage. |
+| 🔗 **5. Create symlink back** | `ln -s /tmp/terraform-cache .terraform` | Terraform still expects `.terraform/` in project directory, so we link it back. |
+| 🔁 **6. Reuse in same session** | `ls -la` | Confirms `.terraform -> /tmp/terraform-cache` symlink is active. Works fine during current session. |
+| ⚠️ **7. Session restart behavior** | *(No command)* | `/tmp` is wiped when CloudShell restarts → `.terraform` will be broken and must be recreated. |
+| 🔄 **8. Reinitialize if needed** | `rm -f .terraform`<br>`terraform init` | If symlink breaks after restart, remove it and re-run init to rebuild providers. |
+| 🧹 **9. Optional cleanup after deploy** | `rm -rf .terraform` | Safe to delete after successful deployment if no further Terraform actions are needed immediately. |
+| 📁 **10. Keep only essential files** | Keep: `main.tf`, `terraform.tfstate`, `.terraform.lock.hcl` | These are small and required for future `terraform destroy` or updates. |
