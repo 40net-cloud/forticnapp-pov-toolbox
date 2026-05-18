@@ -37,6 +37,13 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 | 7 | Upload results to FortiCNAPP (optional) | `lacework iac scan -d . --upload` | Results available in FortiCNAPP UI |
 | 8 | Use in CI/CD | (GitHub / Jenkins / etc.) | Shift-left IaC security |
 
+
+#### Example Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
+
+'''bash
+lacework iac scan -d . --upload=true --format json --save-result result.json
+'''
+
 <br>
 
 | Flag | Shorthand | Type | Default | Allowed Values | Description |
