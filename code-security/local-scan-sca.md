@@ -27,22 +27,17 @@
 
 #### Note to save results to FortiCNAPP UI, repo root required with remote  origin https://github.com/YOURUSER/sca.git, example:
 
-lacework sca scan ./ -f lw-json -o /Users/X/Desktop/sca/test.json
+lacework sca scan . -f lw-json -o test.json --save-results
 
 ```bash
 git init
 git add .
 git commit -m "local repo"
 git remote add origin https://github.com/YOURUSER/sca.git
+git push -u origin main
 ```
-
-#### Try a test remote repo, this is for testing only, Creating local Git repository acting like a remote server.
 ```bash
-mkdir ~/test-remote.git
-cd ~/test-remote.git
-git init --bare
-cd /Users/X/Desktop/sca
-git remote add origin ~/test-remote.git
+git remote -v
 ```
 
 <br>
