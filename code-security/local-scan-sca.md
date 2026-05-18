@@ -36,7 +36,7 @@ git commit -m "local repo"
 git remote add origin https://github.com/YOURUSER/sca.git
 ```
 
-#### Try a test remote repo
+#### Try a test remote repo, this is for testing only, Creating local Git repository acting like a remote server.
 ```bash
 mkdir ~/test-remote.git
 cd ~/test-remote.git
