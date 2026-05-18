@@ -21,8 +21,8 @@
 | 1 | Install CLI | `curl -sSL https://raw.githubusercontent.com/lacework/go-sdk/main/cli/install.sh \| bash` | CLI installed |
 | 2 | Configure FortiCNAPP authentication | `lacework configure -a <account>.lacework.net -k <api_key> -s <api_secret>` | API Keys |
 | 3 | Run local scan | `lacework sca scan .` | Findings shown in terminal |
-| 4 | Export SARIF report | `lacework sca scan . -f sarif -o result.sarif` | SARIF file created |
-| 5 | Upload results to FortiCNAPP UI | `lacework sca scan . --save-results` | Results uploaded to UI |
+| 4 | Export SARIF report | `lacework sca scan ./ -f sarif -o result.sarif` | SARIF file created |
+| 5 | Upload results to FortiCNAPP UI | `lacework sca scan ./ --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
 <br>
