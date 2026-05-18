@@ -40,9 +40,9 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 
 #### Example Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
 
-'''bash
+```bash
 lacework iac scan -d . --upload=true --format json --save-result result.json
-'''
+```
 
 <br>
 
