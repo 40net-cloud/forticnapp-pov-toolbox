@@ -45,7 +45,7 @@ git remote add origin https://github.com/YOURUSER/sca.git
 git push -u origin main
 ```
 
-Verify repository mapping:
+  * Verify repository mapping:
 ```bash
 git remote -v
 git branch
