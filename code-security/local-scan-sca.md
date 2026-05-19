@@ -74,6 +74,10 @@ lacework sca scan /Users/xx/Desktop/sca --save-results
 lacework sca scan /Users/xx/Desktop/sca --save-results -f lw-json -o /Users/xx/Desktop/sca/test2.json
 ```
 
+<img width="1295" height="444" alt="Screenshot 2026-05-19 at 11 17 00 PM" src="https://github.com/user-attachments/assets/5dcac689-2ec3-46b2-8fd7-10b928c8397e" />
+
+<img width="1317" height="518" alt="Screenshot 2026-05-19 at 11 17 43 PM" src="https://github.com/user-attachments/assets/31936ce7-47c7-45e6-bcfa-6516bf416810" />
+
 <br>
 
 
