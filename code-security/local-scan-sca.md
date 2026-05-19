@@ -9,7 +9,6 @@
 | **FortiCNAPP CLI Reference** | [https://docs.fortinet.com/document/forticnapp/latest/cli-reference/68020/get-started-with-the-lacework-forticnapp-cli) |
 | **FortiCNAPP Requirements**  |  [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/681609/requirements) |
 
-
 <br>
 
 ## FortiCNAPP Local SCA Scan — Simple Steps
@@ -22,6 +21,16 @@
 | 4 | Export SARIF report | `lacework sca scan ./ -f sarif -o result.sarif` | SARIF file created |
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan ./ --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
+
+
+
+* Homebrew (macOS/Linux)
+brew install lacework/tap/lacework-cli
+For more details, see the Lacework Homebrew Tap.
+
+* Chocolatey (Windows):
+choco install lacework-cli
+For more details, see the Lacework CLI Chocolatey package.
 
 
 ### Upload Results (--save-results) to FortiCNAPP UI:
@@ -68,17 +77,6 @@ lacework sca scan /Users/xx/Desktop/sca --save-results -f lw-json -o /Users/xx/D
 
 <br>
 
-or Install CLI from:
-Open a new PowerShell terminal to read the updated system PATH and use the FortiCNAPP CLI.
-
-Homebrew (macOS/Linux)
-brew install lacework/tap/lacework-cli
-For more details, see the Lacework Homebrew Tap.
-
-Chocolatey (Windows):
-choco install lacework-cli
-For more details, see the Lacework CLI Chocolatey package.
-<br>
 
 ### FortiCNAPP lacework sca scan —  Addtional Flags Table (  `lacework sca scan` )
 
