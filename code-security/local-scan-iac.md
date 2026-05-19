@@ -27,7 +27,7 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 
 
 ### Upload Results to FortiCNAPP UI: Local Scan configuration variables: 
-  * Required variables (Linux/macOS) based on Pipeline structure in UI, follwoing is example, choose variables that fit yours:
+  * Required variables (Linux/macOS) based on Pipeline structure in UI, follwoing is example, choose variables that fit yours, works w/o Git repository context:
 
 For *Linux/macOS*:
 ```bash
