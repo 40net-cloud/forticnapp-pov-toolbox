@@ -36,8 +36,6 @@
 git init
 git add .
 git commit -m "local repo"
-git remote add origin https://github.com/YOURUSER/sca.git
-git push -u origin main
 ```
 
    * Connect to Remote Repository (recommended)
