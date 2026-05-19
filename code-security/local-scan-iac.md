@@ -29,7 +29,7 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 ### Upload Results to FortiCNAPP UI: Local Scan configuration variables: 
   * Required variables (Linux/macOS) based on Pipeline structure in UI, follwoing is example, choose variables that fit yours:
 
-For Linux/macOS:
+For *Linux/macOS*:
 ```bash
 export CI_PIPELINE_NAME="Github Pipeline"
 export CI_BUILD_ID="CLI Build"
@@ -37,6 +37,17 @@ export CI_BUILD_URL="https://github.com/hkebbi/IDEs"
 export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
 export CI_PLATFORM=CLI
 ```
+
+ * You can make CI Build_ID Dynamic:
+
+```bash
+export CI_PIPELINE_NAME="Github-2 Pipeline"
+export CI_BUILD_ID="Build_$(date +%Y%m%d_%H%M%S)"
+export CI_BUILD_URL="https://github.com/hkebbi/IDEs"
+export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
+export CI_PLATFORM="CLI"
+```
+
 
 For Windows CMD:
 ```bash
