@@ -25,7 +25,10 @@
 
 
 ### Upload Results (--save-results) to FortiCNAPP UI:
-   
+- SCA upload needs repository context (repo name, branch, commit, remote). --save-results organizes results in FortiCNAPP by repository metadata.
+- The folder should be a Git repository and ideally connected to a remote repository.
+
+
 
 #### Example
    * Create Local Git Repository
