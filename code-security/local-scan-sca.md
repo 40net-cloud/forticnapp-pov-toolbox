@@ -27,10 +27,10 @@
 
 
 ### Upload Results (--save-results) to FortiCNAPP UI:
-    * Upload to UI is structured by git repo, branches, commits etc...so git init and origin is required:
+    * SCA upload needs repository context (repo name, branch, commit, remote). --save-results organizes results in FortiCNAPP by repository metadata.
 
 #### Example
-
+   * Create Local Git Repository
 ```bash
 git init
 git add .
@@ -39,8 +39,17 @@ git remote add origin https://github.com/YOURUSER/sca.git
 git push -u origin main
 ```
 
+   * Connect to Remote Repository (recommended)
+```bash
+git remote add origin https://github.com/YOURUSER/sca.git
+git push -u origin main
+```
+
+Verify repository mapping:
 ```bash
 git remote -v
+git branch
+git log --oneline -1
 ```
 
 Run the Scan and save upload to FortiCNAPP UI:
