@@ -38,7 +38,7 @@ export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
 export CI_PLATFORM=CLI
 ```
 
- * You can make CI Build_ID Dynamic:
+*You can make CI Build_ID Dynamic*:
 
 ```bash
 export CI_PIPELINE_NAME="Github-2 Pipeline"
@@ -49,7 +49,7 @@ export CI_PLATFORM="CLI"
 ```
 
 
-For Windows CMD:
+*For Windows CMD*:
 ```bash
 set CI_PIPELINE_NAME=Github Pipeline
 set CI_BUILD_ID=CLI Build
@@ -58,7 +58,7 @@ set CI_PIPELINE_URL=https://github.com/hkebbi/IDEs
 set CI_PLATFORM=CLI
 ```
 
-For Windows PowerShell:
+*For Windows PowerShell*:
 ```bash
 $env:CI_PIPELINE_NAME="Github Pipeline"
 $env:CI_BUILD_ID="CLI Build"
