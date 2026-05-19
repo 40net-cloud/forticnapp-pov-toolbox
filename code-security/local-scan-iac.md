@@ -26,8 +26,8 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 <br>
 
 
-### Local Scan configuration variables: 
-Choose your required variables
+### Upload Results to FortiCNAPP UI: Local Scan configuration variables: 
+  Required variables based on Pipeline structure, follwoing is example, choose the one that fit yours:
 
 ```bash
 export CI_PIPELINE_NAME="Github Pipeline"
@@ -37,9 +37,20 @@ export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
 export CI_PLATFORM=CLI
 ```
 
+### Scan and Upload Results to FortiCNAPP UI:
 ```bash
 lacework iac scan -d .
 ```
+
+#### Example Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
+
+```bash
+lacework iac scan -d . --upload=true --format json --save-result result.json
+```
+
+
+
+
 
 
 
@@ -56,11 +67,8 @@ lacework iac scan -d .
 | 8 | Use in CI/CD | (GitHub / Jenkins / etc.) | Shift-left IaC security |
 
 
-#### Example Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
 
-```bash
-lacework iac scan -d . --upload=true --format json --save-result result.json
-```
+
 
 <br>
 
