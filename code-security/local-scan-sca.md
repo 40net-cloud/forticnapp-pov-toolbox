@@ -25,9 +25,11 @@
 | 5 | Upload results to FortiCNAPP UI | `lacework sca scan ./ --save-results` | Results uploaded to UI |
 |   | Example | `lacework sca scan . -f lw-json -o test.json --save-results`  |
 
-#### Note to save results to FortiCNAPP UI, repo root required with remote  origin https://github.com/YOURUSER/sca.git, example:
 
-lacework sca scan . -f lw-json -o test.json --save-results
+### Upload Results (--save-results) to FortiCNAPP UI:
+    * Upload to UI is structured by git repo, branches, commits etc...so git init and origin is required:
+
+#### Example
 
 ```bash
 git init
@@ -36,9 +38,16 @@ git commit -m "local repo"
 git remote add origin https://github.com/YOURUSER/sca.git
 git push -u origin main
 ```
+
 ```bash
 git remote -v
 ```
+
+Run the Scan and save upload to FortiCNAPP UI:
+```bash
+lacework sca scan . -f lw-json -o test.json --save-results
+```
+
 
 <br>
 
