@@ -27,8 +27,9 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 
 
 ### Upload Results to FortiCNAPP UI: Local Scan configuration variables: 
-  * Required variables based on Pipeline structure in UI, follwoing is example, choose variables that fit yours:
+  * Required variables (Linux/macOS) based on Pipeline structure in UI, follwoing is example, choose variables that fit yours:
 
+For Linux/macOS:
 ```bash
 export CI_PIPELINE_NAME="Github Pipeline"
 export CI_BUILD_ID="CLI Build"
@@ -36,6 +37,25 @@ export CI_BUILD_URL="https://github.com/hkebbi/IDEs"
 export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
 export CI_PLATFORM=CLI
 ```
+
+For Windows CMD:
+```bash
+set CI_PIPELINE_NAME=Github Pipeline
+set CI_BUILD_ID=CLI Build
+set CI_BUILD_URL=https://github.com/hkebbi/IDEs
+set CI_PIPELINE_URL=https://github.com/hkebbi/IDEs
+set CI_PLATFORM=CLI
+```
+
+For Windows PowerShell:
+```bash
+$env:CI_PIPELINE_NAME="Github Pipeline"
+$env:CI_BUILD_ID="CLI Build"
+$env:CI_BUILD_URL="https://github.com/hkebbi/IDEs"
+$env:CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
+$env:CI_PLATFORM="CLI"
+```
+
 
 ### Different example deployements: 
 #### Scan current directory and Upload Results to FortiCNAPP UI:
