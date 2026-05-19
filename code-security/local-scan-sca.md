@@ -59,17 +59,17 @@ git branch
 git log --oneline -1
 ```
 
-* Run the Scan in current directory , save output -f format to output -0 directory path and save upload to FortiCNAPP UI:
+* Example-1: Run the Scan in current directory , save output -f format to output -0 directory path and save upload to FortiCNAPP UI:
 ```bash
 lacework sca scan . -f lw-json -o test.json --save-results
 ```
 
-* Run the Scan in referred directory and save upload to FortiCNAPP UI:
+* Example-2: Run the Scan in referred directory and save upload to FortiCNAPP UI:
 ```bash
 lacework sca scan /Users/xx/Desktop/sca --save-results
 ```
 
-* Run the Scan in referred directory and save upload to FortiCNAPP UI, in addition saved specified output format result to specific directory path:
+* Example-3: Run the Scan in referred directory and save upload to FortiCNAPP UI, in addition saved specified output format result to specific directory path:
 ```bash
 lacework sca scan /Users/xx/Desktop/sca --save-results -f lw-json -o /Users/xx/Desktop/sca/test2.json
 ```
