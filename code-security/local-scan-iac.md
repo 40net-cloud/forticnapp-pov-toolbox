@@ -26,7 +26,8 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 <br>
 
 
-### Local Scan configuration variables:
+### Local Scan configuration variables: 
+Choose your required variables
 
 ```bash
 export CI_PIPELINE_NAME="Github Pipeline"
