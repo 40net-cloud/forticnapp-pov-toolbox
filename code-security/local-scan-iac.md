@@ -25,6 +25,20 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 
 <br>
 
+
+### Local Scan configuration variables:
+export CI_PIPELINE_NAME="Github Pipeline"
+export CI_BUILD_ID="CLI Build"
+export CI_BUILD_URL="https://github.com/hkebbi/IDEs"
+export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
+export CI_PLATFORM=CLI
+
+
+lacework iac scan -d .
+
+
+
+
 ### FortiCNAPP IaC Scan (OPAL) — Simple Steps
 | Step | Action | Command | Result |
 |------|--------|---------|--------|
