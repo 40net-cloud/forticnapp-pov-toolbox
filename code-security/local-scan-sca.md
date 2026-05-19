@@ -10,8 +10,6 @@
 | **FortiCNAPP Requirements**  |  [https://docs.fortinet.com/document/forticnapp/latest/administration-guide/681609/requirements) |
 
 
-                    
-
 <br>
 
 ## FortiCNAPP Local SCA Scan — Simple Steps
@@ -27,9 +25,7 @@
 
 
 ### Upload Results (--save-results) to FortiCNAPP UI:
-    SCA upload needs repository context (repo name, branch, commit, remote). --save-results organizes results in FortiCNAPP by repository metadata.
-    The folder should be a Git repository and ideally connected to a remote repository.
-
+   
 
 #### Example
    * Create Local Git Repository
