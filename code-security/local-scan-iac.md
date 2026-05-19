@@ -27,7 +27,7 @@ It uses OPA + Rego policies to detect misconfigurations before deploymen
 
 
 ### Upload Results to FortiCNAPP UI: Local Scan configuration variables: 
-  Required variables based on Pipeline structure, follwoing is example, choose the one that fit yours:
+  * Required variables based on Pipeline structure in UI, follwoing is example, choose variables that fit yours:
 
 ```bash
 export CI_PIPELINE_NAME="Github Pipeline"
@@ -37,17 +37,29 @@ export CI_PIPELINE_URL="https://github.com/hkebbi/IDEs"
 export CI_PLATFORM=CLI
 ```
 
-### Scan and Upload Results to FortiCNAPP UI:
+### Different example deployements: 
+#### Scan current directory and Upload Results to FortiCNAPP UI:
+  * --upload is True by default
 ```bash
 lacework iac scan -d .
 ```
 
-#### Example Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
+#### Scan local folder (Save results locally in same folder with .json format) and upload to FortiCNAPP UI  
 
 ```bash
 lacework iac scan -d . --upload=true --format json --save-result result.json
 ```
 
+#### Scan local directory (Save results locally in same folder with .json format) and upload to FortiCNAPP UI 
+
+```bash
+lacework iac scan -d /Users/xx/Desktop/scan-iac --format json --save-result /Users/xx/Desktop/scan-iac/result.json
+```
+
+<img width="1284" height="444" alt="Screenshot 2026-05-19 at 10 13 47 PM" src="https://github.com/user-attachments/assets/eacfe7c3-fb93-4efb-b701-9d49112c976e" />
+
+
+<img width="1322" height="659" alt="Screenshot 2026-05-19 at 10 14 16 PM" src="https://github.com/user-attachments/assets/eacada48-65f9-4fe5-a77b-de9ce5124e87" />
 
 
 
