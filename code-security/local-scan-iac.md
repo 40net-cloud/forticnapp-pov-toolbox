@@ -59,7 +59,8 @@ $env:CI_PLATFORM="CLI"
 
 ### Different example deployements: 
 #### Scan current directory and Upload Results to FortiCNAPP UI:
-  * --upload is True by default
+  * --upload value to upload to UI is True by default, you can still add in command:
+    
 ```bash
 lacework iac scan -d .
 ```
