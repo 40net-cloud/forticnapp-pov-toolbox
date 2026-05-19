@@ -24,14 +24,13 @@
 
 
 
-* Homebrew (macOS/Linux)
+* Homebrew (macOS/Linux):
 brew install lacework/tap/lacework-cli
-For more details, see the Lacework Homebrew Tap.
 
 * Chocolatey (Windows):
 choco install lacework-cli
-For more details, see the Lacework CLI Chocolatey package.
 
+<br>
 
 ### Upload Results (--save-results) to FortiCNAPP UI:
 - SCA upload needs repository context (repo name, branch, commit, remote). --save-results organizes results in FortiCNAPP by repository metadata.
