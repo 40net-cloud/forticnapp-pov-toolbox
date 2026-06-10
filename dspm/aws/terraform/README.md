@@ -15,7 +15,7 @@ This Code creates the necessary AWS resources for DSPM scanning, including:
 
 ## Instructions
 
-Follow these steps to deploy:
+Follow these steps to deploy: Clone specific folder
 
 ```bash
 git clone --filter=blob:none --sparse https://github.com/40net-cloud/forticnapp-pov-toolbox.git
