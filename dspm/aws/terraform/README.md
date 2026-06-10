@@ -17,6 +17,12 @@ This Code creates the necessary AWS resources for DSPM scanning, including:
 
 Follow these steps to deploy:
 
+```bash
+git clone --filter=blob:none --sparse https://github.com/40net-cloud/forticnapp-pov-toolbox.git
+cd forticnapp-pov-toolbox
+git sparse-checkout set dspm/aws
+```
+
 1. Rename the file `terraform.tfvars.txt` to `terraform.tfvars`.
 2. Fill in the required variables in `terraform.tfvars` file:
     - scanning_account_id: AWS account ID where DSPM scanner will be deployed
