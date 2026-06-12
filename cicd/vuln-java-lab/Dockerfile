@@ -7,10 +7,10 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn -q clean package -DskipTests
 
-FROM ubuntu:14.04
+FROM eclipse-temurin:8-jre
 
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jre curl openssl bash
+    apt-get install -y curl openssl bash
 
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
