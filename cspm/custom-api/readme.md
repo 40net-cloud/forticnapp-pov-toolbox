@@ -1,5 +1,5 @@
 > [!NOTE]
-> For the complete library of custom compliance policies and frameworks used by FortiCNAPP demonstrations, refer to:
+> For the complete Info of custom compliance policies and frameworks used by FortiCNAPP demonstrations, refer to:
 >
 > **https://github.com/40net-cloud/forticnapp-compliance-policies/tree/main**
 >
