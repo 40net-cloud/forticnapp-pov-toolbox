@@ -1,3 +1,9 @@
+> [!NOTE]
+> For the complete library of custom compliance policies and frameworks used by FortiCNAPP demonstrations, refer to:
+>
+> **https://github.com/40net-cloud/forticnapp-compliance-policies/tree/main**
+>
+> This repository contains additional compliance policies, custom frameworks, and supporting policy definitions that are not covered in this CloudShell storage workaround guide.
 
 # FortiCNAPP Framework Migration
 
