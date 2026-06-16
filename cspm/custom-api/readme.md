@@ -28,7 +28,7 @@ TARGET_SECRET=<TARGET_SECRET>
 ### Example
 
 ```bash
-SOURCE_TENANT=316605
+SOURCE_TENANT=654321
 SOURCE_KEYID=lw-uak-xxxxxxxx
 SOURCE_SECRET=xxxxxxxxxxxxxxxx
 
@@ -142,7 +142,7 @@ This matches frameworks whose names contain:
 * `ISO/IEC 42001:2023 — AIMS`
 * `Microsoft Cloud Security Benchmark v3`
 
-### Exact Match Alternative
+### Example new Custom Frameworks naming
 
 ```jq
 select(
