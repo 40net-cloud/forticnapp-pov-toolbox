@@ -1,0 +1,66 @@
+############################################################################################################################################
+#  Variables to Integrate OCI Configuration (CSPM) with FortiCNAPP                                                                         #
+############################################################################################################################################
+
+# All optional variables are set to their default values. Customize them as needed.
+# Rename this file to terraform.tfvars before running `terraform apply`.
+
+########################################
+# OCI Provider (direct API-key auth)
+########################################
+
+# OCID of the user running this Terraform (your admin user)
+user_ocid = "ocid1.user.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Fingerprint of the API signing key uploaded to that user
+fingerprint = "aa:bb:cc:dd:ee:ff:00:11:22:33:44:55:66:77:88:99"
+
+# Path to the matching PEM private key (forward slashes work on Windows)
+private_key_path = "C:/User/.oci/oci_api_key.pem"
+
+# OCI region to operate in (e.g. eu-frankfurt-1)
+region = "eu-frankfurt-1"
+
+########################################
+# Required
+########################################
+
+# OCID of the OCI tenancy to be integrated with FortiCNAPP
+tenancy_id = "ocid1.tenancy.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Email associated with the IAM user created for the integration
+user_email = "cloudsec@example.com"
+
+########################################
+# FortiCNAPP Integration
+########################################
+
+# Label for the OCI integration as shown within the FortiCNAPP platform
+integration_name = "OCI CSPM Integration"
+
+########################################
+# Resource Naming
+########################################
+
+# The OCI resources will be named <name_prefix>_{user,group,policy}
+name_prefix = "lw_cspm"
+
+# Explicit names (each overrides name_prefix for that resource). Leave empty to use name_prefix.
+user_name   = ""
+group_name  = ""
+policy_name = ""
+
+########################################
+# Tagging / Deployment Behavior
+########################################
+
+# Freeform tags applied to the resources created for the CSPM integration
+freeform_tags = {}
+
+# Set to false to prevent the module from creating any resources
+create = true
+
+# Amount of time to wait before the next resource is provisioned
+wait_time = "10s"
+
+############################################################################################
