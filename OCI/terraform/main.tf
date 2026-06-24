@@ -1,16 +1,29 @@
 # Terraform for integrating an OCI Tenancy with FortiCNAPP for cloud resource configuration assessment (CSPM)
 
 provider "oci" {
-  # Direct API-key authentication (no ~/.oci/config file required).
-  # All values are supplied via terraform.tfvars.
-  tenancy_ocid     = var.tenancy_id
-  user_ocid        = var.user_ocid
-  fingerprint      = var.fingerprint
-  private_key_path = var.private_key_path
-  region           = var.region
+
+  # Config-file auth: set config_file_profile, leave the direct fields empty.
+  config_file_profile = var.config_file_profile != "" ? var.config_file_profile : null
+
+  # Direct API-key auth: set the fields below, and set config_file_profile = "".
+  # tenancy_ocid reuses var.tenancy_id (the tenancy being integrated).
+  tenancy_ocid         = var.tenancy_id
+  user_ocid            = var.oci_user_ocid != "" ? var.oci_user_ocid : null
+  fingerprint          = var.oci_fingerprint != "" ? var.oci_fingerprint : null
+  private_key_path     = var.oci_private_key_path != "" ? var.oci_private_key_path : null
+
+  region = var.region
 }
 
-# The Lacework/FortiCNAPP provider reads credentials from ~/.lacework.toml
+# The Lacework/FortiCNAPP provider. Any value left empty falls back to
+# ~/.lacework.toml (the selected profile) or LW_* environment variables.
+provider "lacework" {
+  profile    = var.lw_profile
+  account    = var.lw_account
+  subaccount = var.lw_subaccount
+  api_key    = var.lw_api_key
+  api_secret = var.lw_api_secret
+}
 
 module "oci_config" {
   source  = "lacework/config/oci"

@@ -2,24 +2,40 @@
 # OCI Provider
 ########################################
 
-variable "user_ocid" {
+########################################
+# OCI Provider
+########################################
+# Use EITHER config-file auth (config_file_profile) OR direct API-key auth
+# (oci_user_ocid + oci_fingerprint + oci_private_key_path). For direct auth,
+# set config_file_profile = "".
+
+variable "config_file_profile" {
   type        = string
-  description = "OCID of the OCI user used to authenticate the provider (the admin running this Terraform)"
+  default     = "DEFAULT"
+  description = "Profile in ~/.oci/config to authenticate with. Set to \"\" when using direct API-key auth"
 }
 
-variable "fingerprint" {
+variable "oci_user_ocid" {
   type        = string
-  description = "Fingerprint of the API signing key uploaded to the OCI user above"
+  default     = ""
+  description = "Direct auth: OCID of the user running this Terraform"
 }
 
-variable "private_key_path" {
+variable "oci_fingerprint" {
   type        = string
-  description = "Path to the PEM private key matching the fingerprint (e.g. C:/Users/.oci/oci_api_key.pem)"
+  default     = ""
+  description = "Direct auth: fingerprint of the API signing key for the user above"
+}
+
+variable "oci_private_key_path" {
+  type        = string
+  default     = ""
+  description = "Direct auth: path to the matching PEM private key (use forward slashes on Windows)"
 }
 
 variable "region" {
   type        = string
-  description = "OCI region to operate in (e.g. eu-frankfurt-1)"
+  description = "OCI region for the provider. Use your tenancy HOME region for IAM writes (e.g. eu-amsterdam-1)"
 }
 
 ########################################
@@ -34,6 +50,43 @@ variable "tenancy_id" {
 variable "user_email" {
   type        = string
   description = "Email associated with the IAM user created for the integration"
+}
+
+########################################
+# FortiCNAPP / Lacework Provider
+########################################
+# Leave any value empty ("") to fall back to ~/.lacework.toml or LW_* env vars.
+
+variable "lw_profile" {
+  type        = string
+  default     = ""
+  description = "Profile name in ~/.lacework.toml to use"
+}
+
+variable "lw_account" {
+  type        = string
+  default     = ""
+  description = "FortiCNAPP account subdomain (the ACME in https://ACME.lacework.net)"
+}
+
+variable "lw_subaccount" {
+  type        = string
+  default     = ""
+  description = "FortiCNAPP sub-account name (organizations only)"
+}
+
+variable "lw_api_key" {
+  type        = string
+  default     = ""
+  sensitive   = true
+  description = "FortiCNAPP API key. Prefer the env var TF_VAR_lw_api_key over committing this"
+}
+
+variable "lw_api_secret" {
+  type        = string
+  default     = ""
+  sensitive   = true
+  description = "FortiCNAPP API secret. Prefer the env var TF_VAR_lw_api_secret over committing this"
 }
 
 ########################################

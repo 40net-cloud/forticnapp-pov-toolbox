@@ -6,20 +6,22 @@
 # Rename this file to terraform.tfvars before running `terraform apply`.
 
 ########################################
-# OCI Provider (direct API-key auth)
+# OCI Provider
 ########################################
+# Choose ONE auth method:
+#   A) Config-file auth  -> set config_file_profile, leave the direct fields empty.
+#   B) Direct API-key    -> set config_file_profile = "" and fill the oci_* fields.
 
-# OCID of the user running this Terraform (your admin user)
-user_ocid = "ocid1.user.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# (A) Config-file auth
+config_file_profile = "DEFAULT"
 
-# Fingerprint of the API signing key uploaded to that user
-fingerprint = "aa:bb:cc:dd:ee:ff:00:11:22:33:44:55:66:77:88:99"
+# (B) Direct API-key auth (leave empty if using config-file auth)
+oci_user_ocid            = ""
+oci_fingerprint          = ""
+oci_private_key_path     = ""
 
-# Path to the matching PEM private key (forward slashes work on Windows)
-private_key_path = "C:/User/.oci/oci_api_key.pem"
-
-# OCI region to operate in (e.g. eu-frankfurt-1)
-region = "eu-frankfurt-1"
+# Use your tenancy HOME region for IAM writes (Tenancy details page shows it)
+region = "eu-amsterdam-1"
 
 ########################################
 # Required
@@ -30,6 +32,20 @@ tenancy_id = "ocid1.tenancy.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Email associated with the IAM user created for the integration
 user_email = "cloudsec@example.com"
+
+########################################
+# FortiCNAPP / Lacework Provider
+########################################
+# Leave empty ("") to fall back to ~/.lacework.toml or LW_* env vars.
+# SECURITY: keep api_key/api_secret OUT of this file. Set them instead via:
+#   setx TF_VAR_lw_api_key   "..."   (Windows)
+#   setx TF_VAR_lw_api_secret "..."
+
+lw_profile    = ""
+lw_account    = ""
+lw_subaccount = ""
+lw_api_key    = ""
+lw_api_secret = ""
 
 ########################################
 # FortiCNAPP Integration
