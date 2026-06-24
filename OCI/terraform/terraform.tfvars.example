@@ -70,7 +70,7 @@ policy_name = ""
 # Tagging / Deployment Behavior
 ########################################
 
-# Freeform tags applied to the resources created for the CSPM integration
+# Freeform tags applied to the resources created for the CSPM integration. "example_tag": "example_value"
 freeform_tags = {}
 
 # Set to false to prevent the module from creating any resources
