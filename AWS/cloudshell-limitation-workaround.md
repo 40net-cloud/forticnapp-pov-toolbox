@@ -36,3 +36,4 @@ $ ln -s /tmp/terraform-cache .terraform
 $ ls -la
 lrwxrwxrwx. 1 cloudshell-user cloudshell-user 20 Jun 10 11:55 .terraform -> /tmp/terraform-cache
 ````
+find ~
