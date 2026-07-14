@@ -39,18 +39,18 @@ cd OCI/terraform
 
 ## 3. Upload your API private key
 
-Use the Cloud Shell menu (**⋮ → Upload**) to upload your `.pem` private key, then secure it:
+Use the Cloud Shell menu (**⋮ → Upload**) to upload your `.pem` private key. Uploaded files land in your home directory — locate it if needed:
 
 ```bash
-mv ~/your_api_key.pem ~/.oci/oci_api_key.pem
-chmod 600 ~/.oci/oci_api_key.pem
+find ~ -name "*.pem" 2>/dev/null
 ```
 
-Generate the fingerprint if you don't have it:
+Secure the key:
 
 ```bash
-openssl rsa -pubout -outform DER -in ~/.oci/oci_api_key.pem 2>/dev/null | openssl md5 -c | awk '{print $2}'
+chmod 600 ~/oci-key.pem
 ```
+
 
 ## 4. Configure variables
 
@@ -66,7 +66,7 @@ echo $OCI_TENANCY   # tenancy_id
 echo $OCI_REGION    # region — use your tenancy HOME region for IAM writes
 ```
 
-For direct API-key auth, set `config_file_profile = ""` and fill in `oci_user_ocid`, `oci_fingerprint`, and `oci_private_key_path` (absolute path, e.g. `/home/your_user/.oci/oci_api_key.pem`). Also set `tenancy_id`, `region`, `user_email`, and your FortiCNAPP credentials (`lw_account`, `lw_api_key`, `lw_api_secret` — or leave them empty to fall back to `~/.lacework.toml` or `LW_*` environment variables).
+For direct API-key auth, set `config_file_profile = ""` and fill in `oci_user_ocid`, `oci_fingerprint`, and `oci_private_key_path` (absolute path, e.g. `/home/your_user/oci-key.pem`). Also set `tenancy_id`, `region`, `user_email`, and your FortiCNAPP credentials (`lw_account`, `lw_api_key`, `lw_api_secret` — or leave them empty to fall back to `~/.lacework.toml` or `LW_*` environment variables).
 
 ## 5. Deploy
 
@@ -86,3 +86,4 @@ To remove all resources created by this example:
 terraform destroy
 ```
 
+> **Note:** Cloud Shell sessions time out after 20 minutes of inactivity, but your home directory (including the cloned repo and Terraform state) persists between sessions.
