@@ -85,5 +85,3 @@ To remove all resources created by this example:
 ```bash
 terraform destroy
 ```
-
-> **Note:** Cloud Shell sessions time out after 20 minutes of inactivity, but your home directory (including the cloned repo and Terraform state) persists between sessions.
