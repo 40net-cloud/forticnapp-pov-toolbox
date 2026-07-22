@@ -15,9 +15,6 @@ regions = [""]
 # Region to deploy shared resources to (multi-region deployment). Defaults to first region in var.regions.
 global_region = ""
 
-# Integration name in FortiCNAPP
-lacework_integration_name = "aws-dspm"
-
 # Prefix for resources
 resource_prefix = "forticnapp-dspm"
 
@@ -26,6 +23,20 @@ tags = {
   ManagedBy   = "terraform"
 }
 
+# Manage the aws_s3_bucket_public_access_block resource on S3 bucket. 
+# Set to true to create the resource.
+# Set to false to prevent creating the resource for environments whose SCPs deny s3:PutBucketPublicAccessBlock.
+# AWS enables Block Public Access by default on new buckets, so the bucket remains private when this is disabled
+manage_s3_public_access_block = 
+
+# Forticnapp configuration:
+# Integration name in FortiCNAPP
+lacework_integration_name = "aws-dspm"
+# Hostname for the Lacework account (e.g., my-tenant.lacework.net). If not provided, will use the URL associated with the default Lacework CLI profile.
+lacework_hostname = ""
+# Lacework domain
+lacework_domain = "lacework.net"
+
 # Scan settings:
 # How often the DSPM scanner runs, in hours. Valid values: 24 (1 day), 72 (3 days), 168 (7 days), 720 (30 days).
 scan_frequency_hours = null
@@ -33,7 +44,6 @@ scan_frequency_hours = null
 max_file_size_mb     = null
 # Docker image for the DSPM scanner
 scanner_image = "lacework/dspm-scanner:latest"
-
 
 # ECS task sizing:
 # CPU units for ECS task (256, 512, 1024, 2048, 4096)
@@ -50,11 +60,4 @@ additional_trusted_role_arns = []
 # Optional environment variables
 additional_environment_variables = []
 
-# Hostname for the Lacework account (e.g., my-tenant.lacework.net). If not provided, will use the URL associated with the default Lacework CLI profile.
-lacework_hostname = ""
 
-# Lacework domain
-lacework_domain = "lacework.net"
-
-# Lacework AWS account ID - Don't change
-lacework_aws_account_id = "434813966438"
