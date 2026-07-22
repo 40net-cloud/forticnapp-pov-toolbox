@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.3"
+  required_version = ">= 1.7"
 
   required_providers {
     aws = {
@@ -7,8 +7,12 @@ terraform {
       version = "~> 6.0"
     }
     lacework = {
-      source  = "lacework/lacework"
-      version = "~> 2.2"
+      source = "lacework/lacework"
+      version = "~> 2.3, != 2.4.0"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9"
     }
   }
 }
