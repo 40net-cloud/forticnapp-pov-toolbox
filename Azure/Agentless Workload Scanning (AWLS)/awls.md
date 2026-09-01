@@ -50,7 +50,7 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 
 
 
-# Agentless Workload Scanning for Subscriptions
+# Deployment: Agentless Workload Scanning for Subscriptions
 
 This configuration enables **agentless workload scanning** for selected Azure subscriptions. It scans workloads in the configured Azure region without installing an agent on each workload.
 
