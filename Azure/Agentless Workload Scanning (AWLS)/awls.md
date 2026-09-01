@@ -46,4 +46,64 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 |                       7 | The scanning virtual machines attach the cloned disks, mount them in the file system, and perform **agentless scanning** without installing software inside customer workloads.                                                                                                                                                                                                                                                                                              |
 |                       8 | The scanning virtual machines upload scan metadata and results to the **customer-owned Azure Blob Storage account**.                                                                                                                                                                                                                                                                                                                                                         |
 |                       9 | A FortiCNAPP ingestion service runs on a schedule and **retrieves scan results and metadata** from the customer storage account for processing in the FortiCNAPP platform.                                                                                                                                                                                                                                                                                                   |
-|    🧹 Automatic Cleanup | Temporary snapshots, ephemeral scanning virtual machines, and stale scan artifacts are automatically removed to minimize footprint and cost.   
+|    🧹 Automatic Cleanup | Temporary snapshots, ephemeral scanning virtual machines, and stale scan artifacts are automatically removed to minimize footprint and cost.  
+
+
+
+# Agentless Workload Scanning for Subscriptions
+
+This configuration enables **agentless workload scanning** for selected Azure subscriptions. It scans workloads in the configured Azure region without installing an agent on each workload.
+
+> Replace every `xxx` value with the appropriate value for your environment before deployment.
+
+## Configuration
+
+| Setting | Value | Description |
+|---|---|---|
+| Subscription ID for Lacework resources | `xxx` | Azure subscription used to provision the required Lacework resources. |
+| Configure additional subscriptions | `No` | Whether to configure more subscriptions during this setup. |
+| Configuration integration | `No` | Enables collection of Azure configuration data. |
+| Activity Log integration | `No` | Enables collection of Azure Activity Log events. |
+| Agentless integration | `Yes` | Enables agentless workload scanning. |
+| Agentless integration level | `SUBSCRIPTION` | Applies scanning configuration at the subscription level. |
+| Global agentless scanning | `Yes` | Enables agentless scanning across the configured scope. |
+| Create Log Analytics workspace | `No` | Creates a new Log Analytics workspace if one is required. |
+| Regions for scanning | `West US` | Azure regions where agentless workload scanning will run. |
+| Subscription IDs for scanning | `xxx` | Comma-separated Azure subscription IDs to scan. |
+| Entra ID Activity Log integration | `No` | Enables Microsoft Entra ID Activity Log collection. |
+| Output location | _Optional_ | Directory where generated deployment output is written. |
+| Run Terraform plan | `Yes` | Runs `terraform plan` to preview the deployment. |
+
+## Example CLI Flow
+
+```powershell
+lacework generate cloud-account azure
+```
+
+When prompted, use the values in the table above. After configuration is complete, allow Terraform to initialize the required providers and review the generated plan before applying it.
+
+## Notes
+
+- Keep subscription IDs out of source control; use `xxx` in documentation and examples.
+- Limit regions and subscriptions to the workload scope you intend to scan.
+- Review the Terraform plan to confirm the resources and permissions match your environment.
+
+## Example
+
+The following example reflects an agentless workload-scanning setup for a single Azure subscription in **West US**:
+
+```text
+Subscription ID to be used to provision Lacework resources: xxx
+Configure Subscriptions (optional): No
+[Configuration] Enable Configuration integration: No
+[Activity Log] Enable Activity Log integration: No
+[Agentless] Enable Agentless integration: Yes
+[Agentless] Select integration level: SUBSCRIPTION
+[Agentless] Enable global Agentless scanning: Yes
+[Agentless] Create Log Analytics Workspace: No
+[Agentless] List of regions for scanning: West US
+[Agentless] List of subscription IDs for scanning: xxx
+[Entra ID Activity Log] Enable Entra ID Activity Log Integration: No
+Provide the location for the output to be written: (optional)
+Run Terraform plan now: Yes
+```
