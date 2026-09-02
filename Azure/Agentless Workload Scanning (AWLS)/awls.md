@@ -1,6 +1,9 @@
+
+Azure AWLS Terraform Modules and Examples:
 A Terraform Module to configure the Lacework Agentless Scanner on Azure.
 https://github.com/lacework/terraform-azure-agentless-scanning
-
+Examples:
+https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples
 
 https://registry.terraform.io/modules/lacework/agentless-scanning/azure/latest
 This Terraform module installs global and regional resources. The global resources are installed once per integration. 
