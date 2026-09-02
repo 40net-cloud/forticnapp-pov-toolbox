@@ -1,3 +1,4 @@
+A Terraform Module to configure the Lacework Agentless Scanner on Azure.
 https://github.com/lacework/terraform-azure-agentless-scanning
 
 
