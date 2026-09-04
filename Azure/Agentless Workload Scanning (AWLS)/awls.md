@@ -167,12 +167,15 @@ Terraform created resource group `lacework-agentless-7277` in the scanning subsc
 - The first region in `--regions` became the global/primary module.
 - Shared storage, identity, Key Vault and integration resources were created once in West US.
 - Network and scanning resources were created separately in both regions.
-- Both subscriptions are monitored through `included_subscriptions`.<img width="1048" height="630" alt="Screenshot 2026-09-04 at 11 02 28 AM" src="https://github.com/user-attachments/assets/32e3ce69-075f-48be-8b48-437ec0f7363d" />
-
+- Both subscriptions are monitored through `included_subscriptions`.
 - Scanner infrastructure is owned and billed through the designated scanning subscription.
 - The second monitored subscription does not require a duplicate scanner resource group; cross-subscription access is provided through Azure RBAC.
 - Microsoft Entra and subscription-level RBAC objects do not necessarily appear in the resource group’s resource list.
 - Temporary scanning VMs, cloned disks, snapshots and network interfaces may appear while scheduled scans are running and are subsequently cleaned up.
+
+
+
+<img width="1331" height="763" alt="Screenshot 2026-09-04 at 11 04 50 AM" src="https://github.com/user-attachments/assets/2a988b70-92f3-4bc9-aa8b-73ccdba496eb" />
 
 
 
