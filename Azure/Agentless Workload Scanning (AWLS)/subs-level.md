@@ -1,5 +1,22 @@
 # FortiCNAPP Agentless Workload Scanning for Microsoft Azure
 
+## Reference documentation
+
+| Reference | Purpose |
+|---|---|
+| [Official Azure AWLS Terraform module](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main) | Authoritative module inputs, outputs, resources, requirements, preflight checks, and deprovisioning guidance |
+| [Azure AWLS module examples](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples) | Single-region, multi-region, tenant-level, subscription-level, and custom-network examples |
+| [Terraform Registry: Azure agentless scanning](https://registry.terraform.io/modules/lacework/agentless-scanning/azure/latest) | Published module version and generated documentation |
+| [Subscription-level single-region example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/subscription-single-region) | Global and regional resources in one region |
+| [Subscription-level multi-region example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/subscription-multi-region) | One global module with additional regional modules |
+| [Custom VNet example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/custom-vnet) | Deploying AWLS with existing/custom networking |
+| [FortiCNAPP: Integrating your Azure environment](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/729300/integrating-your-azure-environment) | Azure scanning workflow and global/regional deployment model |
+| [FortiCNAPP: Preparing for Azure integration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/991151/preparing-for-integration) | Permissions, quotas, limitations, and preflight guidance |
+| [FortiCNAPP: Deploying AWLS on Azure](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/42109/deploying-agentless-workload-scanning-on-azure) | Deployment procedure and validation |
+| [FortiCNAPP: Viewing agentless results](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/692150) | Host and container result locations and filters |
+| [FortiCNAPP: Agentless scanning FAQ](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/269317/agentless-workload-scanning-faqs) | Scan behavior, timing, container support, storage, and cleanup |
+
+---
 This guide documents subscription-level deployment of FortiCNAPP Agentless Workload Scanning (AWLS) on Microsoft Azure using the FortiCNAPP CLI and the official Terraform module.
 
 AWLS scans supported Azure virtual-machine disks for host vulnerabilities, container-image vulnerabilities, and supported secrets without installing an agent inside the monitored workload. It does not provide runtime activity monitoring or behavioral telemetry; deploy the FortiCNAPP agent when those capabilities are required.
@@ -483,22 +500,6 @@ No changes. No objects need to be destroyed.
 ```
 
 That message does not prove that Azure contains no AWLS resources; it only means the current Terraform state manages none.
-
-## Reference documentation
-
-| Reference | Purpose |
-|---|---|
-| [Official Azure AWLS Terraform module](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main) | Authoritative module inputs, outputs, resources, requirements, preflight checks, and deprovisioning guidance |
-| [Azure AWLS module examples](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples) | Single-region, multi-region, tenant-level, subscription-level, and custom-network examples |
-| [Terraform Registry: Azure agentless scanning](https://registry.terraform.io/modules/lacework/agentless-scanning/azure/latest) | Published module version and generated documentation |
-| [Subscription-level single-region example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/subscription-single-region) | Global and regional resources in one region |
-| [Subscription-level multi-region example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/subscription-multi-region) | One global module with additional regional modules |
-| [Custom VNet example](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/examples/custom-vnet) | Deploying AWLS with existing/custom networking |
-| [FortiCNAPP: Integrating your Azure environment](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/729300/integrating-your-azure-environment) | Azure scanning workflow and global/regional deployment model |
-| [FortiCNAPP: Preparing for Azure integration](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/991151/preparing-for-integration) | Permissions, quotas, limitations, and preflight guidance |
-| [FortiCNAPP: Deploying AWLS on Azure](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/42109/deploying-agentless-workload-scanning-on-azure) | Deployment procedure and validation |
-| [FortiCNAPP: Viewing agentless results](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/692150) | Host and container result locations and filters |
-| [FortiCNAPP: Agentless scanning FAQ](https://docs.fortinet.com/document/forticnapp/latest/administration-guide/269317/agentless-workload-scanning-faqs) | Scan behavior, timing, container support, storage, and cleanup |
 
 ## Security and cost notes
 
