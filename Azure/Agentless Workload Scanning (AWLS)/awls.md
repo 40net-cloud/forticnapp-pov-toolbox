@@ -112,7 +112,38 @@ Provide the location for the output to be written: (optional)
 Run Terraform plan now: Yes
 ```
 
-# CLI - Non-Interactive Example: Subscriptions-Level (Two Sub)  in Two Regions:
+## Deployment: FortiCNAPP Azure Agentless CLI Commands
+
+### Single subscription, single region
+
+```powershell
+lacework generate cloud-account azure --agentless --integration_level "SUBSCRIPTION" --agentless_subscription_ids "62692855-5d49-452a-855f-c4e55b312fb6" --subscription_id "62692855-5d49-452a-855f-c4e55b312fb6" --regions "West US" --global=true --noninteractive --output "/home/hussam/azure-agentless-single-sub-single-region"
+```
+
+### Two subscriptions, single region
+
+```powershell
+lacework generate cloud-account azure --agentless --integration_level "SUBSCRIPTION" --agentless_subscription_ids "62692855-5d49-452a-855f-c4e55b312fb6,03921cd3-caef-45a2-bc47-98e889f270a0" --subscription_id "62692855-5d49-452a-855f-c4e55b312fb6" --regions "West US" --global=true --noninteractive --output "/home/hussam/azure-agentless-two-subs-single-region"
+```
+
+### Two subscriptions, two regions
+
+West US is listed first and becomes the global/primary region. East US receives its own regional scanner resources.
+
+```powershell
+lacework generate cloud-account azure --agentless --integration_level "SUBSCRIPTION" --agentless_subscription_ids "62692855-5d49-452a-855f-c4e55b312fb6,03921cd3-caef-45a2-bc47-98e889f270a0" --subscription_id "62692855-5d49-452a-855f-c4e55b312fb6" --regions "West US,East US" --global=true --noninteractive --output "/home/hussam/azure-agentless-two-subs-two-regions"
+```
+
+In all commands:
+
+- `--agentless_subscription_ids` lists the monitored subscriptions.
+- `--subscription_id` identifies the subscription hosting and paying for scanner infrastructure.
+- `--regions` lists the regions in which regional scanner infrastructure is deployed.
+- The first listed region hosts the shared global resources.
+- All monitored subscriptions must be accessible to the deployment identity and should belong to the same Microsoft Entra tenant.
+
+
+# Detailed: CLI - Non-Interactive Example: Subscriptions-Level (Two Sub)  in Two Regions:
 
 ## Deployment model
 
