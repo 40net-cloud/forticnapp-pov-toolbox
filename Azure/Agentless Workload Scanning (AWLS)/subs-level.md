@@ -325,6 +325,13 @@ The official module README is the source of truth for inputs, types, and default
 > [!NOTE]
 > `create_log_analytics_workspace = false` does not disable AWLS. It only prevents the module from creating the optional Log Analytics workspace used to view Container App logs.
 
+
+
+<img width="1048" height="630" alt="Screenshot 2026-09-04 at 11 02 28 AM" src="https://github.com/user-attachments/assets/184eb634-c4e3-4a6a-b463-52b1b7a9f671" />
+
+
+
+
 ## Validate the deployment
 
 Confirm Terraform has no pending differences:
