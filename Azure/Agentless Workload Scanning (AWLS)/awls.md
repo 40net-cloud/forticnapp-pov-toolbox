@@ -54,7 +54,7 @@ Azure Agentless Workload Scanning deploys scheduled, customer-owned scanning inf
 
 
 
-# Deployment: Agentless Workload Scanning for Subscriptions
+# Deployment Examples: Agentless Workload Scanning for Subscriptions
 
 This configuration enables **agentless workload scanning** for selected Azure subscriptions. It scans workloads in the configured Azure region without installing an agent on each workload.
 
@@ -92,7 +92,7 @@ When prompted, use the values in the table above. After configuration is complet
 - Limit regions and subscriptions to the workload scope you intend to scan.
 - Review the Terraform plan to confirm the resources and permissions match your environment.
 
-## Example
+## Interactive CLI Example
 
 The following example reflects an agentless workload-scanning setup for a single Azure subscription in **West US**:
 
@@ -111,3 +111,68 @@ Configure Subscriptions (optional): No
 Provide the location for the output to be written: (optional)
 Run Terraform plan now: Yes
 ```
+
+# CLI - Non-Interactive Example: Subscriptions-Level (Two Sub)  in Two Regions:
+
+## Deployment model
+
+- Integration level: Subscription
+- Monitored subscriptions: Two
+- Scanning regions: West US and East US
+- Global/primary region: West US
+- Scanning subscription: `62692855-5d49-452a-855f-c4e55b312fb6`
+- Second monitored subscription: `03921cd3-caef-45a2-bc47-98e889f270a0`
+- Generated output: `/home/hussam/azure-agentless-multisub-multiregion`
+
+## CLI command
+
+```powershell
+lacework generate cloud-account azure --agentless --integration_level "SUBSCRIPTION" --agentless_subscription_ids "626xxxxxx0" --subscription_id "62yyyyyy<img width="1048" height="630" alt="Screenshot 2026-09-04 at 11 02 28 AM" src="https://github.com/user-attachments/assets/97dbf87d-27ef-4071-b1d7-dbf5f1947a72" />
+b6" --regions "West US,East US" --global=true --noninteractive --output "/home/hussam/azure-agentless-multisub-multiregion"
+```
+
+## Deployment result
+
+Terraform created resource group `lacework-agentless-7277` in the scanning subscription. West US hosts the shared global resources and its regional scanner. East US has a separate regional scanner connected to the West US global module.
+
+### Global/shared resources in West US
+
+- Key Vault: `lacework-agentless-7277`
+- Managed identity: `lacework-identity-7277`
+- Storage account: `laceworkscan7277`
+- FortiCNAPP integration, Microsoft Entra application/service principal, shared authorization and Azure RBAC resources
+
+### West US regional resources
+
+- Container App Job: `lacework-westus-7277`
+- Container Apps Environment: `lacework-service-westus-7277`
+- NAT Gateway: `lacework-nat-gateway-westus-7277`
+- Network Security Group: `lacework-nsg-7277-westus`
+- Public IP address: `lacework-public-ip-westus-7277`
+- Virtual network: `lacework-virt-network-7277-westus`
+- Associated subnet and regional permissions
+
+### East US regional resources
+
+- Container App Job: `lacework-eastus-7277`
+- Container Apps Environment: `lacework-service-eastus-7277`
+- NAT Gateway: `lacework-nat-gateway-eastus-7277`
+- Network Security Group: `lacework-nsg-7277-eastus`
+- Public IP address: `lacework-public-ip-eastus-7277`
+- Virtual network: `lacework-virt-network-7277-eastus`
+- Associated subnet and regional permissions
+
+## Architecture notes
+
+- The first region in `--regions` became the global/primary module.
+- Shared storage, identity, Key Vault and integration resources were created once in West US.
+- Network and scanning resources were created separately in both regions.
+- Both subscriptions are monitored through `included_subscriptions`.<img width="1048" height="630" alt="Screenshot 2026-09-04 at 11 02 28 AM" src="https://github.com/user-attachments/assets/32e3ce69-075f-48be-8b48-437ec0f7363d" />
+
+- Scanner infrastructure is owned and billed through the designated scanning subscription.
+- The second monitored subscription does not require a duplicate scanner resource group; cross-subscription access is provided through Azure RBAC.
+- Microsoft Entra and subscription-level RBAC objects do not necessarily appear in the resource group’s resource list.
+- Temporary scanning VMs, cloned disks, snapshots and network interfaces may appear while scheduled scans are running and are subsequently cleaned up.
+
+
+
