@@ -372,146 +372,6 @@ az containerapp job start --name "<JOB_NAME>" --resource-group "<SCANNING_RESOUR
 
 In FortiCNAPP, view agentless vulnerability results under **Vulnerabilities > Hosts** or **Vulnerabilities > Containers**. For container results, group by image ID and filter **Scanner type** to **Agentless**.
 
-## Container-discovery requirements
-
-For Docker workloads, agentless scanning supports the `overlay2` storage driver and recognized Docker storage locations such as `/var/lib/docker`.
-
-Check an Ubuntu Docker host:
-
-```bash
-sudo docker info | grep -E 'Server Version|Storage Driver|Docker Root Dir'
-findmnt -T /var/lib/docker
-sudo docker ps
-```
-
-If `/var/lib/docker` is on the root disk, `scan_multi_volume` is unnecessary. If it is on a supported secondary Azure managed disk, review the official requirements and enable `scan_multi_volume` when applicable.
-
-Agentless scanning is periodic rather than real-time. Keep short-lived test containers running through a complete scan and evaluation cycle.
-
-## Troubleshooting
-
-### Azure CLI access token expired
-
-Symptoms:
-
-```text
-Error: building client: unable to obtain access token: running Azure CLI: exit status 1
-```
-
-Refresh Azure CLI authentication and select the scanning subscription:
-
-```powershell
-az login
-az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
-az account show --query "{Subscription:id,Tenant:tenantId,User:user.name}" -o table
-az account get-access-token --resource "https://management.azure.com/" --query expiresOn -o tsv
-az account get-access-token --resource "https://graph.microsoft.com/" --query expiresOn -o tsv
-```
-
-Then resume from the same Terraform directory:
-
-```powershell
-terraform plan
-terraform apply
-```
-
-The `azuread` provider requires a Microsoft Graph token. An `end_date_relative` deprecation warning from an older module/provider combination is not the cause of an Azure CLI authentication failure.
-
-### Cloud Shell disconnected or timed out
-
-Cloud Shell can disconnect during a long operation. Terraform normally records each completed resource in state, so resume rather than regenerate the deployment.
-
-1. Reopen Cloud Shell.
-2. Return to the same persistent directory.
-3. Confirm the state file exists.
-4. Refresh Azure authentication.
-5. Run `terraform plan` to reconcile actual infrastructure with state.
-6. Resume `terraform apply` or `terraform destroy` as appropriate.
-
-```powershell
-Set-Location "/home/<USER>/<GENERATED_OUTPUT_DIRECTORY>"
-Get-ChildItem -Force
-terraform state list
-az login
-az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
-terraform plan
-```
-
-Do not start a second Terraform operation while the first is still running. Do not regenerate into a different directory and expect it to manage resources recorded in the original state.
-
-For long-running production deployments, use a persistent runner and a protected remote Terraform backend rather than relying on local Cloud Shell state.
-
-### State file exists but lists no resources
-
-`terraform.tfstate` can exist while containing zero managed objects. Confirm with:
-
-```powershell
-terraform state list
-terraform state list -state="./terraform.tfstate.backup"
-```
-
-If the current state is empty but the backup lists the correct deployment resources, preserve both files and carefully restore the matching backup before attempting to destroy or update the deployment. Never substitute a state file from another AWLS deployment.
-
-If both states are empty, check whether Azure or FortiCNAPP resources still exist before applying another integration:
-
-```powershell
-az group list --query "[?contains(name, 'lacework-agentless')].{Name:name,Location:location}" -o table
-lacework cloud-account list
-```
-
-### Destroy is slow or appears stuck
-
-Azure RBAC, networking, Key Vault, managed identities, and Entra resources can take several minutes to delete. Avoid interrupting Terraform unless necessary.
-
-Before destroying, preserve the state:
-
-```powershell
-Copy-Item ./terraform.tfstate ./terraform.tfstate.before-destroy
-terraform plan -destroy
-terraform destroy
-```
-
-If Cloud Shell times out, reopen it, return to the same directory, refresh `az login`, and rerun `terraform plan -destroy`. Terraform will plan only the remaining resources.
-
-### Destroy fails with `InUseSubnetCannotBeDeleted`
-
-This can occur when AWLS is destroyed while a scan is running, leaving temporary scanner VMs attached to the subnet. First list the VMs in the scanner resource group:
-
-```powershell
-az vm list --resource-group "<SCANNING_RESOURCE_GROUP_NAME>" --subscription "<SCANNING_SUBSCRIPTION_ID>" --show-details -o table
-```
-
-Only after confirming they are temporary AWLS scanner VMs, delete them:
-
-```powershell
-$vmIds = @(az vm list --resource-group "<SCANNING_RESOURCE_GROUP_NAME>" --subscription "<SCANNING_SUBSCRIPTION_ID>" --query "[].id" -o tsv)
-if ($vmIds.Count -gt 0) {
-  az vm delete --ids $vmIds --yes
-}
-```
-
-Resume the destroy from the original Terraform directory:
-
-```powershell
-terraform destroy
-```
-
-Do not manually delete the entire scanning resource group before Terraform finishes. Resources such as Entra applications, service principals, subscription-scoped roles, role assignments, and the FortiCNAPP integration exist outside that resource group.
-
-### No container vulnerabilities appear
-
-Check all of the following:
-
-- The cloud-account integration status is **Success**.
-- `scan_containers` is `true`.
-- Each monitored subscription is present in `included_subscriptions` on the global module.
-- Regional scanner resources exist in every workload region.
-- The regional Container App Job has a successful execution.
-- No LQL workload filter excludes the VM.
-- Docker uses `overlay2` and stores data in a supported path.
-- The container persisted on disk through a complete scan cycle.
-- FortiCNAPP is viewed under **Vulnerabilities > Containers**, grouped by image ID, with **Scanner type: Agentless**.
-
 ## Deprovisioning safely
 
 Always destroy from the directory containing the state that created the deployment:
@@ -530,6 +390,267 @@ No changes. No objects need to be destroyed.
 ```
 
 That message does not prove that Azure contains no AWLS resources; it only means the current Terraform state manages none.
+
+# Azure Agentless Workload Scanner Preflight Check
+
+The [Azure Agentless Workload Scanner Preflight Check](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/preflight_check) validates whether an Azure environment is ready for Lacework/FortiCNAPP Agentless Workload Scanning (AWLS).
+
+The tool:
+
+- Counts the virtual machines in the intended monitoring scope.
+- Validates the required AWLS deployment permissions.
+- Validates regional vCPU quotas based on the number of VMs to scan.
+- Validates public-IP quotas when AWLS is deployed without a NAT Gateway.
+- Writes detailed test results to a JSON report.
+
+> [!IMPORTANT]
+> Do not download only [`core/preflight_check.py`](https://github.com/lacework/terraform-azure-agentless-scanning/blob/main/preflight_check/preflight_check/core/preflight_check.py). It is an internal package file that depends on the other Python modules, `pyproject.toml`, and `uv.lock` in the complete `preflight_check` directory.
+
+## Before you begin
+
+Prepare the following values. Replace only the masked values and region codes in the examples:
+
+| Value | Meaning | Example format |
+|---|---|---|
+| `<SCANNING_SUBSCRIPTION_ID>` | Subscription where the AWLS scanner resources will be deployed and billed | Azure subscription UUID |
+| `<SECOND_MONITORED_SUBSCRIPTION_ID>` | Additional subscription whose workloads will be scanned | Azure subscription UUID |
+| `<PRIMARY_REGION_CODE>` | First/global AWLS deployment region | `westus` |
+| `<SECOND_REGION_CODE>` | Additional AWLS deployment region | `eastus` |
+
+Azure region **codes** are used by this test (`westus,eastus`), while the Lacework generator may display region names (`West US,East US`). Do not put a space after the comma.
+
+## Step 1 — Open Azure Cloud Shell
+
+Open Azure Cloud Shell and select **PowerShell**. Cloud Shell uses Linux underneath, so the Linux `uv` installer is correct even though the prompt starts with `PS`.
+
+## Step 2 — Check available home-directory space
+
+```powershell
+df -h /home/$env:USER
+```
+
+Make sure the `/home` filesystem is not at or near 100%. If adequate space is available, continue to Step 3.
+
+If it is full, first confirm that Terraform is not running:
+
+```powershell
+Get-Process terraform -ErrorAction SilentlyContinue
+```
+
+If this returns no process, list the recreatable `.terraform` dependency directories:
+
+```powershell
+bash -lc 'find /home/$USER -xdev -type d -name .terraform -prune -print'
+```
+
+After reviewing that list, remove only those dependency directories and check the free space again:
+
+```powershell
+bash -lc 'find /home/$USER -xdev -type d -name .terraform -prune -exec rm -rf -- {} +'
+df -h /home/$env:USER
+```
+
+This does not delete `main.tf`, Terraform state, or Azure resources. Run `terraform init` in a Terraform project before using that project again.
+
+## Step 3 — Download the complete test tool
+
+Clone the official repository and enter its preflight directory:
+
+```powershell
+git clone --depth 1 https://github.com/lacework/terraform-azure-agentless-scanning.git
+Set-Location ./terraform-azure-agentless-scanning/preflight_check
+```
+
+If the repository is already cloned, update it:
+
+```powershell
+Set-Location ./terraform-azure-agentless-scanning
+git pull --ff-only
+Set-Location ./preflight_check
+```
+
+Do not clone the repository while already inside its `preflight_check` directory, because that creates an unnecessary nested copy.
+
+## Step 4 — Authenticate to Azure
+
+Select the subscription where AWLS scanner infrastructure will be deployed:
+
+```powershell
+az login
+az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
+az account show --query "{Subscription:id,Tenant:tenantId,User:user.name}" -o table
+```
+
+Confirm that the displayed subscription and tenant are correct. The signed-in identity must be able to read the scanning subscription and every monitored subscription.
+
+## Step 5 — Install and verify `uv`
+
+Azure Cloud Shell runs on Linux even when its command interface is PowerShell. Install the [`uv` package manager](https://docs.astral.sh/uv/) with the official Linux installer:
+
+```powershell
+bash -c 'curl -LsSf https://astral.sh/uv/install.sh | sh'
+```
+
+Add the default installation directory to the current PowerShell session and verify the installation:
+
+```powershell
+$env:PATH = "$HOME/.local/bin:$env:PATH"
+uv --version
+```
+
+If the current session still cannot find `uv`, invoke it by its absolute path:
+
+```powershell
+& "$HOME/.local/bin/uv" --version
+```
+
+## Step 6 — Enter the preflight directory
+
+For the repository path used in this deployment:
+
+```powershell
+Set-Location "/home/hussam/alws-subs-multi-region/terraform-azure-agentless-scanning/preflight_check"
+Get-ChildItem
+```
+
+Confirm that the directory contains `preflight_check`, `pyproject.toml`, and `uv.lock`.
+
+## Step 7 — Display the available options
+
+```powershell
+uv run -m preflight_check --help
+```
+
+## Step 8A — Run the test interactively
+
+```powershell
+uv run -m preflight_check
+```
+
+If `uv` is not on `PATH`, run:
+
+```powershell
+& "$HOME/.local/bin/uv" run -m preflight_check
+```
+
+The tool prompts for:
+
+- Scanning subscription
+- Monitored or excluded subscriptions
+- Scanning regions
+- NAT Gateway preference
+- Report output location
+
+Enter region codes such as `westus` and `eastus`. Choose the same NAT Gateway setting that will be used by the AWLS Terraform deployment.
+
+## Step 8B — Run the test non-interactively
+
+Example for two monitored subscriptions and two regions with a NAT Gateway:
+
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "<PRIMARY_REGION_CODE>,<SECOND_REGION_CODE>" --nat-gateway --output-path "./preflight_report.json"
+```
+
+Use Azure region codes such as `westus,eastus`:
+
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus,eastus" --nat-gateway --output-path "./preflight_report.json"
+```
+
+Examples for common deployment scopes follow.
+
+### One subscription, one region
+
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>" --regions "westus" --nat-gateway --output-path "./preflight_report.json"
+```
+
+### Two subscriptions, one region
+
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus" --nat-gateway --output-path "./preflight_report.json"
+```
+
+### Two subscriptions, two regions
+
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus,eastus" --nat-gateway --output-path "./preflight_report.json"
+```
+
+## Step 9 — Match the network test to the deployment
+
+- Use `--nat-gateway` when Terraform uses `use_nat_gateway = true`.
+- Use `--no-nat-gateway` when Terraform uses `use_nat_gateway = false`.
+- Without a NAT Gateway, the tool also validates the public-IP quota required by scanning instances.
+
+Only use one of these two flags. Do not specify both in the same command.
+
+## Step 10 — Review the results
+
+Review both the console summary and the generated report:
+
+```powershell
+Get-Content ./preflight_report.json
+```
+
+Resolve any failed permission, regional vCPU quota, or public-IP quota checks before running `terraform apply`.
+
+A successful summary should indicate that quota limits are sufficient and permission checks passed. The JSON file contains the detailed evidence.
+
+## Step 11 — Continue with AWLS deployment
+
+The preflight tool validates readiness; it does not deploy AWLS. After all checks pass, return to the directory containing the generated AWLS `main.tf` and run:
+
+```powershell
+terraform init
+terraform plan
+terraform apply
+```
+
+Review the plan before approving the apply.
+
+## Troubleshooting
+
+### `uv` is not recognized
+
+```powershell
+$env:PATH = "$HOME/.local/bin:$env:PATH"
+& "$HOME/.local/bin/uv" --version
+```
+
+### `No space left on device`
+
+Follow Step 2 to remove recreatable `.terraform` dependency caches. Do not delete Terraform state files.
+
+### Azure access token or login error
+
+```powershell
+az login
+az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
+az account show -o table
+```
+
+Then rerun the preflight command.
+
+### Wrong or nested directory
+
+Return to the original preflight directory:
+
+```powershell
+Set-Location "/home/hussam/alws-subs-multi-region/terraform-azure-agentless-scanning/preflight_check"
+```
+
+### Permission check fails for the second subscription
+
+Verify that the currently authenticated Azure identity has the required read and deployment permissions at the relevant scope. Including a subscription ID in the command does not grant access to it.
+
+## Reference
+
+| Reference | Purpose |
+|---|---|
+| [Azure Agentless Workload Scanner Preflight Check](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/preflight_check) | Validation tool to ensure the Azure environment is properly configured before deploying the Lacework Agentless Scanner |
+
+
 
 ## Reference documentation
 
