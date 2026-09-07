@@ -12,7 +12,7 @@ AWLS scans supported Azure virtual-machine disks for host vulnerabilities, conta
 | [How Azure AWLS works](#how-azure-awls-works) | Agentless scanning workflow |
 | [Azure resource model](#azure-resource-model) | Global and regional Azure resources |
 | [Deployment topology comparison](#deployment-topology-comparison) | One versus multiple subscriptions and regions |
-| [Prerequisites, Requirement](#prerequisites,Requirement) | Required access, tools, quotas, and networking |
+| [Prerequisites, Requirement](#prerequisites) | Required access, tools, quotas, and networking |
 | [CLI deployment examples](#cli-deployment-examples) | AWLS generation commands |
 | [Generate, review, and deploy](#generate-review-and-deploy) | Terraform deployment process |
 | [Multi-region Terraform structure](#multi-region-terraform-structure) | Global and regional module relationship |
