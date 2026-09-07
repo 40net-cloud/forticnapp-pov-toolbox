@@ -206,40 +206,18 @@ More subscriptions = broader RBAC scope and more workloads
 More regions       = more regional scanner infrastructure
 ```
 
-## Prerequisites
+## Requirement, Prerequisites
 
-- FortiCNAPP administrator access
-- FortiCNAPP CLI installed and configured
-- Terraform 1.9 or later
-- Azure CLI installed and authenticated
-- Deployment permissions required by the official Azure AWLS documentation
-- Access to create role definitions and role assignments in the scanning and monitored subscriptions
-- Adequate regional Azure vCPU and public-IP quotas for scanner workloads
-- TCP 443 egress from scanner infrastructure to required Azure and FortiCNAPP endpoints
-- All subscriptions in a subscription-level integration should be accessible in the same Microsoft Entra tenant
-
-| Requirement | Purpose | Required? |
+| Requirement | Required capacity or condition | How to validate |
 |---|---|---|
-| FortiCNAPP administrator access | Create and verify the AWLS cloud integration | Yes |
-| FortiCNAPP CLI | Generate the AWLS Terraform configuration | Yes |
-| Terraform 1.9 or later | Deploy and manage AWLS infrastructure | Yes |
-| Azure CLI authentication | Allow Terraform and the preflight tool to access Azure | Yes |
-| Azure deployment permissions | Create resource groups, identities, networking, storage, Container Apps, custom roles, and role assignments | Yes |
-| Access to monitored subscriptions | Discover and scan eligible workloads across the included subscriptions | Yes |
-| Same Microsoft Entra tenant | Required for the scanning identity to access multiple included subscriptions | Yes |
-| Regional vCPU quota | Supports temporary scanning VMs created during scans | Yes |
-| TCP 443 outbound access | Allows scanner communication with Azure and FortiCNAPP services | Yes |
-| Azure Container Apps support | Runs the regional AWLS orchestration job | Yes |
-| Container scanning | Set `scan_containers = true`; enabled by default | For container vulnerability results |
-| Host vulnerability scanning | Set `scan_host_vulnerabilities = true`; enabled by default | For host vulnerability results |
-| NAT Gateway | Provides controlled outbound connectivity for scanning resources; enabled by default | Recommended, but optional |
-| Public-IP quota | Required for scanning instances when NAT Gateway is disabled | Only without NAT Gateway |
-| Log Analytics workspace | Provides access to Container App logs | Optional |
-| Secondary-volume scanning | Set `scan_multi_volume = true` to inspect supported secondary disks | Optional |
-| AWLS scanner in each workload region | Creates regional scanning infrastructure where workloads need to be scanned | Yes, for every scanned region |
-| Azure Storage Account | Stores AWLS artifacts and metadata; normally created by the module | Yes |
-| Key Vault | Stores the integration secret; normally created by the module | Yes |
-| Preflight check | Validates permissions, VM count, vCPU quota, and public-IP quota | Recommended |
+| Total Regional vCPUs | In the **scanning subscription**, allow at least **1 available vCPU for every 2 VMs** being scanned in that region. Example: 30 VMs in East US require at least 15 available regional vCPUs. | Run the AWLS preflight check or `az vm list-usage --location "eastus" -o table` |
+| VM-family vCPU quota | Available quota across the **DSv3, DSv4, and DSv5** VM families must support the required regional vCPU capacity. Both total regional and VM-family quota must be sufficient. | Check **Azure Portal → Subscriptions → Usage + quotas**, filtered by region |
+| Public-IP quota without NAT | Allow approximately **1 public IP for every 4 workloads** scanned in each region—about 25% of the regional workload count. Example: 100 workloads require approximately 25 public IPs. | Run preflight with `--no-nat-gateway` |
+| NAT Gateway deployment | When NAT is enabled, individual public IPs are not required for every scanning VM. NAT is recommended for larger environments, particularly above approximately 1,000 workloads per region. | Run preflight with `--nat-gateway` and confirm `use_nat_gateway = true` |
+| Container Apps availability | Azure Container Apps Jobs must be supported in every selected scanning region. | Confirm regional service availability before deployment |
+| Regional scanner coverage | Deploy one AWLS regional scanner stack for every Azure region containing workloads that must be scanned. | Compare VM locations with the regions passed to `--regions` |
+| Outbound connectivity | Scanner networking must allow outbound TCP 443 to required Azure and FortiCNAPP endpoints. | Review VNet, subnet, NSG, firewall, and routing configuration |
+| Azure capacity | Having sufficient quota does not guarantee that Azure currently has capacity for the required VM family in that region. | Validate through deployment and choose another supported family, zone, or region if Azure reports a capacity error |
 
 Verify the active Azure context before deployment:
 
