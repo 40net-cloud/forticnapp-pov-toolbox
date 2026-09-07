@@ -7,6 +7,22 @@ AWLS scans supported Azure virtual-machine disks for host vulnerabilities, conta
 > [!IMPORTANT]
 > Replace the masked subscription IDs and region names in all examples. Review every Terraform plan before applying it.
 
+| Section | Purpose |
+|---|---|
+| [How Azure AWLS works](#how-azure-awls-works) | Agentless scanning workflow |
+| [Azure resource model](#azure-resource-model) | Global and regional Azure resources |
+| [Deployment topology comparison](#deployment-topology-comparison) | One versus multiple subscriptions and regions |
+| [Prerequisites](#prerequisites) | Required access, tools, quotas, and networking |
+| [CLI deployment examples](#cli-deployment-examples) | AWLS generation commands |
+| [Generate, review, and deploy](#generate-review-and-deploy) | Terraform deployment process |
+| [Multi-region Terraform structure](#multi-region-terraform-structure) | Global and regional module relationship |
+| [Important module inputs](#important-module-inputs) | Main AWLS configuration options |
+| [Validate the deployment](#validate-the-deployment) | Post-deployment checks |
+| [Deprovisioning safely](#deprovisioning-safely) | Safe Terraform removal |
+| [Azure AWLS Preflight Check](#azure-awls-preflight-check) | Pre-deployment validation |
+| [Reference documentation](#reference-documentation) | Official supporting documentation |
+| [Security and cost notes](#security-and-cost-notes) | Security and Azure cost considerations |
+
 ## How Azure AWLS works
 
 1. Terraform creates the global and regional scanning infrastructure in a customer-controlled Azure scanning subscription.
