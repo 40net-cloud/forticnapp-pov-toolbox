@@ -218,6 +218,29 @@ More regions       = more regional scanner infrastructure
 - TCP 443 egress from scanner infrastructure to required Azure and FortiCNAPP endpoints
 - All subscriptions in a subscription-level integration should be accessible in the same Microsoft Entra tenant
 
+| Requirement | Purpose | Required? |
+|---|---|---|
+| FortiCNAPP administrator access | Create and verify the AWLS cloud integration | Yes |
+| FortiCNAPP CLI | Generate the AWLS Terraform configuration | Yes |
+| Terraform 1.9 or later | Deploy and manage AWLS infrastructure | Yes |
+| Azure CLI authentication | Allow Terraform and the preflight tool to access Azure | Yes |
+| Azure deployment permissions | Create resource groups, identities, networking, storage, Container Apps, custom roles, and role assignments | Yes |
+| Access to monitored subscriptions | Discover and scan eligible workloads across the included subscriptions | Yes |
+| Same Microsoft Entra tenant | Required for the scanning identity to access multiple included subscriptions | Yes |
+| Regional vCPU quota | Supports temporary scanning VMs created during scans | Yes |
+| TCP 443 outbound access | Allows scanner communication with Azure and FortiCNAPP services | Yes |
+| Azure Container Apps support | Runs the regional AWLS orchestration job | Yes |
+| Container scanning | Set `scan_containers = true`; enabled by default | For container vulnerability results |
+| Host vulnerability scanning | Set `scan_host_vulnerabilities = true`; enabled by default | For host vulnerability results |
+| NAT Gateway | Provides controlled outbound connectivity for scanning resources; enabled by default | Recommended, but optional |
+| Public-IP quota | Required for scanning instances when NAT Gateway is disabled | Only without NAT Gateway |
+| Log Analytics workspace | Provides access to Container App logs | Optional |
+| Secondary-volume scanning | Set `scan_multi_volume = true` to inspect supported secondary disks | Optional |
+| AWLS scanner in each workload region | Creates regional scanning infrastructure where workloads need to be scanned | Yes, for every scanned region |
+| Azure Storage Account | Stores AWLS artifacts and metadata; normally created by the module | Yes |
+| Key Vault | Stores the integration secret; normally created by the module | Yes |
+| Preflight check | Validates permissions, VM count, vCPU quota, and public-IP quota | Recommended |
+
 Verify the active Azure context before deployment:
 
 ```powershell
