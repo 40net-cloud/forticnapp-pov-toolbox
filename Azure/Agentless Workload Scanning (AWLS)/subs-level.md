@@ -391,238 +391,24 @@ No changes. No objects need to be destroyed.
 
 That message does not prove that Azure contains no AWLS resources; it only means the current Terraform state manages none.
 
-# Azure Agentless Workload Scanner Preflight Check
+# Azure AWLS Preflight Check
 
-The [Azure Agentless Workload Scanner Preflight Check](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/preflight_check) validates whether an Azure environment is ready for Lacework/FortiCNAPP Agentless Workload Scanning (AWLS).
+The [official preflight tool](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/preflight_check) checks Azure permissions, VM count, regional vCPU quota, and public-IP quota when a NAT Gateway is not used.
 
-The tool:
+> Use the complete `preflight_check` directory. The individual `core/preflight_check.py` file is not sufficient.
 
-- Counts the virtual machines in the intended monitoring scope.
-- Validates the required AWLS deployment permissions.
-- Validates regional vCPU quotas based on the number of VMs to scan.
-- Validates public-IP quotas when AWLS is deployed without a NAT Gateway.
-- Writes detailed test results to a JSON report.
-
-> [!IMPORTANT]
-> Do not download only [`core/preflight_check.py`](https://github.com/lacework/terraform-azure-agentless-scanning/blob/main/preflight_check/preflight_check/core/preflight_check.py). It is an internal package file that depends on the other Python modules, `pyproject.toml`, and `uv.lock` in the complete `preflight_check` directory.
-
-## Before you begin
-
-Prepare the following values. Replace only the masked values and region codes in the examples:
-
-| Value | Meaning | Example format |
-|---|---|---|
-| `<SCANNING_SUBSCRIPTION_ID>` | Subscription where the AWLS scanner resources will be deployed and billed | Azure subscription UUID |
-| `<SECOND_MONITORED_SUBSCRIPTION_ID>` | Additional subscription whose workloads will be scanned | Azure subscription UUID |
-| `<PRIMARY_REGION_CODE>` | First/global AWLS deployment region | `westus` |
-| `<SECOND_REGION_CODE>` | Additional AWLS deployment region | `eastus` |
-
-Azure region **codes** are used by this test (`westus,eastus`), while the Lacework generator may display region names (`West US,East US`). Do not put a space after the comma.
-
-## Step 1 — Open Azure Cloud Shell
-
-Open Azure Cloud Shell and select **PowerShell**. Cloud Shell uses Linux underneath, so the Linux `uv` installer is correct even though the prompt starts with `PS`.
-
-## Step 2 — Check available home-directory space
-
-```powershell
-df -h /home/$env:USER
-```
-
-Make sure the `/home` filesystem is not at or near 100%. If adequate space is available, continue to Step 3.
-
-If it is full, first confirm that Terraform is not running:
-
-```powershell
-Get-Process terraform -ErrorAction SilentlyContinue
-```
-
-If this returns no process, list the recreatable `.terraform` dependency directories:
-
-```powershell
-bash -lc 'find /home/$USER -xdev -type d -name .terraform -prune -print'
-```
-
-After reviewing that list, remove only those dependency directories and check the free space again:
-
-```powershell
-bash -lc 'find /home/$USER -xdev -type d -name .terraform -prune -exec rm -rf -- {} +'
-df -h /home/$env:USER
-```
-
-This does not delete `main.tf`, Terraform state, or Azure resources. Run `terraform init` in a Terraform project before using that project again.
-
-## Step 3 — Download the complete test tool
-
-Clone the official repository and enter its preflight directory:
+## 1. Download the tool
 
 ```powershell
 git clone --depth 1 https://github.com/lacework/terraform-azure-agentless-scanning.git
 Set-Location ./terraform-azure-agentless-scanning/preflight_check
 ```
 
-If the repository is already cloned, update it:
+If it is already downloaded, go directly to its existing `preflight_check` directory.
 
-```powershell
-Set-Location ./terraform-azure-agentless-scanning
-git pull --ff-only
-Set-Location ./preflight_check
-```
+## 2. Sign in to Azure
 
-Do not clone the repository while already inside its `preflight_check` directory, because that creates an unnecessary nested copy.
-
-## Step 4 — Authenticate to Azure
-
-Select the subscription where AWLS scanner infrastructure will be deployed:
-
-```powershell
-az login
-az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
-az account show --query "{Subscription:id,Tenant:tenantId,User:user.name}" -o table
-```
-
-Confirm that the displayed subscription and tenant are correct. The signed-in identity must be able to read the scanning subscription and every monitored subscription.
-
-## Step 5 — Install and verify `uv`
-
-Azure Cloud Shell runs on Linux even when its command interface is PowerShell. Install the [`uv` package manager](https://docs.astral.sh/uv/) with the official Linux installer:
-
-```powershell
-bash -c 'curl -LsSf https://astral.sh/uv/install.sh | sh'
-```
-
-Add the default installation directory to the current PowerShell session and verify the installation:
-
-```powershell
-$env:PATH = "$HOME/.local/bin:$env:PATH"
-uv --version
-```
-
-If the current session still cannot find `uv`, invoke it by its absolute path:
-
-```powershell
-& "$HOME/.local/bin/uv" --version
-```
-
-## Step 6 — Enter the preflight directory
-
-For the repository path used in this deployment:
-
-```powershell
-Set-Location "/home/hussam/alws-subs-multi-region/terraform-azure-agentless-scanning/preflight_check"
-Get-ChildItem
-```
-
-Confirm that the directory contains `preflight_check`, `pyproject.toml`, and `uv.lock`.
-
-## Step 7 — Display the available options
-
-```powershell
-uv run -m preflight_check --help
-```
-
-## Step 8A — Run the test interactively
-
-```powershell
-uv run -m preflight_check
-```
-
-If `uv` is not on `PATH`, run:
-
-```powershell
-& "$HOME/.local/bin/uv" run -m preflight_check
-```
-
-The tool prompts for:
-
-- Scanning subscription
-- Monitored or excluded subscriptions
-- Scanning regions
-- NAT Gateway preference
-- Report output location
-
-Enter region codes such as `westus` and `eastus`. Choose the same NAT Gateway setting that will be used by the AWLS Terraform deployment.
-
-## Step 8B — Run the test non-interactively
-
-Example for two monitored subscriptions and two regions with a NAT Gateway:
-
-```powershell
-uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "<PRIMARY_REGION_CODE>,<SECOND_REGION_CODE>" --nat-gateway --output-path "./preflight_report.json"
-```
-
-Use Azure region codes such as `westus,eastus`:
-
-```powershell
-uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus,eastus" --nat-gateway --output-path "./preflight_report.json"
-```
-
-Examples for common deployment scopes follow.
-
-### One subscription, one region
-
-```powershell
-uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>" --regions "westus" --nat-gateway --output-path "./preflight_report.json"
-```
-
-### Two subscriptions, one region
-
-```powershell
-uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus" --nat-gateway --output-path "./preflight_report.json"
-```
-
-### Two subscriptions, two regions
-
-```powershell
-uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_MONITORED_SUBSCRIPTION_ID>" --regions "westus,eastus" --nat-gateway --output-path "./preflight_report.json"
-```
-
-## Step 9 — Match the network test to the deployment
-
-- Use `--nat-gateway` when Terraform uses `use_nat_gateway = true`.
-- Use `--no-nat-gateway` when Terraform uses `use_nat_gateway = false`.
-- Without a NAT Gateway, the tool also validates the public-IP quota required by scanning instances.
-
-Only use one of these two flags. Do not specify both in the same command.
-
-## Step 10 — Review the results
-
-Review both the console summary and the generated report:
-
-```powershell
-Get-Content ./preflight_report.json
-```
-
-Resolve any failed permission, regional vCPU quota, or public-IP quota checks before running `terraform apply`.
-
-A successful summary should indicate that quota limits are sufficient and permission checks passed. The JSON file contains the detailed evidence.
-
-## Step 11 — Continue with AWLS deployment
-
-The preflight tool validates readiness; it does not deploy AWLS. After all checks pass, return to the directory containing the generated AWLS `main.tf` and run:
-
-```powershell
-terraform init
-terraform plan
-terraform apply
-```
-
-Review the plan before approving the apply.
-
-## Troubleshooting
-
-### `uv` is not recognized
-
-```powershell
-$env:PATH = "$HOME/.local/bin:$env:PATH"
-& "$HOME/.local/bin/uv" --version
-```
-
-### `No space left on device`
-
-Follow Step 2 to remove recreatable `.terraform` dependency caches. Do not delete Terraform state files.
-
-### Azure access token or login error
+Replace `<SCANNING_SUBSCRIPTION_ID>` with the subscription where AWLS resources will be deployed:
 
 ```powershell
 az login
@@ -630,27 +416,59 @@ az account set --subscription "<SCANNING_SUBSCRIPTION_ID>"
 az account show -o table
 ```
 
-Then rerun the preflight command.
-
-### Wrong or nested directory
-
-Return to the original preflight directory:
+## 3. Install `uv`
 
 ```powershell
-Set-Location "/home/hussam/alws-subs-multi-region/terraform-azure-agentless-scanning/preflight_check"
+bash -c 'curl -LsSf https://astral.sh/uv/install.sh | sh'
+$env:PATH = "$HOME/.local/bin:$env:PATH"
+uv --version
 ```
 
-### Permission check fails for the second subscription
+## 4. Run the check
 
-Verify that the currently authenticated Azure identity has the required read and deployment permissions at the relevant scope. Including a subscription ID in the command does not grant access to it.
+Interactive mode:
 
-## Reference
+```powershell
+uv run -m preflight_check
+```
 
-| Reference | Purpose |
-|---|---|
-| [Azure Agentless Workload Scanner Preflight Check](https://github.com/lacework/terraform-azure-agentless-scanning/tree/main/preflight_check) | Validation tool to ensure the Azure environment is properly configured before deploying the Lacework Agentless Scanner |
+Two subscriptions and two regions:
 
+```powershell
+uv run -m preflight_check --scanning-subscription "<SCANNING_SUBSCRIPTION_ID>" --monitored-subscriptions "<SCANNING_SUBSCRIPTION_ID>,<SECOND_SUBSCRIPTION_ID>" --regions "westus,eastus" --nat-gateway --output-path "./preflight_report.json"
+```
 
+Change only the subscription IDs, region codes, and network option:
+
+- Use `--nat-gateway` if AWLS will use a NAT Gateway.
+- Otherwise, replace it with `--no-nat-gateway`.
+
+## 5. Review the result
+
+```powershell
+Get-Content ./preflight_report.json
+```
+
+Resolve failed permission or quota checks before running `terraform apply`.
+
+## Quick troubleshooting
+
+If `uv` is not recognized:
+
+```powershell
+$env:PATH = "$HOME/.local/bin:$env:PATH"
+& "$HOME/.local/bin/uv" run -m preflight_check
+```
+
+If installation reports `No space left on device`, first confirm Terraform is not running. Then remove only the recreatable `.terraform` dependency directories:
+
+```powershell
+Get-Process terraform -ErrorAction SilentlyContinue
+bash -lc 'find /home/$USER -xdev -type d -name .terraform -prune -exec rm -rf -- {} +'
+df -h /home/$env:USER
+```
+
+This does not delete Terraform state, configuration, or Azure resources. Run `terraform init` before using those Terraform projects again.
 
 ## Reference documentation
 
