@@ -23,6 +23,12 @@ Terraform code to install or uninstall the **FortiCNAPP (Lacework) Windows agent
 | Target VMs | Windows, **running**, outbound HTTPS to `updates.lacework.net` and your FortiCNAPP server URL |
 | FortiCNAPP | An agent access token, plus the MSI and script URLs for the release you want (Windows agent releases page) |
 
+## Use cases
+
+- **Proof of value / onboarding:** roll the agent out to a set of customer VMs in minutes, then remove it cleanly when the evaluation ends.
+- **Fleet rollout:** add new VMs to the `vms` list and re-apply.
+- **Controlled removal:** uninstall from all listed VMs with one variable change, without logging in to each host.
+- **Version change:** apply with `false`, update the release URLs, then apply with `true`.
 
 ## Files
 
@@ -87,13 +93,6 @@ terraform apply
 ```bash
 terraform apply -var install_agent=false
 ```
-
-## Use cases
-
-- **Proof of value / onboarding:** roll the agent out to a set of customer VMs in minutes, then remove it cleanly when the evaluation ends.
-- **Fleet rollout:** add new VMs to the `vms` list and re-apply.
-- **Controlled removal:** uninstall from all listed VMs with one variable change, without logging in to each host.
-- **Version change:** apply with `false`, update the release URLs, then apply with `true`.
 
 ## Notes
 
