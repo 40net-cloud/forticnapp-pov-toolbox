@@ -1,4 +1,4 @@
-# FortiCNAPP Windows Agent – Azure VM Deployment
+# Terraform for FortiCNAPP Windows Agent – Azure VM Deployment
 
 Terraform code to install or uninstall the **FortiCNAPP (Lacework) Windows agent** on multiple existing Azure Windows VMs, controlled by a single variable.
 
