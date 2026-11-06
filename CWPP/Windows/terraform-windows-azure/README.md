@@ -100,15 +100,15 @@ terraform apply -var install_agent=false
 - `terraform destroy`, or removing a VM from `vms`, deletes only the extension. **The agent stays installed.** Run with `install_agent = false` first.
 - The access token is stored in Terraform state. Use a secured remote backend.
 - Troubleshooting logs on the VM: `C:\WindowsAzure\Logs\Plugins\Microsoft.Compute.CustomScriptExtension\`
-- Troubleshooting windows agent errors, review the LWDataCollector log files in the C:\ProgramData\Lacework\Logs directory.
+- Troubleshooting windows agent errors, review the LWDataCollector log files in the`C:\ProgramData\Lacework\Log` directory.
+- Enter the following command to check status for the lwdatacollector service: 
 
-Enter the following command to check status for the lwdatacollector service: 
-- In Powersehll:
+In Powersehll:
 ```bash
 sc.exe query lwdatacollector
 ```
 or
-- In Command Prompt
+In Command Prompt
 ```bash
 sc query lwdatacollector
 ```
@@ -123,6 +123,7 @@ Restart the window agent with the following command:
 
 ```bash
 sc.exe start lwdatacollector
+```
 
 ## References
 
