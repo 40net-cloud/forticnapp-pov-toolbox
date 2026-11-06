@@ -1,0 +1,2 @@
+
+[Integrating a google Artifact Registry (GAR) with Lacework at a GCP Organization Level](https://community.fortinet.com/forticnapp-63/integrating-a-google-artifact-registry-gar-with-lacework-at-a-gcp-organization-level-179123)
